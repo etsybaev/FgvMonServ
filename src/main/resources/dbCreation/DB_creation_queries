@@ -28,3 +28,52 @@ CREATE TABLE `Monserv`.`User` (
 
 INSERT INTO `Monserv`.`User` (`firstName`, `lastName`, `contactPhoneNumber`, `password`, `enabled`, `role`) VALUES ('adm', 'adm', 'adm', '1234', '1', '1');
 
+
+
+------------------------------------------------------------------------------------------
+
+CREATE TABLE `Monserv`.`Bank` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `bankName` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`))
+DEFAULT CHARACTER SET = cp1251
+COLLATE = cp1251_ukrainian_ci;
+
+
+-------------------------------------------------------------------------------------------------
+
+
+CREATE TABLE `Monserv`.`Exchange` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `exchangeName` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+DEFAULT CHARACTER SET = cp1251
+COLLATE = cp1251_ukrainian_ci;
+
+
+
+---------------------------------------------------------------------------------------------
+
+
+CREATE TABLE `Monserv`.`Aassets` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `bankId` INT NULL,
+  `exchangeId` INT NULL,
+  `auctionDate` DATE NULL,
+  `lotNumber` VARCHAR(45) NULL,
+  `debtSize` FLOAT NULL,
+  `startPrice` FLOAT NULL,
+  `priceForClient` FLOAT NULL,
+  `discount` VARCHAR(10) NULL,
+  `url` TEXT NULL,
+  `lotOverview` TEXT NULL,
+  `fullName` VARCHAR(45) NULL,
+  `phoneNumber` VARCHAR(45) NULL,
+  `details` LONGTEXT NULL,
+  `callDate` DATE NULL,
+  `callStatus` VARCHAR(45) NULL,
+  `newPrice` VARCHAR(45) NULL,
+  `newAuctionDate` DATE NULL,
+  PRIMARY KEY (`id`))
+DEFAULT CHARACTER SET = cp1251
+COLLATE = cp1251_ukrainian_ci;
