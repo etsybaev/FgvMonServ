@@ -3,24 +3,101 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 
-<%--<script type="text/javascript">--%>
-	<%--function httpGet(id){--%>
-		<%--var xmlHttp = new XMLHttpRequest();--%>
-		<%--xmlHttp.open( "GET", "controller/open/" + id, false ); // false for synchronous request--%>
-		<%--xmlHttp.send( null );--%>
-		<%--return xmlHttp.responseText;--%>
-	<%--}--%>
-<%--</script>--%>
-
-	<%--<br/>--%>
-	<%--<button onclick="httpGet(1);" id="MAIN_HOME_ENTRANCE">MAIN_HOME_ENTRANCE</button>--%>
-	<%--<br/><br/>--%>
-	<%--<button onclick="httpGet(2);" id="MAIN_GATE">MAIN_GATE</button>--%>
-	<%--<br/><br/>--%>
-	<%--<button onclick="httpGet(4);" id="WICKET_MAIN_GATE">WICKET_MAIN_GATE</button>--%>
-	<%--<br/><br/>--%>
-	<%--<button onclick="httpGet(5);" id="WICKET_NOVUS">WICKET_NOVUS</button>--%>
-	<%--<br/><br/>--%>
+    <script src="<c:url value="/resources/script/sorttable.js" />"></script>
 
 
-<h1> Some body </h1>
+<style type="text/css">
+    th, td {
+        padding: 3px !important;
+    }
+
+    /* Sortable tables */
+    table.sortable thead {
+        background-color: #333;
+        color: #cccccc;
+        font-weight: bold;
+        cursor: default;
+    }
+    th {
+        font-size: 100%;
+    }
+
+
+    table#counterdemo tbody {
+        counter-reset: sortabletablescope;
+    }
+    table#counterdemo thead tr::before {
+        content: "";
+        display: table-cell;
+    }
+    table#counterdemo tbody tr::before {
+        content: counter(sortabletablescope);
+        counter-increment: sortabletablescope;
+        display: table-cell;
+    }
+
+    table#stripedemo tbody tr:nth-child(2n) td {
+        background: #ffcccc;
+    }
+    table#stripedemo tbody tr:nth-child(2n+1) td {
+        background: #ccfffff;
+    }
+</style>
+
+
+<script type="text/javascript" src="sorttable.js"></script>
+
+<table class="sortable">
+    <tr>
+        <th>Name</th>
+        <th>Salary</th>
+        <th>Extension</th>
+        <th>Start date</th>
+        <th>Start date (American)</th>
+    </tr>
+    <tr>
+        <td>Bloggs, Fred</td>
+        <td>$12000.00</td>
+        <td>1353</td>
+        <td>18/08/2003</td>
+        <td>08/18/2003</td>
+    </tr>
+    <tr>
+        <td>Turvey, Kevin</td>
+        <td>$191200.00</td>
+        <td>2342</td>
+        <td>02/05/1979</td>
+        <td>05/02/1979</td>
+    </tr>
+    <tr>
+        <td>Mbogo, Arnold</td>
+        <td>$32010.12</td>
+        <td>2755</td>
+        <td>09/08/1998</td>
+        <td>08/09/1998</td>
+    </tr>
+    <tr>
+        <td>Shakespeare, Bill</td>
+        <td>$122000.00</td>
+        <td>3211</td>
+        <td>12/11/1961</td>
+        <td>11/12/1961</td>
+    </tr>
+    <tr>
+        <td>Shakespeare, Hamnet</td>
+        <td>$9000</td>
+        <td>9005</td>
+        <td>01/01/2002</td>
+        <td>01/01/2002</td>
+    </tr>
+    <tr>
+        <td>Fitz, Marvin</td>
+        <td>$3300</td>
+        <td>5554</td>
+        <td>22/05/1995</td>
+        <td>05/22/1995</td>
+    </tr>
+</table>
+
+
+
