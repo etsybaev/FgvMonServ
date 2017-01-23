@@ -21,33 +21,18 @@
     th {
         font-size: 100%;
     }
-
-
-    table#counterdemo tbody {
-        counter-reset: sortabletablescope;
-    }
-    table#counterdemo thead tr::before {
-        content: "";
-        display: table-cell;
-    }
-    table#counterdemo tbody tr::before {
-        content: counter(sortabletablescope);
-        counter-increment: sortabletablescope;
-        display: table-cell;
-    }
-
     table#stripedemo tbody tr:nth-child(2n) td {
-        background: #ffcccc;
+        background: #9a9895;
     }
     table#stripedemo tbody tr:nth-child(2n+1) td {
-        background: #ccfffff;
+        background: #dcdad7;
     }
 </style>
 
 
 <script type="text/javascript" src="sorttable.js"></script>
 
-<table class="sortable">
+<table class="sortable" id="stripedemo">
     <tr>
         <th>Name</th>
         <th>Salary</th>

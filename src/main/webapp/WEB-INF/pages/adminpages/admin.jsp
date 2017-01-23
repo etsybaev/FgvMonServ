@@ -7,46 +7,31 @@
 <html>
 <head>
     <script src="<c:url value="/resources/script/userDelConfirm.js" />"></script>
+    <script src="<c:url value="/resources/script/sorttable.js" />"></script>
     <title>Users Page</title>
 
     <style type="text/css">
-        .tg {
-            border-collapse: collapse;
-            border-spacing: 0;
-            border-color: #ccc;
+        th, td {
+            padding: 3px !important;
         }
-
-        .tg td {
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            padding: 10px 5px;
-            border-style: solid;
-            border-width: 1px;
-            overflow: hidden;
-            word-break: normal;
-            border-color: #ccc;
-            color: #333;
-            background-color: #fff;
+        /* Sortable tables */
+        table.sortable thead {
+            background-color: #333;
+            color: #cccccc;
+            font-weight: bold;
+            cursor: default;
         }
-
-        .tg th {
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            font-weight: normal;
-            padding: 10px 5px;
-            border-style: solid;
-            border-width: 1px;
-            overflow: hidden;
-            word-break: normal;
-            border-color: #ccc;
-            color: #333;
-            background-color: #f0f0f0;
+        th {
+            font-size: 100%;
         }
-
-        .tg .tg-4eph {
-            background-color: #f9f9f9
+        table#stripedemo tbody tr:nth-child(2n) td {
+            background: #9a9895;
+        }
+        table#stripedemo tbody tr:nth-child(2n+1) td {
+            background: #dcdad7;
         }
     </style>
+
 </head>
 <body>
 <p><a href="../">Back to main menu</a></p>
@@ -166,9 +151,10 @@
 
 
 <h1>User List</h1>
+<script type="text/javascript" src="sorttable.js"></script>
 
 <c:if test="${!empty listUsers}">
-    <table class="tg">
+    <table class="sortable" id="stripedemo">
         <tr>
             <th width="30">ID</th>
             <th width="120">First Name</th>
