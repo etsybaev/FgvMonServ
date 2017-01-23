@@ -1,0 +1,30 @@
+CREATE SCHEMA `Monserv` ;
+
+
+-------------------------------------------------------------------------
+
+CREATE TABLE `Monserv`.`UserRoles` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `role` VARCHAR(15) NOT NULL,
+  PRIMARY KEY (`id`));
+
+  INSERT INTO `Monserv`.`UserRoles` (`role`) VALUES ('ROLE_ADMIN');
+  INSERT INTO `Monserv`.`UserRoles` (`role`) VALUES ('ROLE_USER');
+
+-------------------------------------------------------------------------
+
+CREATE TABLE `Monserv`.`User` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `firstName` VARCHAR(15) NOT NULL,
+  `lastName` VARCHAR(15) NOT NULL,
+  `contactPhoneNumber` VARCHAR(12) NOT NULL,
+  `password` VARCHAR(10) NOT NULL,
+  `enabled` TINYINT(1) NOT NULL DEFAULT 0,
+  `role` INT(11) NULL DEFAULT 2,
+  `createdTime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updatedTime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `contactPhoneNumber_UNIQUE` (`contactPhoneNumber` ASC));
+
+INSERT INTO `Monserv`.`User` (`firstName`, `lastName`, `contactPhoneNumber`, `password`, `enabled`, `role`) VALUES ('adm', 'adm', 'adm', '1234', '1', '1');
+
