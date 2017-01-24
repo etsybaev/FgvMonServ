@@ -126,6 +126,13 @@
             <version>3.8.1</version>
         </dependency>
 
+        <!--this is html parser-->
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.10.2</version>
+        </dependency>
+
 
 
     </dependencies>
