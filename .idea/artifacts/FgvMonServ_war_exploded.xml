@@ -51,6 +51,7 @@
           <element id="library" level="project" name="Maven: org.jodd:jodd-core:3.8.1" />
           <element id="library" level="project" name="Maven: org.jodd:jodd-xxx:3.8.1" />
           <element id="library" level="project" name="Maven: org.jsoup:jsoup:1.10.2" />
+          <element id="library" level="project" name="Maven: org.json:json:20140107" />
         </element>
       </element>
       <element id="directory" name="META-INF">

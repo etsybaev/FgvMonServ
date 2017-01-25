@@ -255,23 +255,23 @@ public class Passport {
 
     @Override
     public String toString() {
-        return "Passport{" +
-                "lotsForSale='" + lotsForSale + '\'' +
-                ", numberAndDateOfComitetAboutSalesCondition='" + numberAndDateOfComitetAboutSalesCondition + '\'' +
-                ", publicAuctionOrganizer='" + publicAuctionOrganizer + '\'' +
-                ", warrantyPayment='" + warrantyPayment + '\'' +
-                ", participantsNumberCondition='" + participantsNumberCondition + '\'' +
-                ", bankInfoForRegistrationPayment='" + bankInfoForRegistrationPayment + '\'' +
-                ", auctionStepAndAmountRaiseCondition='" + auctionStepAndAmountRaiseCondition + '\'' +
-                ", procedureForReviewTheProperty='" + procedureForReviewTheProperty + '\'' +
-                ", contactPersonInBankToReviewTheProperty='" + contactPersonInBankToReviewTheProperty + '\'' +
-                ", auctionDate='" + auctionDate + '\'' +
-                ", auctionTime='" + auctionTime + '\'' +
-                ", urlForElectronicAuction='" + urlForElectronicAuction + '\'' +
-                ", placeAndFormForThoseWhoWantToTakeAPart='" + placeAndFormForThoseWhoWantToTakeAPart + '\'' +
-                ", deadlineForSubmitAnApplicationForAuction='" + deadlineForSubmitAnApplicationForAuction + '\'' +
-                ", deadlineForWarrantyPayment='" + deadlineForWarrantyPayment + '\'' +
-                ", totalOpenedBiddingLimit='" + totalOpenedBiddingLimit + '\'' +
-                '}';
+        return "Passport{ \n" +
+                "   lotsForSale='" + lotsForSale + ",\n" +
+                "   numberAndDateOfComitetAboutSalesCondition='" + numberAndDateOfComitetAboutSalesCondition + ",\n" +
+                "   publicAuctionOrganizer='" + publicAuctionOrganizer + ",\n" +
+                "   warrantyPayment='" + warrantyPayment + ",\n" +
+                "   participantsNumberCondition='" + participantsNumberCondition + ",\n" +
+                "   bankInfoForRegistrationPayment='" + bankInfoForRegistrationPayment + '\'' +
+                "   auctionStepAndAmountRaiseCondition='" + auctionStepAndAmountRaiseCondition + ",\n" +
+                "   procedureForReviewTheProperty='" + procedureForReviewTheProperty + '\'' +
+                "   contactPersonInBankToReviewTheProperty='" + contactPersonInBankToReviewTheProperty + ",\n" +
+                "   auctionDate='" + auctionDate + ",\n" +
+                "   auctionTime='" + auctionTime + ",\n" +
+                "   urlForElectronicAuction='" + urlForElectronicAuction + ",\n" +
+                "   placeAndFormForThoseWhoWantToTakeAPart='" + placeAndFormForThoseWhoWantToTakeAPart + ",\n" +
+                "   deadlineForSubmitAnApplicationForAuction='" + deadlineForSubmitAnApplicationForAuction + ",\n" +
+                "   deadlineForWarrantyPayment='" + deadlineForWarrantyPayment + ",\n" +
+                "   totalOpenedBiddingLimit='" + totalOpenedBiddingLimit + ",\n" +
+                '}' + "\n";
     }
 }

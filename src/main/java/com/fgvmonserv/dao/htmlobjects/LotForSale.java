@@ -106,12 +106,12 @@ public class LotForSale {
 
     @Override
     public String toString() {
-        return "LotForSale{" +
-                "lotId='" + lotId + '\'' +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", startPrice='" + startPrice + '\'' +
-                ", assetPublicPassport='" + assetPublicPassport + '\'' +
-                '}';
+        return "LotForSale{" +  "\n" +
+                "   lotId='" + lotId + ",\n" +
+                "   name='" + name + ",\n" +
+                "   description='" + description + ",\n" +
+                "   startPrice='" + startPrice + ",\n" +
+                "   assetPublicPassport='" + assetPublicPassport + "\n" +
+                '}' + "\n";
     }
 }
