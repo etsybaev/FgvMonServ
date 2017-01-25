@@ -18,41 +18,48 @@ public class NotificationPage {
         try {
             Document doc = Jsoup.connect(url).get();
             Elements tbodyLots = doc.body().getElementsByTag("tbody").get(0).children();
-            int tbodyLotsSize = tbodyLots.size();
-            int columnSize = tbodyLots.get(0).children().size();
-
             //This is the final matrix with parsed values from table
-            String[][] matrix = new String[tbodyLotsSize][columnSize];
-            //iterate by each row in table
-            for(int i=0; i< tbodyLotsSize; i++) {
-                //iterate by each column in table
-                Element row = tbodyLots.get(i);
-                for(int j=0; j< row.children().size(); j++){
-                    Element td = row.getElementsByTag("td").get(j);
-                    //find first free cell to put data (some of fields may be already busy by values that were out by "rowspan")
-                    for (int k=j; k<row.children().size();k++){
-                        if (matrix[i][k] == null || matrix[i][k].isEmpty()){
-                            matrix[i][k] = td.text();
-                            System.out.println("breaking search");
-                            break;
-                        }
-                    }
-                    //if has rowspan - then add the value to next fields as well
-                    if(td.hasAttr("rowspan")) {
-                        int rowspan = Integer.parseInt(td.attr("rowspan"));
-                        for (int k=1; k<rowspan; k++){
-                            matrix[i+k][j] = td.text();
-                        }
-                    }
+            String[][] matrix = parseTableWithLots(tbodyLots);
 
-                    System.out.println(td.text());
-                }
-                System.out.println();
-            }
             System.out.println("");
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+
+    private String[][] parseTableWithLots(Elements tbodyLots){
+        int tbodyLotsSize = tbodyLots.size();
+        int columnSize = tbodyLots.get(0).children().size();
+        //This is the final matrix with parsed values from table
+        String[][] matrix = new String[tbodyLotsSize][columnSize];
+        //iterate by each row in table
+        for(int i=0; i< tbodyLotsSize; i++) {
+            //iterate by each column in table
+            Element row = tbodyLots.get(i);
+            for(int j=0; j< row.children().size(); j++){
+                Element td = row.getElementsByTag("td").get(j);
+                //find first free cell to put data (some of fields may be already busy by values that were out by "rowspan")
+                for (int k=0; k<columnSize;k++){
+                    if (matrix[i][k] == null || matrix[i][k].isEmpty()){
+                        matrix[i][k] = td.text();
+                        System.out.println("breaking search");
+                        break;
+                    }
+                }
+                //if has rowspan - then add the value to next fields as well
+                if(td.hasAttr("rowspan")) {
+                    int rowspan = Integer.parseInt(td.attr("rowspan"));
+                    for (int k=1; k<rowspan; k++){
+                        matrix[i+k][j] = td.text();
+                    }
+                }
+
+                System.out.println(td.text());
+            }
+            System.out.println();
+        }
+        return matrix;
     }
 }
 
