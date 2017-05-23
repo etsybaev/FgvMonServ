@@ -7,6 +7,16 @@
 
 
 <style type="text/css">
+
+	.intro-header {
+		padding-top: 50px; /* If you're making other pages, make sure there is 50px of padding to make sure the navbar doesn't overlap content! */
+		padding-bottom: 50px;
+		text-align: center;
+		color: #f8f8f8;
+		background: url(/resources/img/intro-bg.jpg) no-repeat center center;
+		background-size: cover;
+	}
+
 	div, p {margin:0px; padding:0px;}
 
 	#container {
@@ -40,10 +50,11 @@
 
 			<%--If anonymus -  show login link and registration form--%>
 			<c:if test="${pageContext.request.userPrincipal.name == null}">
-				<a href="/login"><img src="/resources/img/login-button.png" style="width:304px;height:150px;"/></a>
-				<%--<a href="/login">LogIn</a>--%>
+				<div class="intro-header" >
+					<a href="/login"><img src="/resources/img/login-button.png" style="width:250px;height:110px;"/></a>
+						<%--<a href="/login">LogIn</a>--%>
+				</div>
 			</c:if>
-
 		</div>
 
 		<div id="middle">
