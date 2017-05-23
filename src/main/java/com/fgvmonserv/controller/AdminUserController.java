@@ -1,8 +1,8 @@
 package com.fgvmonserv.controller;
 
-import com.fgvmonserv.model.User;
-import com.fgvmonserv.service.UserRolesService;
-import com.fgvmonserv.service.UserService;
+import com.fgvmonserv.model.userauth.User;
+import com.fgvmonserv.service.userauth.UserRolesService;
+import com.fgvmonserv.service.userauth.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.prepost.PreAuthorize;

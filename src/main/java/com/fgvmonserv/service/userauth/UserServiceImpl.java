@@ -1,7 +1,7 @@
-package com.fgvmonserv.service;
+package com.fgvmonserv.service.userauth;
 
-import com.fgvmonserv.dao.UserDao;
-import com.fgvmonserv.model.User;
+import com.fgvmonserv.dao.userauth.UserDao;
+import com.fgvmonserv.model.userauth.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

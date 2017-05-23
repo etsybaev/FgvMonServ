@@ -1,8 +1,8 @@
-package com.fgvmonserv.service;
+package com.fgvmonserv.service.userauth;
 
 import com.fgvmonserv.UserRolesEnum;
-import com.fgvmonserv.dao.UserRolesDao;
-import com.fgvmonserv.model.UserRoles;
+import com.fgvmonserv.dao.userauth.UserRolesDao;
+import com.fgvmonserv.model.userauth.UserRoles;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

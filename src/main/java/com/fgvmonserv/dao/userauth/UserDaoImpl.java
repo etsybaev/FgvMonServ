@@ -1,6 +1,6 @@
-package com.fgvmonserv.dao;
+package com.fgvmonserv.dao.userauth;
 
-import com.fgvmonserv.model.User;
+import com.fgvmonserv.model.userauth.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;

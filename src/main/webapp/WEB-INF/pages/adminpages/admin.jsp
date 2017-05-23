@@ -1,4 +1,4 @@
-<%@ page import="com.fgvmonserv.model.UserRoles" %>
+<%@ page import="com.fgvmonserv.model.userauth.UserRoles" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
@@ -114,8 +114,8 @@
             </td>
             <td>
                 <select id="enabled" required="required" name="enabled">
-                    <option value="true">Active</option>
                     <option value="false">Inactive</option>
+                    <option value="true">Active</option>
                 </select>
             </td>
         </tr>

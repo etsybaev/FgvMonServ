@@ -1,6 +1,6 @@
 package com.fgvmonserv.controller;
 
-import com.fgvmonserv.model.User;
+import com.fgvmonserv.model.userauth.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;

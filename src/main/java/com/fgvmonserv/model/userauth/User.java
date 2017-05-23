@@ -1,4 +1,4 @@
-package com.fgvmonserv.model;
+package com.fgvmonserv.model.userauth;
 
 
 import org.hibernate.annotations.NotFound;

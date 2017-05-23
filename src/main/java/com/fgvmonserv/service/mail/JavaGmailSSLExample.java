@@ -1,4 +1,4 @@
-package com.fgvmonserv.service;
+package com.fgvmonserv.service.mail;
 
 import jodd.mail.SmtpServer;
 import jodd.mail.SendMailSession;

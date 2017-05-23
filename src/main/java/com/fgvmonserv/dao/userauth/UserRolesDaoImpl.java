@@ -1,7 +1,7 @@
-package com.fgvmonserv.dao;
+package com.fgvmonserv.dao.userauth;
 
 import com.fgvmonserv.UserRolesEnum;
-import com.fgvmonserv.model.UserRoles;
+import com.fgvmonserv.model.userauth.UserRoles;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;

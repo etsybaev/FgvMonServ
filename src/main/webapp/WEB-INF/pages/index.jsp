@@ -40,7 +40,8 @@
 
 			<%--If anonymus -  show login link and registration form--%>
 			<c:if test="${pageContext.request.userPrincipal.name == null}">
-				<a href="/login">LogIn</a>
+				<a href="/login"><img src="/resources/img/login-button.png" style="width:304px;height:150px;"/></a>
+				<%--<a href="/login">LogIn</a>--%>
 			</c:if>
 
 		</div>
