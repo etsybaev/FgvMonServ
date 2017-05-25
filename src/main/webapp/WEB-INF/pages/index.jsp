@@ -41,12 +41,11 @@
 		<div id="top">
 			<%--If Admin user -  show admin panel link--%>
 			<c:if test="${pageContext.request.isUserInRole('ROLE_ADMIN') == true}">
-				<h2>
-						<form action="/admin">
-							<input type="submit" value="Admin panel">
-						</form>
-				</h2>
+				<form action="/admin">
+					<input type="submit" value="Admin panel">
+				</form>
 			</c:if>
+
 
 			<%--If anonymus -  show login link and registration form--%>
 			<c:if test="${pageContext.request.userPrincipal.name == null}">
@@ -55,11 +54,17 @@
 						<%--<a href="/login">LogIn</a>--%>
 				</div>
 			</c:if>
+
 		</div>
 
 		<div id="middle">
 			<%--If logged in - show logout button and access control buttons--%>
 			<c:if test="${pageContext.request.userPrincipal.name != null}">
+				<%--Show import/export DB button--%>
+				<form action="/importexport">
+					<input type="submit" value="Import/Export database">
+				</form>
+
 				<h3>Welcome : ${pageContext.request.userPrincipal.name} | <a href="<c:url value="/logout" />" > Logout</a></h3>
 				<%--This is the page to control all the access points--%>
 				<jsp:include page="IndexPageMainBody.jsp"/>
