@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -54,9 +55,17 @@ public class ImportExportController {
             redirectAttributes.addFlashAttribute("message",
                     "You successfully uploaded '" + file.getOriginalFilename() + "'");
 
+            //http://opencsv.sourceforge.net/
+            CSVReader reader = new CSVReader(new FileReader(UPLOADED_FOLDER + file.getOriginalFilename()), ';');
+            String [] line;
+            while ((line = reader.readNext()) != null) {
+                System.out.println("AAAA " + line[0] + "   " + line[1] + "    etc...");
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         return "redirect:/importexport/uploadStatus";
     }
 
