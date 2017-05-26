@@ -11,5 +11,9 @@
         <input id="file" type="file" name="file" />
         <p><button type="submit">Upload</button></p>
     </form>
+
+
+    <p><a href="/importexport/download">Download</a></p>
+
 </body>
 </html>

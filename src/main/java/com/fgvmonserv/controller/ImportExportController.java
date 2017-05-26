@@ -5,13 +5,12 @@ import com.opencsv.CSVReader;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -72,6 +71,31 @@ public class ImportExportController {
     @GetMapping("/importexport/uploadStatus")
     public String uploadStatus() {
         return "/importexport/uploadStatus";
+    }
+
+
+
+    @RequestMapping("/importexport/download")
+    public void downloadPDFResource( HttpServletRequest request,
+                                     HttpServletResponse response){
+
+        //Authorized user will download the file
+        String fileName = "1pr.csv";
+
+        Path file = Paths.get(UPLOADED_FOLDER, fileName);
+        if (Files.exists(file))
+        {
+            response.setContentType("text/csv");
+            response.addHeader("Content-Disposition", "attachment; filename=" + fileName);
+            try
+            {
+                Files.copy(file, response.getOutputStream());
+                response.getOutputStream().flush();
+            }
+            catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
     }
 
 }
