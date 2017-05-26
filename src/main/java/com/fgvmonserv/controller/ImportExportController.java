@@ -79,12 +79,20 @@ public class ImportExportController {
     public void downloadPDFResource( HttpServletRequest request,
                                      HttpServletResponse response){
 
+
+        //For filter param some oject may be used, ex:
+        //   @PreAuthorize("hasRole('ROLE_ADMIN')")
+        //   public String addUser(@ModelAttribute("exportParams") ExportParams exportParams){
+        // Then we may assemble request using params ex "exportParams.getPeriodRange()" etc.
+
+        //Here should be some logic of fetching data from DB and file creation.
+
+
         //Authorized user will download the file
         String fileName = "1pr.csv";
 
         Path file = Paths.get(UPLOADED_FOLDER, fileName);
-        if (Files.exists(file))
-        {
+        if (Files.exists(file)){
             response.setContentType("text/csv");
             response.addHeader("Content-Disposition", "attachment; filename=" + fileName);
             try
