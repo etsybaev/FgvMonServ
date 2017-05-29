@@ -1,0 +1,20 @@
+th, td {
+    padding: 3px !important;
+}
+/* Sortable tables */
+table.sortable thead {
+    background-color: #333;
+    color: #cccccc;
+    font-weight: bold;
+    cursor: default;
+}
+th {
+    font-size: 100%;
+}
+table#stripedemo tbody tr:nth-child(2n) td {
+    background: #9a9895;
+}
+table#stripedemo tbody tr:nth-child(2n+1) td {
+    background: #dcdad7;
+}
+

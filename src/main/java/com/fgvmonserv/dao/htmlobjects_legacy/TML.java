@@ -1,4 +1,4 @@
-package com.fgvmonserv.dao.htmlobjects;
+package com.fgvmonserv.dao.htmlobjects_legacy;
 
 /**
  * Created by ievgeniit on 24.01.17.

@@ -6,31 +6,38 @@
 <%@ page session="false" %>
 <html>
 <head>
+    <%--<link href="<c:url value="/resources/css/sortableTable.css" />" rel="sortableTable" type="text/css">--%>
     <script src="<c:url value="/resources/script/userDelConfirm.js" />"></script>
     <script src="<c:url value="/resources/script/sorttable.js" />"></script>
+    <%--<script type="text/javascript" src="sorttable.js"></script>--%>
     <title>Users Page</title>
 
     <style type="text/css">
-        th, td {
-            padding: 3px !important;
-        }
-        /* Sortable tables */
-        table.sortable thead {
-            background-color: #333;
-            color: #cccccc;
-            font-weight: bold;
-            cursor: default;
-        }
-        th {
-            font-size: 100%;
-        }
-        table#stripedemo tbody tr:nth-child(2n) td {
-            background: #9a9895;
-        }
-        table#stripedemo tbody tr:nth-child(2n+1) td {
-            background: #dcdad7;
-        }
+        @import "/resources/css/sortableTable.css";
     </style>
+
+
+    <%--<style type="text/css">--%>
+        <%--th, td {--%>
+            <%--padding: 3px !important;--%>
+        <%--}--%>
+        <%--/* Sortable tables */--%>
+        <%--table.sortable thead {--%>
+            <%--background-color: #333;--%>
+            <%--color: #cccccc;--%>
+            <%--font-weight: bold;--%>
+            <%--cursor: default;--%>
+        <%--}--%>
+        <%--th {--%>
+            <%--font-size: 100%;--%>
+        <%--}--%>
+        <%--table#stripedemo tbody tr:nth-child(2n) td {--%>
+            <%--background: #9a9895;--%>
+        <%--}--%>
+        <%--table#stripedemo tbody tr:nth-child(2n+1) td {--%>
+            <%--background: #dcdad7;--%>
+        <%--}--%>
+    <%--</style>--%>
 
 </head>
 <body>
@@ -151,7 +158,7 @@
 
 
 <h1>User List</h1>
-<script type="text/javascript" src="sorttable.js"></script>
+
 
 <c:if test="${!empty listUsers}">
     <table class="sortable" id="stripedemo">

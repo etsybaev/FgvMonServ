@@ -1,10 +1,6 @@
-package com.fgvmonserv.dao.htmlobjects;
+package com.fgvmonserv.dao.htmlobjects_legacy;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
-
-import java.io.IOException;
 
 /**
  * Created with IntelliJ IDEA.

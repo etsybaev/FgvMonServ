@@ -49,13 +49,21 @@
         <property name="userDao" ref="userDao"/>
     </bean>
 
-
     <bean id="userRolesDao" class="com.fgvmonserv.dao.userauth.UserRolesDaoImpl">
         <property name="sessionFactory" ref="hibernate5AnnotatedSessionFactory"/>
     </bean>
     <bean id="userRolesService" class="com.fgvmonserv.service.userauth.UserRolesServiceImpl">
         <property name="userRolesDao" ref="userRolesDao"/>
     </bean>
+
+    <bean id="baseTableDao" class="com.fgvmonserv.dao.BaseTableDaoImpl">
+        <property name="sessionFactory" ref="hibernate5AnnotatedSessionFactory"/>
+    </bean>
+    <bean id="baseTableService" class="com.fgvmonserv.service.BaseTableServiceImpl">
+        <property name="baseTableDao" ref="baseTableDao"/>
+    </bean>
+
+
 
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <property name="maxUploadSize" value="10000000"/>

@@ -17,7 +17,7 @@
 		background-size: cover;
 	}
 
-	div, p {margin:0px; padding:0px;}
+	/*div, p {margin:0px; padding:0px;}*/
 
 	#container {
 		width:100%;

@@ -1,4 +1,4 @@
-package com.fgvmonserv.dao.htmlobjects;
+package com.fgvmonserv.dao.htmlobjects_legacy;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
