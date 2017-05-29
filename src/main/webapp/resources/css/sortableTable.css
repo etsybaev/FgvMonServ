@@ -11,10 +11,10 @@ table.sortable thead {
 th {
     font-size: 100%;
 }
-table#stripedemo tbody tr:nth-child(2n) td {
+table#sortableTable tbody tr:nth-child(2n) td {
     background: #9a9895;
 }
-table#stripedemo tbody tr:nth-child(2n+1) td {
+table#sortableTable tbody tr:nth-child(2n+1) td {
     background: #dcdad7;
 }
 

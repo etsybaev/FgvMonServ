@@ -161,7 +161,7 @@
 
 
 <c:if test="${!empty listUsers}">
-    <table class="sortable" id="stripedemo">
+    <table class="sortable" id="sortableTable">
         <tr>
             <th width="30">ID</th>
             <th width="120">First Name</th>

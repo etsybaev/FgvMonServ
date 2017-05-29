@@ -4,7 +4,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 
     <script src="<c:url value="/resources/script/sorttable.js" />"></script>
-    <link href="<c:url value="/resources/css/sortableTable.css" />" rel="tableStyle">
+    <%--<link href="<c:url value="/resources/css/sortableTable.css" />" rel="tableStyle">--%>
 
 <style type="text/css">
     @import "/resources/css/sortableTable.css";
@@ -15,14 +15,26 @@
 
 <div class="sortableTable">
     <c:if test="${!empty allRecordsList}">
-        <table class="sortable" id="recordsList">
-
+        <table class="sortable" id="sortableTable">
             <tr>
-                <th width="30">Id</th>
-                <th width="120">Bank Name</th>
-                <th width="120">Auction Date</th>
-                <th width="120">Lot Number</th>
-                <th width="120">Admin Comments</th>
+                <th width="10">Id</th>
+                <th width="70">Bank Name</th>
+                <th width="20">Auction Date</th>
+                <th width="20">Lot Number</th>
+                <th width="20">KD Number</th>
+                <th width="20">Start Price</th>
+                <th width="20">URL</th>
+                <th width="20">Property Details</th>
+                <th width="20">Loan Debtor Full Name</th>
+                <th width="20">loan Debtor Phone Number</th>
+                <th width="20">loan Debtor Social Code</th>
+                <th width="20">Details</th>
+                <th width="20">Date of Call</th>
+                <th width="20">Status of Call</th>
+                <th width="20">New Price</th>
+                <th width="20">New Auction Date</th>
+                <th width="20">Auction number</th>
+                <th width="20">Symptom</th>
 
             </tr>
             <c:forEach items="${allRecordsList}" var="allRecordsList">
@@ -34,8 +46,20 @@
                     <td>${allRecordsList.bank}</td>
                     <td>${allRecordsList.auctionDate}</td>
                     <td>${allRecordsList.lotNumber}</td>
-                    <td>${allRecordsList.adminComments}</td>
-
+                    <td>${allRecordsList.kdNumber}</td>
+                    <td>${allRecordsList.startPrice}</td>
+                    <td>${allRecordsList.url}</td>
+                    <td>${allRecordsList.propertyDetails}</td>
+                    <td>${allRecordsList.loanDebtorFullName}</td>
+                    <td>${allRecordsList.loanDebtorPhoneNumber}</td>
+                    <td>${allRecordsList.loanDebtorIdentCode}</td>
+                    <td>${allRecordsList.details}</td>
+                    <td>${allRecordsList.dateOfCall}</td>
+                    <td>${allRecordsList.statusOfCall}</td>
+                    <td>${allRecordsList.newPrice}</td>
+                    <td>${allRecordsList.newAuctionDate}</td>
+                    <td>${allRecordsList.auctionNumber}</td>
+                    <td>${allRecordsList.symptom}</td>
                 </tr>
             </c:forEach>
         </table>
