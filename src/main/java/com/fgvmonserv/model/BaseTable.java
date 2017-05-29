@@ -2,7 +2,9 @@ package com.fgvmonserv.model;
 
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 
 /**
  * Created by ievgenii.tsybaiev on 05.01.2017.
@@ -25,11 +27,13 @@ public class BaseTable {
 //    private UserRoles userRoles;
 
     @Column(name = "auctionDate")
-    private Date auctionDate;
+    private LocalDate auctionDate;
     @Column(name = "lotNumber")
     private String lotNumber;
     @Column(name = "kdNumber")
     private String kdNumber;
+    @Column(name = "aboutAuction")
+    private String aboutAuction;
     @Column(name = "startPrice")
     private String startPrice;
     @Column(name = "url")
@@ -45,17 +49,31 @@ public class BaseTable {
     @Column(name = "details")
     private String details;
     @Column(name = "dateOfCall")
-    private Date dateOfCall;
+    private LocalDate dateOfCall;
     @Column(name = "statusOfCall")
     private String statusOfCall;
     @Column(name = "newPrice")
     private String newPrice;
     @Column(name = "newAuctionDate")
-    private Date newAuctionDate;
+    private LocalDate newAuctionDate;
     @Column(name = "auctionNumber")
     private String auctionNumber;
     @Column(name = "symptom")
     private String symptom;
+
+
+
+    public static BaseTable getShortBaseTableFromCsvLine(String[] lineFromCsv){
+        return new BaseTable()
+                .setBank(lineFromCsv[1])
+                .setAuctionDate(LocalDate.parse(lineFromCsv[2], DateTimeFormatter.ofPattern("dd.MM.yyyy")))
+                .setLotNumber(lineFromCsv[3])
+                .setKdNumber(lineFromCsv[4])
+                .setAboutAuction(lineFromCsv[5])
+                .setStartPrice(lineFromCsv[6])
+                .setUrl(lineFromCsv[7])
+                .setPropertyDetails(lineFromCsv[8]);
+    }
 
     public int getId() {
         return id;
@@ -75,11 +93,11 @@ public class BaseTable {
         return this;
     }
 
-    public Date getAuctionDate() {
+    public LocalDate getAuctionDate() {
         return auctionDate;
     }
 
-    public BaseTable setAuctionDate(Date auctionDate) {
+    public BaseTable setAuctionDate(LocalDate auctionDate) {
         this.auctionDate = auctionDate;
         return this;
     }
@@ -99,6 +117,15 @@ public class BaseTable {
 
     public BaseTable setKdNumber(String kdNumber) {
         this.kdNumber = kdNumber;
+        return this;
+    }
+
+    public String getAboutAuction() {
+        return aboutAuction;
+    }
+
+    public BaseTable setAboutAuction(String aboutAuction) {
+        this.aboutAuction = aboutAuction;
         return this;
     }
 
@@ -165,11 +192,11 @@ public class BaseTable {
         return this;
     }
 
-    public Date getDateOfCall() {
+    public LocalDate getDateOfCall() {
         return dateOfCall;
     }
 
-    public BaseTable setDateOfCall(Date dateOfCall) {
+    public BaseTable setDateOfCall(LocalDate dateOfCall) {
         this.dateOfCall = dateOfCall;
         return this;
     }
@@ -192,11 +219,11 @@ public class BaseTable {
         return this;
     }
 
-    public Date getNewAuctionDate() {
+    public LocalDate getNewAuctionDate() {
         return newAuctionDate;
     }
 
-    public BaseTable setNewAuctionDate(Date newAuctionDate) {
+    public BaseTable setNewAuctionDate(LocalDate newAuctionDate) {
         this.newAuctionDate = newAuctionDate;
         return this;
     }
@@ -232,6 +259,8 @@ public class BaseTable {
             return false;
         if (lotNumber != null ? !lotNumber.equals(baseTable.lotNumber) : baseTable.lotNumber != null) return false;
         if (kdNumber != null ? !kdNumber.equals(baseTable.kdNumber) : baseTable.kdNumber != null) return false;
+        if (aboutAuction != null ? !aboutAuction.equals(baseTable.aboutAuction) : baseTable.aboutAuction != null)
+            return false;
         if (startPrice != null ? !startPrice.equals(baseTable.startPrice) : baseTable.startPrice != null) return false;
         if (url != null ? !url.equals(baseTable.url) : baseTable.url != null) return false;
         if (propertyDetails != null ? !propertyDetails.equals(baseTable.propertyDetails) : baseTable.propertyDetails != null)
@@ -261,6 +290,7 @@ public class BaseTable {
         result = 31 * result + (auctionDate != null ? auctionDate.hashCode() : 0);
         result = 31 * result + (lotNumber != null ? lotNumber.hashCode() : 0);
         result = 31 * result + (kdNumber != null ? kdNumber.hashCode() : 0);
+        result = 31 * result + (aboutAuction != null ? aboutAuction.hashCode() : 0);
         result = 31 * result + (startPrice != null ? startPrice.hashCode() : 0);
         result = 31 * result + (url != null ? url.hashCode() : 0);
         result = 31 * result + (propertyDetails != null ? propertyDetails.hashCode() : 0);
@@ -285,6 +315,7 @@ public class BaseTable {
                 ", auctionDate=" + auctionDate +
                 ", lotNumber='" + lotNumber + '\'' +
                 ", kdNumber='" + kdNumber + '\'' +
+                ", aboutAuction='" + aboutAuction + '\'' +
                 ", startPrice='" + startPrice + '\'' +
                 ", url='" + url + '\'' +
                 ", propertyDetails='" + propertyDetails + '\'' +

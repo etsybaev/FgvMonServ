@@ -2,9 +2,15 @@ package com.fgvmonserv.service;
 
 import com.fgvmonserv.dao.BaseTableDao;
 import com.fgvmonserv.model.BaseTable;
+import com.opencsv.CSVReader;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,5 +39,27 @@ public class BaseTableServiceImpl implements BaseTableService {
     @Transactional
     public List<BaseTable> getAllRecordsList() {
         return this.baseTableDao.getAllRecordsList();
+    }
+
+
+    @Override
+    public List<BaseTable> getShortBaseTableInfoFromCsvFile(CommonsMultipartFile file) {
+        List<BaseTable> resultList = new ArrayList<>();
+        try {
+            // Get the file and save it somewhere
+            byte[] bytes = file.getBytes();
+            //http://opencsv.sourceforge.net/
+            CSVReader reader = new CSVReader(new InputStreamReader(new ByteArrayInputStream(bytes)), ';');
+            List<String[]> csvLines = reader.readAll();
+            //As the first line of CSV document is column titles - need to start from second line, i.e. not from 0, but from 1
+            for(int i = 1; i < csvLines.size(); i++){
+                String[] csvLine = csvLines.get(i);
+                BaseTable shortBaseTableFromCsvLine = BaseTable.getShortBaseTableFromCsvLine(csvLine);
+                resultList.add(shortBaseTableFromCsvLine);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return resultList;
     }
 }

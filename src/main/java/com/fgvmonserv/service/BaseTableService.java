@@ -1,6 +1,7 @@
 package com.fgvmonserv.service;
 
 import com.fgvmonserv.model.BaseTable;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ public interface BaseTableService {
 
     public void addBaseTableRecord();
     public List<BaseTable> getAllRecordsList();
+    public List<BaseTable> getShortBaseTableInfoFromCsvFile(CommonsMultipartFile file);
 
 
 }
