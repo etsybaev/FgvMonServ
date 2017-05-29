@@ -1,5 +1,6 @@
 package com.fgvmonserv.service;
 
+import com.fgvmonserv.BaseTableNamesEnum;
 import com.fgvmonserv.dao.BaseTableDao;
 import com.fgvmonserv.model.BaseTable;
 import com.opencsv.CSVReader;
@@ -10,6 +11,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,5 +63,28 @@ public class BaseTableServiceImpl implements BaseTableService {
             e.printStackTrace();
         }
         return resultList;
+    }
+
+    @Override
+    public List<String[]> getPreparedListOfStringArrayToWriteToCsvFile(List<BaseTable> allRecordsList) {
+        List<String[]> listOfStringArrayToWriteToCsvFile = new ArrayList<>();
+        //Adding columns header names
+        listOfStringArrayToWriteToCsvFile.add(getColumnNamesThatWillBeShownInexportedCsvFile());
+        //Now need to prepare and add values
+        allRecordsList.forEach(baseTable -> {
+            listOfStringArrayToWriteToCsvFile.add(baseTable.getValuesAsStringArray());
+        });
+
+        return listOfStringArrayToWriteToCsvFile;
+    }
+
+    private String[] getColumnNamesThatWillBeShownInexportedCsvFile(){
+        Field[] declaredFields = BaseTable.class.getDeclaredFields();
+        String[] declaredFieldsAsString =  new String[declaredFields.length];
+        //Get all declared variables in BaseTable class and find appropriate values in Enum.
+        for(int i = 0; i < declaredFields.length; i++){
+            declaredFieldsAsString[i] = BaseTableNamesEnum.getViewNameFromDbName(declaredFields[i].getName());
+        }
+        return declaredFieldsAsString;
     }
 }

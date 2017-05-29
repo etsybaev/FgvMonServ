@@ -16,7 +16,7 @@ public class BaseTable {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @Column(name = "bank")
     private String bank;
@@ -61,8 +61,6 @@ public class BaseTable {
     @Column(name = "symptom")
     private String symptom;
 
-
-
     public static BaseTable getShortBaseTableFromCsvLine(String[] lineFromCsv){
         return new BaseTable()
                 .setBank(lineFromCsv[1])
@@ -75,11 +73,36 @@ public class BaseTable {
                 .setPropertyDetails(lineFromCsv[8]);
     }
 
-    public int getId() {
+    //I know this is harcode. Will re0write it later
+    public String[] getValuesAsStringArray(){
+        String[] objectAsArray = new String[19];
+        objectAsArray[0] = getId().toString() ;
+        objectAsArray[1] = getBank();
+        objectAsArray[2] = getAuctionDate() == null ? "-" : getAuctionDate().toString();
+        objectAsArray[3] = getLotNumber();
+        objectAsArray[4] = getKdNumber();
+        objectAsArray[5] = getAboutAuction();
+        objectAsArray[6] = getStartPrice();
+        objectAsArray[7] = getUrl();
+        objectAsArray[8] = getPropertyDetails();
+        objectAsArray[9] = getLoanDebtorFullName();
+        objectAsArray[10] = getLoanDebtorPhoneNumber();
+        objectAsArray[11] = getLoanDebtorIdentCode();
+        objectAsArray[12] = getDetails();
+        objectAsArray[13] = getDateOfCall() == null ? "-" : getDateOfCall().toString();
+        objectAsArray[14] = getStatusOfCall();
+        objectAsArray[15] = getNewPrice();
+        objectAsArray[16] = getNewAuctionDate() == null ? "-" : getNewAuctionDate().toString();
+        objectAsArray[17] = getAuctionNumber();
+        objectAsArray[18] = getSymptom();
+        return objectAsArray;
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public BaseTable setId(int id) {
+    public BaseTable setId(Integer id) {
         this.id = id;
         return this;
     }

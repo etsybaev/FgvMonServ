@@ -3,10 +3,9 @@ package com.fgvmonserv.controller;
 import com.fgvmonserv.model.BaseTable;
 import com.fgvmonserv.model.userauth.User;
 import com.fgvmonserv.service.BaseTableService;
-import com.opencsv.CSVReader;
+import com.opencsv.CSVWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.core.io.ByteArrayResource;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,6 +40,7 @@ public class ImportExportController {
 
     //Save the uploaded file to this folder
     private static String UPLOADED_FOLDER = "/home/ievgeniit/tempTomcatUpload/";
+    private static String fileName = "DataBase.csv";
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/importexport", method = RequestMethod.GET)
@@ -48,7 +48,6 @@ public class ImportExportController {
         model.addAttribute("user", new User());
         return "importexport/files";
     }
-
 
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -68,13 +67,14 @@ public class ImportExportController {
         return "redirect:/importexport/uploadStatus";
     }
 
+    @PreAuthorize("isFullyAuthenticated()")
     @GetMapping("/importexport/uploadStatus")
     public String uploadStatus() {
         return "/importexport/uploadStatus";
     }
 
 
-
+    @PreAuthorize("isFullyAuthenticated()")
     @RequestMapping("/importexport/download")
     public void downloadPDFResource( HttpServletRequest request,
                                      HttpServletResponse response){
@@ -88,15 +88,27 @@ public class ImportExportController {
         //Here should be some logic of fetching data from DB and file creation.
 
 
-        //Authorized user will download the file
-        String fileName = "1pr.csv";
+        List<BaseTable> allRecordsList = this.baseTableService.getAllRecordsList();
 
-        Path file = Paths.get(UPLOADED_FOLDER, fileName);
+        List<String[]> preparedListOfStringArrayToWriteToCsvFile = this.baseTableService
+                .getPreparedListOfStringArrayToWriteToCsvFile(allRecordsList);
+
+        CSVWriter writer = null;
+        String tmpFilePath = UPLOADED_FOLDER + fileName + System.currentTimeMillis();
+        File tmpFile = new File(tmpFilePath);
+        try {
+            writer = new CSVWriter(new FileWriter(tmpFile), ';');
+            writer.writeAll(preparedListOfStringArrayToWriteToCsvFile);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Path file = Paths.get(tmpFilePath);
         if (Files.exists(file)){
             response.setContentType("text/csv");
             response.addHeader("Content-Disposition", "attachment; filename=" + fileName);
-            try
-            {
+            try{
                 Files.copy(file, response.getOutputStream());
                 response.getOutputStream().flush();
             }
@@ -104,6 +116,7 @@ public class ImportExportController {
                 ex.printStackTrace();
             }
         }
+        tmpFile.delete();
     }
 
 
