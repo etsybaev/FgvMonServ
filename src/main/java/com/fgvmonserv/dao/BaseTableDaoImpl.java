@@ -22,8 +22,20 @@ public class BaseTableDaoImpl implements BaseTableDao {
 
 
     @Override
-    public void addBaseTableRecord() {
-        throw new RuntimeException("Method  implemented");
+    public void addBaseTableRecord(BaseTable baseTable) {
+        System.out.println("Adding BaseTable record " + baseTable);
+        Session session = this.sessionFactory.getCurrentSession();
+        session.persist(baseTable);
+        System.out.println("Record has been added");
+    }
+
+
+    @Override
+    public void addBaseTableRecordsList(List<BaseTable> baseTablesList) {
+        System.out.println("Adding BaseTable record " + baseTablesList);
+        Session session = this.sessionFactory.getCurrentSession();
+        session.persist(baseTablesList);
+        System.out.println("Record has been added");
     }
 
     @Override

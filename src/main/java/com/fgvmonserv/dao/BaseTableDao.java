@@ -9,7 +9,8 @@ import java.util.List;
  */
 public interface BaseTableDao {
 
-    public void addBaseTableRecord();
+    public void addBaseTableRecord(BaseTable baseTable);
+    public void addBaseTableRecordsList(List<BaseTable> baseTablesList);
     public List<BaseTable> getAllRecordsList();
 
 
