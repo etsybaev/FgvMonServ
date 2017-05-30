@@ -6,29 +6,29 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 
-<style type="text/css">
+<%--<style type="text/css">--%>
 
-	.intro-header {
-		padding-top: 50px; /* If you're making other pages, make sure there is 50px of padding to make sure the navbar doesn't overlap content! */
-		padding-bottom: 50px;
-		text-align: center;
-		color: #f8f8f8;
-		background: url(/resources/img/intro-bg.jpg) no-repeat center center;
-		background-size: cover;
-	}
+	<%--.intro-header {--%>
+		<%--padding-top: 50px; /* If you're making other pages, make sure there is 50px of padding to make sure the navbar doesn't overlap content! */--%>
+		<%--padding-bottom: 50px;--%>
+		<%--text-align: center;--%>
+		<%--color: #f8f8f8;--%>
+		<%--background: url(/resources/img/intro-bg.jpg) no-repeat center center;--%>
+		<%--background-size: cover;--%>
+	<%--}--%>
 
-	/*div, p {margin:0px; padding:0px;}*/
+	<%--div, p {margin:0px; padding:0px;}--%>
 
-	#container {
-		width:100%;
-		height:75%;
-		position:fixed;
-	}
-	#top {height:5%;}
-	#middle {height:95%;}
+	<%--#container {--%>
+		<%--width:100%;--%>
+		<%--height:75%;--%>
+		<%--position:fixed;--%>
+	<%--}--%>
+	<%--#top {height:5%;}--%>
+	<%--#middle {height:95%;}--%>
 
-	button {width:100%;height:25%;}
-</style>
+	<%--button {width:100%;height:25%;}--%>
+<%--</style>--%>
 
 <html>
 <head>
@@ -37,7 +37,7 @@
 </head>
 <body>
 
-	<div id="container">
+	<div id="container"  style="overflow-scrolling:auto;">
 		<div id="top">
 			<%--If Admin user -  show admin panel link--%>
 			<c:if test="${pageContext.request.isUserInRole('ROLE_ADMIN') == true}">
