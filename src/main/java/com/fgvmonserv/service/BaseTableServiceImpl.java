@@ -40,8 +40,15 @@ public class BaseTableServiceImpl implements BaseTableService {
 
     @Override
     @Transactional
-    public void addBaseTableRecordsList(List<BaseTable> baseTablesList){
-        this.baseTableDao.addBaseTableRecordsList(baseTablesList);
+    public void updateBaseTableRecord(BaseTable baseTablesList) {
+        this.baseTableDao.updateBaseTableRecord(baseTablesList);
+    }
+
+
+    @Override
+    @Transactional
+    public BaseTable getRecordById(int id) {
+        return this.baseTableDao.getRecordById(id);
     }
 
     @Override
@@ -70,6 +77,12 @@ public class BaseTableServiceImpl implements BaseTableService {
             e.printStackTrace();
         }
         return resultList;
+    }
+
+    @Override
+    @Transactional
+    public void removeBaseTableRecord(int id) {
+        this.baseTableDao.removeBaseTableRecord(id);
     }
 
     @Override

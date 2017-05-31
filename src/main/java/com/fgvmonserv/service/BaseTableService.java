@@ -12,7 +12,9 @@ import java.util.List;
 public interface BaseTableService {
 
     public void addBaseTableRecord(BaseTable baseTable);
-    public void addBaseTableRecordsList(List<BaseTable> baseTablesList);
+    public void updateBaseTableRecord(BaseTable baseTablesList);
+    public BaseTable getRecordById(int id);
+    public void removeBaseTableRecord(int id);
     public List<BaseTable> getAllRecordsList();
     public List<BaseTable> getShortBaseTableInfoFromCsvFile(CommonsMultipartFile file);
     public List<String[]> getPreparedListOfStringArrayToWriteToCsvFile(List<BaseTable> allRecordsList);

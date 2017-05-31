@@ -76,10 +76,10 @@ public class ImportExportController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value="/importexport/fileupload", method=RequestMethod.GET)
-    public String processUploadGet(){//@ModelAttribute("parsedData") BaseTableListHolder baseTableHolder, Model redirectAttributes) {
+    public String processUploadGet(@ModelAttribute("parsedData") BaseTableListHolder baseTableHolder) {
 
         System.out.println("We are in fileUpload GET method, ");
-
+        baseTableHolder.getBaseTableList().forEach(record -> this.baseTableService.addBaseTableRecord(record));
         return "/importexport/files";
     }
 

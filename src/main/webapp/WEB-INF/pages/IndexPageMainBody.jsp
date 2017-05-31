@@ -1,8 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
-
+<%--<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>--%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" %>
     <script src="<c:url value="/resources/script/sorttable.js" />"></script>
     <%--<link href="<c:url value="/resources/css/sortableTable.css" />" rel="tableStyle">--%>
 
@@ -39,10 +39,8 @@
             </tr>
             <c:forEach items="${allRecordsList}" var="allRecordsList">
                 <tr>
-                        <%--<td>${user.id}</td>--%>
-                        <%--additional code for Id param make its value a link to entrance history details--%>
-                        <%--<td><a target="_blank" href="/admin/userdata/${user.id}" >${user.id}</a></td>--%>
-                    <td>${allRecordsList.id}</td>
+                    <%--<td>${allRecordsList.id}</td>--%>
+                    <td><a target="_blank" href="/basetableconroller/basetablerecorddetails/${allRecordsList.id}" >${allRecordsList.id}</a></td>
                     <td>${allRecordsList.bank}</td>
                     <td>${allRecordsList.auctionDate}</td>
                     <td>${allRecordsList.lotNumber}</td>

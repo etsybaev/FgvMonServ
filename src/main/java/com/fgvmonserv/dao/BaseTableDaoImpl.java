@@ -29,13 +29,20 @@ public class BaseTableDaoImpl implements BaseTableDao {
         System.out.println("Record has been added");
     }
 
+    @Override
+    public void updateBaseTableRecord(BaseTable baseTable) {
+        System.out.println("Updating BaseTable record " + baseTable);
+        Session session = this.sessionFactory.getCurrentSession();
+        session.update(baseTable);
+        System.out.println("Record has been updated");
+    }
 
     @Override
-    public void addBaseTableRecordsList(List<BaseTable> baseTablesList) {
-        System.out.println("Adding BaseTable record " + baseTablesList);
-        Session session = this.sessionFactory.getCurrentSession();
-        session.persist(baseTablesList);
-        System.out.println("Record has been added");
+    public BaseTable getRecordById(int id) {
+        System.out.println("Getting BaseTable record with id = " + id);
+        BaseTable baseTable = this.sessionFactory.getCurrentSession().load(BaseTable.class, id);
+        System.out.println("Got record " + baseTable);
+        return baseTable;
     }
 
     @Override
@@ -47,5 +54,18 @@ public class BaseTableDaoImpl implements BaseTableDao {
             System.out.println("Got user " + baseTable);
         }
         return list;
+    }
+
+    @Override
+    public void removeBaseTableRecord(int id) {
+        System.out.println("Removing BaseTable record with id = " + id);
+        Session session = this.sessionFactory.getCurrentSession();
+        BaseTable baseTable = session.load(BaseTable.class, id);
+        if(baseTable != null){
+            session.delete(baseTable);
+            System.out.println("Record has been removed");
+        }else {
+            System.out.println("WARNING! Record has not been found in DB!");
+        }
     }
 }

@@ -30,6 +30,32 @@ INSERT INTO `Monserv`.`User` (`firstName`, `lastName`, `contactPhoneNumber`, `pa
 
 
 
+--------------------------------------------------------------------------------------------
+CREATE TABLE `Monserv`.`BaseTable` (
+  `id` INT(11) NOT NULL,
+  `bank` VARCHAR(45) NULL,
+  `auctionDate` DATE NULL,
+  `lotNumber` VARCHAR(45) NULL,
+  `kdNumber` VARCHAR(45) NULL,
+  `aboutAuction` TEXT NULL,
+  `startPrice` VARCHAR(45) NULL,
+  `url` VARCHAR(45) NULL,
+  `propertyDetails` MEDIUMTEXT NULL,
+  `loanDebtorFullName` VARCHAR(45) NULL,
+  `loanDebtorPhoneNumber` VARCHAR(45) NULL,
+  `loanDebtorIdentCode` VARCHAR(45) NULL,
+  `details` MEDIUMTEXT NULL,
+  `dateOfCall` DATE NULL,
+  `statusOfCall` VARCHAR(45) NULL,
+  `newPrice` VARCHAR(45) NULL,
+  `newAuctionDate` DATE NULL,
+  `auctionNumber` VARCHAR(45) NULL,
+  `symptom` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`))
+DEFAULT CHARACTER SET = utf8;
+
+
+
 ------------------------------------------------------------------------------------------
 
 CREATE TABLE `Monserv`.`Bank` (
