@@ -1,6 +1,8 @@
 package com.fgvmonserv.model;
 
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -26,6 +28,7 @@ public class BaseTable {
 //    @NotFound(action = NotFoundAction.IGNORE)
 //    private UserRoles userRoles;
 
+    @DateTimeFormat(pattern="dd.MM.yyyy")
     @Column(name = "auctionDate")
     private LocalDate auctionDate;
     @Column(name = "lotNumber")
@@ -48,12 +51,14 @@ public class BaseTable {
     private String loanDebtorIdentCode;
     @Column(name = "details")
     private String details;
+    @DateTimeFormat(pattern="dd.MM.yyyy")
     @Column(name = "dateOfCall")
     private LocalDate dateOfCall;
     @Column(name = "statusOfCall")
     private String statusOfCall;
     @Column(name = "newPrice")
     private String newPrice;
+    @DateTimeFormat(pattern="dd.MM.yyyy")
     @Column(name = "newAuctionDate")
     private LocalDate newAuctionDate;
     @Column(name = "auctionNumber")
