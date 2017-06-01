@@ -35,7 +35,7 @@ public class BaseTableController {
         return "basetable/basetablerecorddetails";
     }
 
-    @RequestMapping("/removeuser/{id}")
+    @RequestMapping("/removebasetablerecord/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String removeBaseTableRecord(@PathVariable("id") int id){
         this.baseTableService.removeBaseTableRecord(id);
