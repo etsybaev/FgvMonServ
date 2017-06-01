@@ -40,7 +40,7 @@
             <c:forEach items="${allRecordsList}" var="allRecordsList">
                 <tr>
                     <%--<td>${allRecordsList.id}</td>--%>
-                    <td><a target="_blank" href="/basetableconroller/basetablerecorddetails/${allRecordsList.id}" >${allRecordsList.id}</a></td>
+                    <td><a href="/basetableconroller/basetablerecorddetails/${allRecordsList.id}" >${allRecordsList.id}</a></td>
                     <td>${allRecordsList.bank}</td>
                     <td>${allRecordsList.auctionDate}</td>
                     <td>${allRecordsList.lotNumber}</td>

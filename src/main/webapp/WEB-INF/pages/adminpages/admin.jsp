@@ -8,7 +8,7 @@
 <html>
 <head>
     <%--<link href="<c:url value="/resources/css/sortableTable.css" />" rel="sortableTable" type="text/css">--%>
-    <script src="<c:url value="/resources/script/userDelConfirm.js" />"></script>
+    <script src="<c:url value="/resources/script/delConfirm.js" />"></script>
     <script src="<c:url value="/resources/script/sorttable.js" />"></script>
     <%--<script type="text/javascript" src="sorttable.js"></script>--%>
     <title>Users Page</title>
@@ -186,7 +186,7 @@
                 <td>${user.userRoles.role}</td>
 
                 <td><a href="<c:url value='/admin/edituser/${user.id}'/>">Edit</a></td>
-                <td><a href="javascript:deleteUser.deleteBook(${user.id})">Delete</a></td>
+                <td><a href="javascript:deleteScript.deleteUser(${user.id})">Delete</a></td>
                 <td><a target="_blank" href="<c:url value='/admin/userdata/${user.id}'/>">See user details</a></td>
             </tr>
         </c:forEach>
