@@ -42,7 +42,7 @@
                     <%--<td>${allRecordsList.id}</td>--%>
                     <td><a target="_blank" href="/basetableconroller/basetablerecorddetails/${allRecordsList.id}" >${allRecordsList.id}</a></td>
                     <td>${allRecordsList.bank}</td>
-                    <td>${allRecordsList.auctionDate}</td>
+                    <td>${allRecordsList.auctionDate.toLocalDate()}</td>
                     <td>${allRecordsList.lotNumber}</td>
                     <td>${allRecordsList.kdNumber}</td>
                     <td>${allRecordsList.startPrice}</td>

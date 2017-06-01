@@ -5,6 +5,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 
@@ -28,9 +29,11 @@ public class BaseTable {
 //    @NotFound(action = NotFoundAction.IGNORE)
 //    private UserRoles userRoles;
 
-    @DateTimeFormat(pattern="dd.MM.yyyy")
+//    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+//    @DateTimeFormat(pattern="dd.MM.yyyy")
+    @DateTimeFormat(pattern="dd.MM.yyyy HH:mm")
     @Column(name = "auctionDate")
-    private LocalDate auctionDate;
+    private LocalDateTime auctionDate;
     @Column(name = "lotNumber")
     private String lotNumber;
     @Column(name = "kdNumber")
@@ -51,14 +54,16 @@ public class BaseTable {
     private String loanDebtorIdentCode;
     @Column(name = "details")
     private String details;
-    @DateTimeFormat(pattern="dd.MM.yyyy")
+//    @DateTimeFormat(pattern="dd.MM.yyyy")
+    @DateTimeFormat(pattern="dd.MM.yyyy HH:mm")
     @Column(name = "dateOfCall")
     private LocalDate dateOfCall;
     @Column(name = "statusOfCall")
     private String statusOfCall;
     @Column(name = "newPrice")
     private String newPrice;
-    @DateTimeFormat(pattern="dd.MM.yyyy")
+//    @DateTimeFormat(pattern="dd.MM.yyyy")
+    @DateTimeFormat(pattern="dd.MM.yyyy HH:mm")
     @Column(name = "newAuctionDate")
     private LocalDate newAuctionDate;
     @Column(name = "auctionNumber")
@@ -69,7 +74,7 @@ public class BaseTable {
     public static BaseTable getShortBaseTableFromCsvLine(String[] lineFromCsv){
         return new BaseTable()
                 .setBank(lineFromCsv[1])
-                .setAuctionDate(LocalDate.parse(lineFromCsv[2], DateTimeFormatter.ofPattern("dd.MM.yyyy")))
+                .setAuctionDate(LocalDateTime.parse(lineFromCsv[2], DateTimeFormatter.ofPattern("dd.MM.yyyy")))
                 .setLotNumber(lineFromCsv[3])
                 .setKdNumber(lineFromCsv[4])
                 .setAboutAuction(lineFromCsv[5])
@@ -121,11 +126,11 @@ public class BaseTable {
         return this;
     }
 
-    public LocalDate getAuctionDate() {
+    public LocalDateTime getAuctionDate() {
         return auctionDate;
     }
 
-    public BaseTable setAuctionDate(LocalDate auctionDate) {
+    public BaseTable setAuctionDate(LocalDateTime auctionDate) {
         this.auctionDate = auctionDate;
         return this;
     }
