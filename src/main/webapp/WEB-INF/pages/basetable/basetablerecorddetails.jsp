@@ -18,10 +18,18 @@
         <%--<form action="/admin">--%>
             <%--<input type="submit" value="Admin panel">--%>
         <%--</form>--%>
-        <td><a href="javascript:deleteScript.deleteBaseTableRecord(${baseTableRecord.id})">Delete</a></td>
+        <td><button type="button" onclick="javascript:deleteScript.deleteBaseTableRecord(${baseTableRecord.id})">Delete this record</button></td>
+        <%--<td><a href="javascript:deleteScript.deleteBaseTableRecord(${baseTableRecord.id})">Delete</a></td>--%>
     </c:if>
 
     <h1>Details:</h1>
+
+    <c:if test="${!empty message}">
+        <h3 style="color: red">
+            ${message}
+        </h3>
+    </c:if>
+
 
     <c:url var="addAction" value="/basetableconroller/editbasetablerecord"/>
 

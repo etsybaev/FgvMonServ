@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  * Created by ievgenii.tsybaiev on 09.01.2017.
@@ -44,10 +45,9 @@ public class BaseTableController {
 
     @RequestMapping(value = "/editbasetablerecord", method = RequestMethod.POST)
     @PreAuthorize("isFullyAuthenticated()")
-    public String addUser(@ModelAttribute("baseTableRecord") BaseTable baseTable){
-        System.out.println("Updating record " + baseTable.toString());
+    public String addUser(@ModelAttribute("baseTableRecord") BaseTable baseTable, RedirectAttributes redirectAttributes){
         this.baseTableService.updateBaseTableRecord(baseTable);
-//        return "redirect:/";
+        redirectAttributes.addFlashAttribute("message", "Record has been successfully updated!");
         return "redirect:/basetableconroller/basetablerecorddetails/" + baseTable.getId();
     }
 }
