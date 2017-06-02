@@ -1,4 +1,4 @@
-package com.fgvmonserv;
+package com.fgvmonserv.converter;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;

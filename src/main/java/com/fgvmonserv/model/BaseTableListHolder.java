@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fgvmonserv.Utils;
+import com.fgvmonserv.converter.UrlEncoderDecoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,16 +53,5 @@ public class BaseTableListHolder{
         return "BaseTableListHolder{" +
                 "baseTableList=" + baseTableList +
                 '}';
-    }
-
-    public String toJson(){
-        ObjectMapper objectMapper = new ObjectMapper();
-        String objectAsJsonString = null;
-        try {
-            objectAsJsonString = objectMapper.writeValueAsString(this);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return Utils.encodeToUrlUtf8(objectAsJsonString);
     }
 }

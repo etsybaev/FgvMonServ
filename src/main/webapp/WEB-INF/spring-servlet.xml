@@ -63,6 +63,9 @@
         <property name="baseTableDao" ref="baseTableDao"/>
     </bean>
 
+    <bean id="jsonConverter" class="com.fgvmonserv.converter.JsonConverter" />
+    <bean id="urlEncoderDecoder" class="com.fgvmonserv.converter.UrlEncoderDecoder" />
+    <bean id="csvConverter" class="com.fgvmonserv.converter.CsvConverter" />
 
 
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">

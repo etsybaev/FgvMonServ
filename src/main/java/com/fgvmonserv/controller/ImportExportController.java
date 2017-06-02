@@ -1,7 +1,8 @@
 package com.fgvmonserv.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fgvmonserv.Utils;
+import com.fgvmonserv.converter.CsvConverter;
+import com.fgvmonserv.converter.JsonConverter;
+import com.fgvmonserv.converter.UrlEncoderDecoder;
 import com.fgvmonserv.model.BaseTable;
 import com.fgvmonserv.model.BaseTableListHolder;
 import com.fgvmonserv.model.userauth.User;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
@@ -25,15 +25,18 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-/**
- * Created by ievgenii.tsybaiev on 09.01.2017.
- */
 
 @Controller
 public class ImportExportController {
 
+    //Save the uploaded file to this folder
+    private static String UPLOADED_FOLDER = "/home/ievgeniit/tempTomcatUpload/";
+    private static String fileName = "DataBase.csv";
 
     private BaseTableService baseTableService;
+    private JsonConverter jsonConverter ;
+    private UrlEncoderDecoder urlEncoderDecoder;
+    private CsvConverter csvConverter;
 
     @Autowired(required = true)
     @Qualifier(value = "baseTableService")
@@ -42,9 +45,26 @@ public class ImportExportController {
         return this;
     }
 
-    //Save the uploaded file to this folder
-    private static String UPLOADED_FOLDER = "/home/ievgeniit/tempTomcatUpload/";
-    private static String fileName = "DataBase.csv";
+    @Autowired(required = true)
+    @Qualifier(value = "jsonConverter")
+    public ImportExportController setJsonConverter(JsonConverter jsonConverter) {
+        this.jsonConverter = jsonConverter;
+        return this;
+    }
+
+    @Autowired(required = true)
+    @Qualifier(value = "urlEncoderDecoder")
+    private ImportExportController setUrlEncoderDecoder(UrlEncoderDecoder urlEncoderDecoder){
+        this.urlEncoderDecoder = urlEncoderDecoder;
+        return this;
+    }
+
+    @Autowired(required = true)
+    @Qualifier(value = "csvConverter")
+    public ImportExportController setCsvConverter(CsvConverter csvConverter) {
+        this.csvConverter = csvConverter;
+        return this;
+    }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/importexport", method = RequestMethod.GET)
@@ -53,25 +73,24 @@ public class ImportExportController {
         return "importexport/files";
     }
 
-
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value="/importexport/fileupload", method=RequestMethod.POST)
     public String processUpload(@RequestParam CommonsMultipartFile file, RedirectAttributes redirectAttributes) {
-
         if (file.isEmpty()) {
             redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
             return "redirect:/importexport/fileupload";
         }
 
-        List<BaseTable> shortBaseTableInfoFromCsvFile = this.baseTableService.getShortBaseTableInfoFromCsvFile(file);
+        List<BaseTable> shortBaseTableInfoFromCsvFile = csvConverter.getShortBaseTableInfoFromCsvFile(file);
         BaseTableListHolder baseTableListHolder = new BaseTableListHolder();
         baseTableListHolder.getBaseTableList().addAll(shortBaseTableInfoFromCsvFile);
 
         redirectAttributes.addFlashAttribute("message", "Please check the records to be uploaded." +
-                " \n If ot looks good please press on Confirm button below. Otherwise fix your CSV file and try again. ");
+                " \n If it looks good please press on Confirm button below. Otherwise fix your CSV file and try again. ");
 
         redirectAttributes.addFlashAttribute("parsedData", baseTableListHolder);
-        redirectAttributes.addFlashAttribute("jsonData", baseTableListHolder.toJson());
+        redirectAttributes.addFlashAttribute("jsonData",
+                urlEncoderDecoder.encodeToUrlUtf8((jsonConverter.convertToJson(baseTableListHolder))));
         return "redirect:/importexport/fileupload";
     }
 
@@ -85,17 +104,10 @@ public class ImportExportController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/importexport/doAddRecords", method=RequestMethod.POST)
-    public String addUser(HttpServletRequest request, ServletRequest rq, @ModelAttribute("data") String baseTableHolder, RedirectAttributes redirectAttributes){
-//
-        String s = Utils.decodeFromUrlUtf8(baseTableHolder);
-        ObjectMapper objectMapper = new ObjectMapper();
-
-        BaseTableListHolder baseTableListHolder = null;
-        try {
-            baseTableListHolder = objectMapper.readValue(s, BaseTableListHolder.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public String addUser(@ModelAttribute("data") String baseTableHolder, RedirectAttributes redirectAttributes){
+        String s = urlEncoderDecoder.decodeFromUrlUtf8(baseTableHolder);
+        BaseTableListHolder baseTableListHolder = jsonConverter.convertJsonToObject(s,
+                BaseTableListHolder.class, false);
 
         baseTableListHolder.getBaseTableList().forEach(record -> this.baseTableService.addBaseTableRecord(record));
         redirectAttributes.addFlashAttribute("message", "All records have been added to database");
@@ -105,8 +117,7 @@ public class ImportExportController {
 
     @PreAuthorize("isFullyAuthenticated()")
     @RequestMapping("/importexport/download")
-    public void downloadPDFResource( HttpServletRequest request,
-                                     HttpServletResponse response){
+    public void downloadPDFResource( HttpServletRequest request, HttpServletResponse response){
 
 
         //For filter param some oject may be used, ex:
@@ -119,7 +130,7 @@ public class ImportExportController {
 
         List<BaseTable> allRecordsList = this.baseTableService.getAllRecordsList();
 
-        List<String[]> preparedListOfStringArrayToWriteToCsvFile = this.baseTableService
+        List<String[]> preparedListOfStringArrayToWriteToCsvFile = csvConverter
                 .getPreparedListOfStringArrayToWriteToCsvFile(allRecordsList);
 
         CSVWriter writer = null;
@@ -147,44 +158,4 @@ public class ImportExportController {
         }
         tmpFile.delete();
     }
-
-
-
-
-
-
-
-
-
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
-//    @RequestMapping(value="/importexport/fileupload", method=RequestMethod.POST)
-//    public String processUpload(@RequestParam CommonsMultipartFile file, RedirectAttributes redirectAttributes) {
-//
-//        if (file.isEmpty()) {
-//            redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
-//            return "redirect:/importexport/uploadStatus";
-//        }
-//        try {
-//            // Get the file and save it somewhere
-//            byte[] bytes = file.getBytes();
-//            Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
-//            Files.write(path, bytes);
-//
-//            redirectAttributes.addFlashAttribute("message",
-//                    "You successfully uploaded '" + file.getOriginalFilename() + "'");
-//
-//            //http://opencsv.sourceforge.net/
-//            CSVReader reader = new CSVReader(new FileReader(UPLOADED_FOLDER + file.getOriginalFilename()), ';');
-//            String [] line;
-//            while ((line = reader.readNext()) != null) {
-//                System.out.println("AAAA " + line[0] + "   " + line[1] + "    etc...");
-//            }
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return "redirect:/importexport/uploadStatus";
-//    }
-
 }

@@ -1,4 +1,4 @@
-package com.fgvmonserv;
+package com.fgvmonserv.converter;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -7,9 +7,9 @@ import java.net.URLEncoder;
 /**
  * Created by ievgeniit on 02.06.17.
  */
-public class Utils {
+public class UrlEncoderDecoder {
 
-    public static String encodeToUrlUtf8(String inputString) {
+    public String encodeToUrlUtf8(String inputString) {
         try {
             return URLEncoder.encode(inputString, "UTF-8");
         } catch (UnsupportedEncodingException e) {
@@ -17,14 +17,11 @@ public class Utils {
         }
     }
 
-
-    public static String decodeFromUrlUtf8(String inputString) {
+    public String decodeFromUrlUtf8(String inputString) {
         try {
             return URLDecoder.decode(inputString, "UTF-8");
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException("Was not able to decode string '" + inputString + "' with UTF-8 format.");
         }
     }
-
-
 }

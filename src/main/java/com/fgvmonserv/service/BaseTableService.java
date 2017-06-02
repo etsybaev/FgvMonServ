@@ -16,8 +16,5 @@ public interface BaseTableService {
     public BaseTable getRecordById(int id);
     public void removeBaseTableRecord(int id);
     public List<BaseTable> getAllRecordsList();
-    public List<BaseTable> getShortBaseTableInfoFromCsvFile(CommonsMultipartFile file);
-    public List<String[]> getPreparedListOfStringArrayToWriteToCsvFile(List<BaseTable> allRecordsList);
-
 
 }
