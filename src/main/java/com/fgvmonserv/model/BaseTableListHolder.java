@@ -1,20 +1,33 @@
 package com.fgvmonserv.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fgvmonserv.Utils;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by ievgeniit on 29.05.17.
  */
+@JsonInclude(JsonInclude.Include.ALWAYS)
+@JsonPropertyOrder({
+        "baseTableList"
+})
 
-public class BaseTableListHolder {
+public class BaseTableListHolder{
 
+    @JsonProperty("baseTableList")
     private List<BaseTable> baseTableList = new ArrayList<>();
 
+    @JsonProperty("baseTableList")
     public List<BaseTable> getBaseTableList() {
         return baseTableList;
     }
 
+    @JsonProperty("baseTableList")
     public BaseTableListHolder setBaseTableList(List<BaseTable> baseTableList) {
         this.baseTableList = baseTableList;
         return this;
@@ -40,5 +53,16 @@ public class BaseTableListHolder {
         return "BaseTableListHolder{" +
                 "baseTableList=" + baseTableList +
                 '}';
+    }
+
+    public String toJson(){
+        ObjectMapper objectMapper = new ObjectMapper();
+        String objectAsJsonString = null;
+        try {
+            objectAsJsonString = objectMapper.writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return Utils.encodeToUrlUtf8(objectAsJsonString);
     }
 }

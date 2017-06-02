@@ -1,6 +1,7 @@
 
 
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%--<%@ page contentType="text/html;charset=UTF-8" language="java" %>--%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -59,7 +60,7 @@
             </table>
             <p>
             <form action="/importexport/doAddRecords" style="text-align: center;" method="post" modelAttribute="parsedData" enctype="application/x-www-form-urlencoded">
-                <input type="hidden" value="${parsedData}" name="data">
+                <input type="hidden" value="${jsonData}" name="data">
                 <input type="submit" value="Confirm">
             </form>
             </p>

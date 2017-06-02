@@ -1,5 +1,7 @@
 package com.fgvmonserv.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fgvmonserv.Utils;
 import com.fgvmonserv.model.BaseTable;
 import com.fgvmonserv.model.BaseTableListHolder;
 import com.fgvmonserv.model.userauth.User;
@@ -14,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -70,6 +71,7 @@ public class ImportExportController {
                 " \n If ot looks good please press on Confirm button below. Otherwise fix your CSV file and try again. ");
 
         redirectAttributes.addFlashAttribute("parsedData", baseTableListHolder);
+        redirectAttributes.addFlashAttribute("jsonData", baseTableListHolder.toJson());
         return "redirect:/importexport/fileupload";
     }
 
@@ -77,19 +79,25 @@ public class ImportExportController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value="/importexport/fileupload", method=RequestMethod.GET)
     public String processUploadGet(@ModelAttribute("parsedData") BaseTableListHolder baseTableHolder) {
-
-        System.out.println("We are in fileUpload GET method, ");
-        baseTableHolder.getBaseTableList().forEach(record -> this.baseTableService.addBaseTableRecord(record));
         return "/importexport/files";
     }
 
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @RequestMapping(value = "/importexport/doAddRecords", method=RequestMethod.POST, consumes = "application/x-www-form-urlencoded")
-    public String addUser(ServletRequest rq, @ModelAttribute("data") BaseTableListHolder baseTableHolder, RedirectAttributes redirectAttributes){
+    @RequestMapping(value = "/importexport/doAddRecords", method=RequestMethod.POST)
+    public String addUser(HttpServletRequest request, ServletRequest rq, @ModelAttribute("data") String baseTableHolder, RedirectAttributes redirectAttributes){
+//
+        String s = Utils.decodeFromUrlUtf8(baseTableHolder);
+        ObjectMapper objectMapper = new ObjectMapper();
 
-        System.out.println("aaaa" + baseTableHolder);
+        BaseTableListHolder baseTableListHolder = null;
+        try {
+            baseTableListHolder = objectMapper.readValue(s, BaseTableListHolder.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
+        baseTableListHolder.getBaseTableList().forEach(record -> this.baseTableService.addBaseTableRecord(record));
         redirectAttributes.addFlashAttribute("message", "All records have been added to database");
         return "redirect:/importexport/fileupload";
     }
