@@ -1,8 +1,12 @@
 package com.fgvmonserv.dao;
 
+import com.fgvmonserv.BaseTableNamesEnum;
 import com.fgvmonserv.model.BaseTable;
+import com.fgvmonserv.model.BaseTableDateFilter;
+import com.fgvmonserv.model.userauth.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -50,6 +54,30 @@ public class BaseTableDaoImpl implements BaseTableDao {
         System.out.println("Getting all user list");
         Session session = this.sessionFactory.getCurrentSession();
         List<BaseTable> list = session.createQuery("from BaseTable").list();
+        for(BaseTable baseTable : list){
+            System.out.println("Got user " + baseTable);
+        }
+        return list;
+    }
+
+    @Override
+    public List<BaseTable> getAllRecordsList(BaseTableDateFilter baseTableDateFilter) {
+        System.out.println("Getting all user list");
+        Session session = this.sessionFactory.getCurrentSession();
+
+        Query query = null;
+        if (baseTableDateFilter.getBaseTableNamesEnum() == BaseTableNamesEnum.NEW_AUCTION_DATE){
+            query = session.createQuery("from BaseTable where newAuctionDate >=:auctionDateStartFromFilter");
+            query.setParameter("auctionDateStartFromFilter", baseTableDateFilter.getStartDate());
+        }else if (baseTableDateFilter.getBaseTableNamesEnum() == BaseTableNamesEnum.AUCTION_DATE){
+            query = session.createQuery("from BaseTable where auctionDate >=:auctionDateStartFromFilter");
+            query.setParameter("auctionDateStartFromFilter", baseTableDateFilter.getStartDate());
+        } else {
+            System.out.println("ERROR! Wrong enum provided! Returning all values without filtering");
+            query = session.createQuery("from BaseTable");
+        }
+        List<BaseTable> list = query.list();
+
         for(BaseTable baseTable : list){
             System.out.println("Got user " + baseTable);
         }

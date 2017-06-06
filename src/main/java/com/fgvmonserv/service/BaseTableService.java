@@ -1,6 +1,7 @@
 package com.fgvmonserv.service;
 
 import com.fgvmonserv.model.BaseTable;
+import com.fgvmonserv.model.BaseTableDateFilter;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import java.util.List;
@@ -16,5 +17,6 @@ public interface BaseTableService {
     public BaseTable getRecordById(int id);
     public void removeBaseTableRecord(int id);
     public List<BaseTable> getAllRecordsList();
+    public List<BaseTable> getAllRecordsList(BaseTableDateFilter baseTableDateFilter);
 
 }

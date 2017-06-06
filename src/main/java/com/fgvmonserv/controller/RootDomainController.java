@@ -45,7 +45,7 @@ public class RootDomainController {
         if(dateFilter.getBaseTableNamesEnum() == null){
             dateFilter.setBaseTableNamesEnum(BaseTableNamesEnum.AUCTION_DATE);
         }
-        model.addAttribute("allRecordsList", this.baseTableService.getAllRecordsList());
+        model.addAttribute("allRecordsList", this.baseTableService.getAllRecordsList(dateFilter));
         model.addAttribute("baseTableDateFilter", dateFilter);
         return "index";
     }

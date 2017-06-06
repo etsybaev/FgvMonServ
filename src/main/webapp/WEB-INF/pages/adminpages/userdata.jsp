@@ -49,56 +49,58 @@
 
 </head>
 <body>
-<h1>User Details</h1>
 
-<table class="tg">
-  <tr>
-    <th width="80">ID</th>
-    <th width="120">First name</th>
-    <th width="120">Last name</th>
-    <th width="120">Phone number</th>
-    <th width="120">Is enabled</th>
-    <th width="120">User role</th>
-    <th width="120">Created</th>
-    <th width="120">Updated</th>
-  </tr>
-  <tr>
-    <td>${user.id}</td>
-    <td>${user.firstName}</td>
-    <td>${user.lastName}</td>
-    <td>${user.contactPhoneNumber}</td>
-    <td>${user.enabled}</td>
-    <td>${user.userRoles.role}</td>
-    <td>${user.createdtime}</td>
-    <td>${user.updatedtime}</td>
-  </tr>
-</table>
+<div style="background-color: #f0f4ce">
+  <h1>User Details</h1>
 
-<br>
-<br>
+  <table class="tg">
+    <tr>
+      <th width="80">ID</th>
+      <th width="120">First name</th>
+      <th width="120">Last name</th>
+      <th width="120">Phone number</th>
+      <th width="120">Is enabled</th>
+      <th width="120">User role</th>
+      <th width="120">Created</th>
+      <th width="120">Updated</th>
+    </tr>
+    <tr>
+      <td>${user.id}</td>
+      <td>${user.firstName}</td>
+      <td>${user.lastName}</td>
+      <td>${user.contactPhoneNumber}</td>
+      <td>${user.enabled}</td>
+      <td>${user.userRoles.role}</td>
+      <td>${user.createdtime}</td>
+      <td>${user.updatedtime}</td>
+    </tr>
+  </table>
 
-<h1>Here could be some user's activity details</h1>
+  <br>
+  <br>
 
-<%--<c:choose>--%>
-  <%--<c:when test="${!empty accessHistoryList}">--%>
-    <%--<table class="tg">--%>
-      <%--<tr>--%>
-        <%--<th width="120">Access point</th>--%>
-        <%--<th width="120">Date and time</th>--%>
-      <%--</tr>--%>
-      <%--<c:forEach items="${accessHistoryList}" var="accessHistory">--%>
+  <h1>Here could be some user's activity details</h1>
+
+  <%--<c:choose>--%>
+    <%--<c:when test="${!empty accessHistoryList}">--%>
+      <%--<table class="tg">--%>
         <%--<tr>--%>
-          <%--<td>${accessHistory.accessPoints.description}</td>--%>
-          <%--<td>${accessHistory.datetime}</td>--%>
+          <%--<th width="120">Access point</th>--%>
+          <%--<th width="120">Date and time</th>--%>
         <%--</tr>--%>
-      <%--</c:forEach>--%>
-    <%--</table>--%>
-  <%--</c:when>--%>
-  <%--<c:otherwise>--%>
-      <%--<p>No Data found</p>--%>
+        <%--<c:forEach items="${accessHistoryList}" var="accessHistory">--%>
+          <%--<tr>--%>
+            <%--<td>${accessHistory.accessPoints.description}</td>--%>
+            <%--<td>${accessHistory.datetime}</td>--%>
+          <%--</tr>--%>
+        <%--</c:forEach>--%>
+      <%--</table>--%>
+    <%--</c:when>--%>
+    <%--<c:otherwise>--%>
+        <%--<p>No Data found</p>--%>
 
-  <%--</c:otherwise>--%>
-<%--</c:choose>--%>
-
+    <%--</c:otherwise>--%>
+  <%--</c:choose>--%>
+</div>
 </body>
 </html>

@@ -3,6 +3,7 @@ package com.fgvmonserv.service;
 import com.fgvmonserv.BaseTableNamesEnum;
 import com.fgvmonserv.dao.BaseTableDao;
 import com.fgvmonserv.model.BaseTable;
+import com.fgvmonserv.model.BaseTableDateFilter;
 import com.opencsv.CSVReader;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -54,6 +55,12 @@ public class BaseTableServiceImpl implements BaseTableService {
     @Transactional
     public List<BaseTable> getAllRecordsList() {
         return this.baseTableDao.getAllRecordsList();
+    }
+
+    @Override
+    @Transactional
+    public List<BaseTable> getAllRecordsList(BaseTableDateFilter baseTableDateFilter) {
+        return this.baseTableDao.getAllRecordsList(baseTableDateFilter);
     }
 
     @Override

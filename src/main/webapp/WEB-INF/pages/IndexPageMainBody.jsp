@@ -54,6 +54,7 @@
 
 
 <div class="sortableTable">
+    <p>Records found by provided search criteria: ${allRecordsList.size()}</p>
     <c:if test="${!empty allRecordsList}">
         <table class="sortable" id="sortableTable">
             <tr>
