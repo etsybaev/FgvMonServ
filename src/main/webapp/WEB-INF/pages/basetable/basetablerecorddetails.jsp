@@ -58,7 +58,7 @@
               </form:label>
             </td>
             <td>
-              <form:input path="bank"/>
+              <form:input path="bank" size="40"/>
             </td>
           </tr>
           <tr>
@@ -78,7 +78,7 @@
               </form:label>
             </td>
             <td>
-              <form:input path="lotNumber"/>
+              <form:input path="lotNumber" size="40"/>
             </td>
           </tr>
           <tr>
@@ -88,7 +88,7 @@
               </form:label>
             </td>
             <td>
-              <form:input path="kdNumber"/>
+              <form:input path="kdNumber" size="40"/>
             </td>
           </tr>
           <tr>
@@ -108,7 +108,7 @@
               </form:label>
             </td>
             <td>
-              <form:input path="url"/>
+              <form:input path="url" size="90"/>
             </td>
           </tr>
           <tr>
@@ -118,7 +118,7 @@
               </form:label>
             </td>
             <td>
-              <form:input path="propertyDetails"/>
+              <form:textarea path="propertyDetails" rows="15" cols="90" cssStyle="font-weight: normal; resize: none;overflow-y: scroll;"/>
             </td>
           </tr>
           <tr>
@@ -128,7 +128,7 @@
               </form:label>
             </td>
             <td>
-              <form:input path="loanDebtorFullName"/>
+              <form:input path="loanDebtorFullName" size="40"/>
             </td>
           </tr>
           <tr>
@@ -158,7 +158,7 @@
               </form:label>
             </td>
             <td>
-              <form:input path="details"/>
+              <form:textarea path="details" rows="15" cols="90" cssStyle="font-weight: normal;resize: none;overflow-y: scroll;"/>
             </td>
           </tr>
           <tr>
@@ -178,7 +178,7 @@
               </form:label>
             </td>
             <td>
-              <form:input path="statusOfCall"/>
+              <form:textarea path="statusOfCall"   rows="7" cols="90" cssStyle="font-weight: normal;resize: none;overflow-y: scroll;"/>
             </td>
           </tr>
           <tr>
@@ -218,7 +218,7 @@
               </form:label>
             </td>
             <td>
-              <form:input path="symptom"/>
+              <form:input path="symptom" size="90"/>
             </td>
           </tr>
 
