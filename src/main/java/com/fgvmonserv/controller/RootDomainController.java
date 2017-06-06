@@ -1,5 +1,6 @@
 package com.fgvmonserv.controller;
 
+import com.fgvmonserv.BaseTableNamesEnum;
 import com.fgvmonserv.model.BaseTableDateFilter;
 import com.fgvmonserv.model.userauth.User;
 import com.fgvmonserv.service.BaseTableService;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import java.time.LocalDate;
+import java.util.Arrays;
 
 /**
  * Created by ievgenii.tsybaiev on 09.01.2017.
@@ -35,16 +37,15 @@ public class RootDomainController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String indexPage(Model model, @ModelAttribute("baseTableDateFilter") BaseTableDateFilter dateFilter){
         model.addAttribute("user", new User());
-        model.addAttribute("allRecordsList", this.baseTableService.getAllRecordsList());
+        model.addAttribute("byAuctionDate",  Arrays.asList(BaseTableNamesEnum.AUCTION_DATE, BaseTableNamesEnum.NEW_AUCTION_DATE));
 
         if(dateFilter.getStartDate() == null){
             dateFilter.setStartDate(LocalDate.now().minusMonths(1));
         }
-
-        if (dateFilter.getEndDate() == null){
-            dateFilter.setEndDate(LocalDate.now());
+        if(dateFilter.getBaseTableNamesEnum() == null){
+            dateFilter.setBaseTableNamesEnum(BaseTableNamesEnum.AUCTION_DATE);
         }
-
+        model.addAttribute("allRecordsList", this.baseTableService.getAllRecordsList());
         model.addAttribute("baseTableDateFilter", dateFilter);
         return "index";
     }

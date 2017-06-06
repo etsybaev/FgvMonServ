@@ -13,38 +13,42 @@
 
 <%--<script type="text/javascript" src="sorttable.js"></script>--%>
 
-<div id="timePickers">
+<div id="timePickers" style="border: double">
+    <h1>Filter result options</h1>
+        <form:form action="/" commandName="baseTableDateFilter" acceptCharset="UTF-8" method="get" >
+            <table>
+                <tr>
+                    <td>
+                        <form:label path="startDate">
+                            <spring:message text="Start Date"/>
+                        </form:label>
+                    </td>
+                    <td>
+                        <form:input type="date" path="startDate"/>
+                    </td>
+                </tr>
 
-    <form:form action="/" commandName="baseTableDateFilter" acceptCharset="UTF-8" method="get" >
-        <table>
-            <tr>
-                <td>
-                    <form:label path="startDate">
-                        <spring:message text="Start Date"/>
-                    </form:label>
-                </td>
-                <td>
-                    <form:input type="date" path="startDate"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <form:label path="endDate">
-                        <spring:message text="End Date"/>
-                    </form:label>
-                </td>
-                <td>
-                    <form:input type="date" path="endDate"/>
-                </td>
-            </tr>
-
-            <tr>
-                <td>
-                    <input type="submit" value="<spring:message text="Apply filter"/>"/>
-                </td>
-            </tr>
-        </table>
-    </form:form>
+                <tr>
+                    <td>
+                        <form:label path="baseTableNamesEnum">
+                            <spring:message text="Filter By"/>
+                        </form:label>
+                    </td>
+                    <td>
+                        <form:select required="required" path="baseTableNamesEnum">
+                            <c:forEach items="${byAuctionDate}" var="filterByCriteria">
+                                <option value="${filterByCriteria}">${filterByCriteria.getViewName()}</option>
+                            </c:forEach>
+                        </form:select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="submit" value="<spring:message text="Apply filter"/>"/>
+                    </td>
+                </tr>
+            </table>
+        </form:form>
 </div>
 
 
@@ -99,6 +103,3 @@
         </table>
     </c:if>
 </div>
-
-
-

@@ -12,9 +12,9 @@ th {
     font-size: 100%;
 }
 table#sortableTable tbody tr:nth-child(2n) td {
-    background: #9a9895;
+    background: #ddd6c7;
 }
 table#sortableTable tbody tr:nth-child(2n+1) td {
-    background: #dcdad7;
+    background: #dbdccb;
 }
 

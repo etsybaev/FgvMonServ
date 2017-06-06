@@ -38,7 +38,7 @@
 </head>
 <body>
 
-	<div id="container"  style="overflow-scrolling:auto;">
+	<div id="container"  style="overflow-scrolling:auto; border: double; background-color: #f0f4ce">
 		<div id="top">
 			<%--If Admin user -  show admin panel link--%>
 			<c:if test="${pageContext.request.isUserInRole('ROLE_ADMIN') == true}">
