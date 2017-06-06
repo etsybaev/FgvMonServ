@@ -13,6 +13,42 @@
 
 <%--<script type="text/javascript" src="sorttable.js"></script>--%>
 
+<div id="timePickers">
+
+    <form:form action="/" commandName="baseTableDateFilter" acceptCharset="UTF-8" method="get" >
+        <table>
+            <tr>
+                <td>
+                    <form:label path="startDate">
+                        <spring:message text="Start Date"/>
+                    </form:label>
+                </td>
+                <td>
+                    <form:input type="date" path="startDate"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <form:label path="endDate">
+                        <spring:message text="End Date"/>
+                    </form:label>
+                </td>
+                <td>
+                    <form:input type="date" path="endDate"/>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <input type="submit" value="<spring:message text="Apply filter"/>"/>
+                </td>
+            </tr>
+        </table>
+    </form:form>
+</div>
+
+
+
 <div class="sortableTable">
     <c:if test="${!empty allRecordsList}">
         <table class="sortable" id="sortableTable">
