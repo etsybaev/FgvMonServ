@@ -61,7 +61,7 @@ public class BaseTable {
     @JsonProperty("auctionDate")
     @JsonDeserialize(using = JsonDateDeserializer.class)
     @JsonSerialize(using = JsonDateSerializer.class)
-    @DateTimeFormat(pattern="dd.MM.yyyy")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @Column(name = "auctionDate")
     private LocalDate auctionDate;
 
@@ -108,7 +108,7 @@ public class BaseTable {
     @JsonProperty("dateOfCall")
     @JsonDeserialize(using = JsonDateDeserializer.class)
     @JsonSerialize(using = JsonDateSerializer.class)
-    @DateTimeFormat(pattern="dd.MM.yyyy")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @Column(name = "dateOfCall")
     private LocalDate dateOfCall;
 
@@ -123,7 +123,7 @@ public class BaseTable {
     @JsonProperty("newAuctionDate")
     @JsonDeserialize(using = JsonDateDeserializer.class)
     @JsonSerialize(using = JsonDateSerializer.class)
-    @DateTimeFormat(pattern="dd.MM.yyyy")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @Column(name = "newAuctionDate")
     private LocalDate newAuctionDate;
 

@@ -65,7 +65,7 @@
             </form:label>
           </td>
           <td>
-            <form:input path="auctionDate"/>
+            <form:input type="date" path="auctionDate"/>
           </td>
         </tr>
         <tr>
@@ -165,7 +165,7 @@
             </form:label>
           </td>
           <td>
-            <form:input path="dateOfCall"/>
+            <form:input type="date" path="dateOfCall"/>
           </td>
         </tr>
         <tr>
@@ -195,7 +195,7 @@
             </form:label>
           </td>
           <td>
-            <form:input path="newAuctionDate"/>
+            <form:input type="date" path="newAuctionDate"/>
           </td>
         </tr>
         <tr>

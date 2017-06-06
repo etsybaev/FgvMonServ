@@ -26,7 +26,8 @@ public class JsonDateDeserializer extends JsonDeserializer<LocalDate> {
         TextNode node = (TextNode) oc.readTree(jp);
         String dateString = node.textValue();
 
-        LocalDate date = LocalDate.parse(dateString, DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+        LocalDate date = LocalDate.parse(dateString, DateTimeFormatter.ISO_DATE);
+//        LocalDate date = LocalDate.parse(dateString, DateTimeFormatter.ofPattern("dd.MM.yyyy"));
 
 //        Instant instant = Instant.parse(dateString);
 //        LocalDateTime dateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
