@@ -1,3 +1,4 @@
+<%@ page import="com.fgvmonserv.BaseTableNamesEnum" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%--<%@ page contentType="text/html; charset=UTF-8" %>--%>
 <%@ page language="java" pageEncoding="UTF-8" contentType="text/html;charset=UTF-8" %>
@@ -42,7 +43,7 @@
             <tr>
               <td>
                 <form:label path="id">
-                  <spring:message text="ID"/>
+                  <spring:message text="<%=BaseTableNamesEnum.ID.getViewName()%>"/>
                 </form:label>
               </td>
               <td>
@@ -54,7 +55,7 @@
           <tr>
             <td>
               <form:label path="bank">
-                <spring:message text="Bank Name"/>
+                <spring:message text="<%=BaseTableNamesEnum.BANK.getViewName()%>"/>
               </form:label>
             </td>
             <td>
@@ -64,7 +65,7 @@
           <tr>
             <td>
               <form:label path="auctionDate">
-                <spring:message text="Auction Date"/>
+                <spring:message text="<%=BaseTableNamesEnum.AUCTION_DATE.getViewName()%>"/>
               </form:label>
             </td>
             <td>
@@ -74,7 +75,7 @@
           <tr>
             <td>
               <form:label path="lotNumber">
-                <spring:message text="Lot Number"/>
+                <spring:message text="<%=BaseTableNamesEnum.LOT_NUMBER.getViewName()%>"/>
               </form:label>
             </td>
             <td>
@@ -84,7 +85,7 @@
           <tr>
             <td>
               <form:label path="kdNumber">
-                <spring:message text="KD Number"/>
+                <spring:message text="<%=BaseTableNamesEnum.KD_NUMBER.getViewName()%>"/>
               </form:label>
             </td>
             <td>
@@ -94,7 +95,7 @@
           <tr>
             <td>
               <form:label path="startPrice">
-                <spring:message text="Start Price"/>
+                <spring:message text="<%=BaseTableNamesEnum.START_PRICE.getViewName()%>"/>
               </form:label>
             </td>
             <td>
@@ -104,7 +105,7 @@
           <tr>
             <td>
               <form:label path="url">
-                <spring:message text="URL"/>
+                <spring:message text="<%=BaseTableNamesEnum.URL.getViewName()%>"/>
               </form:label>
             </td>
             <td>
@@ -114,7 +115,7 @@
           <tr>
             <td>
               <form:label path="propertyDetails">
-                <spring:message text="Property Details"/>
+                <spring:message text="<%=BaseTableNamesEnum.PROPERTY_DETAILS.getViewName()%>"/>
               </form:label>
             </td>
             <td>
@@ -124,7 +125,7 @@
           <tr>
             <td>
               <form:label path="loanDebtorFullName">
-                <spring:message text="Loan Debtor Full Name"/>
+                <spring:message text="<%=BaseTableNamesEnum.LOAN_DEBTOR_FULL_NAME.getViewName()%>"/>
               </form:label>
             </td>
             <td>
@@ -134,7 +135,7 @@
           <tr>
             <td>
               <form:label path="loanDebtorPhoneNumber">
-                <spring:message text="loan Debtor Phone Number"/>
+                <spring:message text="<%=BaseTableNamesEnum.LOAN_DEBTOR_PHONE_NUMBER.getViewName()%>"/>
               </form:label>
             </td>
             <td>
@@ -144,7 +145,7 @@
           <tr>
             <td>
               <form:label path="loanDebtorIdentCode">
-                <spring:message text="loan Debtor Social Code"/>
+                <spring:message text="<%=BaseTableNamesEnum.LOAN_DEBTOR_IDENT_CODE.getViewName()%>"/>
               </form:label>
             </td>
             <td>
@@ -154,7 +155,7 @@
           <tr>
             <td>
               <form:label path="details">
-                <spring:message text="Details"/>
+                <spring:message text="<%=BaseTableNamesEnum.DETAILS.getViewName()%>"/>
               </form:label>
             </td>
             <td>
@@ -164,7 +165,7 @@
           <tr>
             <td>
               <form:label path="dateOfCall">
-                <spring:message text="Date of Call"/>
+                <spring:message text="<%=BaseTableNamesEnum.DATE_OF_CALL.getViewName()%>"/>
               </form:label>
             </td>
             <td>
@@ -174,7 +175,7 @@
           <tr>
             <td>
               <form:label path="statusOfCall">
-                <spring:message text="Status of Call"/>
+                <spring:message text="<%=BaseTableNamesEnum.STATUS_OF_CALL.getViewName()%>"/>
               </form:label>
             </td>
             <td>
@@ -184,7 +185,7 @@
           <tr>
             <td>
               <form:label path="newPrice">
-                <spring:message text="New Price"/>
+                <spring:message text="<%=BaseTableNamesEnum.NEW_PRICE.getViewName()%>"/>
               </form:label>
             </td>
             <td>
@@ -194,7 +195,7 @@
           <tr>
             <td>
               <form:label path="newAuctionDate">
-                <spring:message text="New Auction Date"/>
+                <spring:message text="<%=BaseTableNamesEnum.NEW_AUCTION_DATE.getViewName()%>"/>
               </form:label>
             </td>
             <td>
@@ -204,7 +205,7 @@
           <tr>
             <td>
               <form:label path="auctionNumber">
-                <spring:message text="Auction number"/>
+                <spring:message text="<%=BaseTableNamesEnum.AUCTION_NUMBER.getViewName()%>"/>
               </form:label>
             </td>
             <td>
@@ -214,7 +215,7 @@
           <tr>
             <td>
               <form:label path="symptom">
-                <spring:message text="Symptom"/>
+                <spring:message text="<%=BaseTableNamesEnum.SYMPTOM.getViewName()%>"/>
               </form:label>
             </td>
             <td>

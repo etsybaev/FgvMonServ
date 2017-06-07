@@ -1,4 +1,4 @@
-
+<%@ page import="com.fgvmonserv.BaseTableNamesEnum" %>
 
 <%--<%@ page contentType="text/html;charset=UTF-8" language="java" %>--%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" %>
@@ -40,14 +40,14 @@
             <c:if test="${!empty jsonData}">
                 <table class="sortable" id="sortableTable">
                     <tr>
-                        <th width="80">Bank Name</th>
-                        <th width="50">Auction Date</th>
-                        <th width="40">Lot Number</th>
-                        <th width="40">About Auction</th>
-                        <th width="80">KD Number</th>
-                        <th width="70">Start Price</th>
-                        <th width="100">URL</th>
-                        <th width="100">Property Details</th>
+                        <th width="80"><%=BaseTableNamesEnum.BANK.getViewName()%></th>
+                        <th width="50"><%=BaseTableNamesEnum.AUCTION_DATE.getViewName()%></th>
+                        <th width="40"><%=BaseTableNamesEnum.LOT_NUMBER.getViewName()%></th>
+                        <th width="40"><%=BaseTableNamesEnum.ABOUT_AUCTION.getViewName()%></th>
+                        <th width="80"><%=BaseTableNamesEnum.KD_NUMBER.getViewName()%></th>
+                        <th width="70"><%=BaseTableNamesEnum.START_PRICE.getViewName()%></th>
+                        <th width="100"><%=BaseTableNamesEnum.URL.getViewName()%></th>
+                        <th width="100"><%=BaseTableNamesEnum.PROPERTY_DETAILS.getViewName()%></th>
                     </tr>
                     <c:forEach items="${parsedData.getBaseTableList()}" var="baseTable">
                         <tr>

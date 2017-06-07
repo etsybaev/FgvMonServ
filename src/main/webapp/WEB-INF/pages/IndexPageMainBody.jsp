@@ -1,3 +1,4 @@
+<%@ page import="com.fgvmonserv.BaseTableNamesEnum" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
@@ -58,24 +59,24 @@
     <c:if test="${!empty allRecordsList}">
         <table class="sortable" id="sortableTable">
             <tr>
-                <th width="10">Id</th>
-                <th width="70">Bank Name</th>
-                <th width="20">Auction Date</th>
-                <th width="20">Lot Number</th>
-                <th width="20">KD Number</th>
-                <th width="20">Start Price</th>
-                <th width="20">URL</th>
-                <th width="20">Property Details</th>
-                <th width="20">Loan Debtor Full Name</th>
-                <th width="20">loan Debtor Phone Number</th>
-                <th width="20">loan Debtor Social Code</th>
-                <th width="20">Details</th>
-                <th width="20">Date of Call</th>
-                <th width="20">Status of Call</th>
-                <th width="20">New Price</th>
-                <th width="20">New Auction Date</th>
-                <th width="20">Auction number</th>
-                <th width="20">Symptom</th>
+                <th width="10"><%=BaseTableNamesEnum.ID.getViewName()%></th>
+                <th width="70"><%=BaseTableNamesEnum.BANK.getViewName()%></th>
+                <th width="20"><%=BaseTableNamesEnum.AUCTION_DATE.getViewName()%></th>
+                <th width="20"><%=BaseTableNamesEnum.LOT_NUMBER.getViewName()%></th>
+                <th width="20"><%=BaseTableNamesEnum.KD_NUMBER.getViewName()%></th>
+                <th width="20"><%=BaseTableNamesEnum.START_PRICE.getViewName()%></th>
+                <th width="20"><%=BaseTableNamesEnum.URL.getViewName()%></th>
+                <th width="20"><%=BaseTableNamesEnum.PROPERTY_DETAILS.getViewName()%></th>
+                <th width="20"><%=BaseTableNamesEnum.LOAN_DEBTOR_FULL_NAME.getViewName()%></th>
+                <th width="20"><%=BaseTableNamesEnum.LOAN_DEBTOR_PHONE_NUMBER.getViewName()%></th>
+                <th width="20"><%=BaseTableNamesEnum.LOAN_DEBTOR_IDENT_CODE.getViewName()%></th>
+                <th width="20"><%=BaseTableNamesEnum.DETAILS.getViewName()%></th>
+                <th width="20"><%=BaseTableNamesEnum.DATE_OF_CALL.getViewName()%></th>
+                <th width="20"><%=BaseTableNamesEnum.STATUS_OF_CALL.getViewName()%></th>
+                <th width="20"><%=BaseTableNamesEnum.NEW_PRICE.getViewName()%></th>
+                <th width="20"><%=BaseTableNamesEnum.NEW_AUCTION_DATE.getViewName()%></th>
+                <th width="20"><%=BaseTableNamesEnum.AUCTION_NUMBER.getViewName()%>r</th>
+                <th width="20"><%=BaseTableNamesEnum.SYMPTOM.getViewName()%></th>
 
             </tr>
             <c:forEach items="${allRecordsList}" var="allRecordsList">
