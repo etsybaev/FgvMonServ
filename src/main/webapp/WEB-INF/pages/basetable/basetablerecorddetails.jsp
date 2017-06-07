@@ -42,184 +42,184 @@
 
             <tr>
               <td>
-                <form:label path="id">
+                <form:label path="<%=BaseTableNamesEnum.ID.getDbName()%>">
                   <spring:message text="<%=BaseTableNamesEnum.ID.getViewName()%>"/>
                 </form:label>
               </td>
               <td>
-                <form:input path="id" readonly="true" size="8" disabled="true"/>
+                <form:input path="<%=BaseTableNamesEnum.ID.getDbName()%>" readonly="true" size="8" disabled="true"/>
                 <form:hidden path="id"/>
               </td>
             </tr>
 
           <tr>
             <td>
-              <form:label path="bank">
+              <form:label path="<%=BaseTableNamesEnum.BANK.getDbName()%>">
                 <spring:message text="<%=BaseTableNamesEnum.BANK.getViewName()%>"/>
               </form:label>
             </td>
             <td>
-              <form:input path="bank" size="40"/>
+              <form:input path="<%=BaseTableNamesEnum.BANK.getDbName()%>" size="40"/>
             </td>
           </tr>
           <tr>
             <td>
-              <form:label path="auctionDate">
+              <form:label path="<%=BaseTableNamesEnum.AUCTION_DATE.getDbName()%>">
                 <spring:message text="<%=BaseTableNamesEnum.AUCTION_DATE.getViewName()%>"/>
               </form:label>
             </td>
             <td>
-              <form:input type="date" path="auctionDate"/>
+              <form:input type="date" path="<%=BaseTableNamesEnum.AUCTION_DATE.getDbName()%>"/>
             </td>
           </tr>
           <tr>
             <td>
-              <form:label path="lotNumber">
+              <form:label path="<%=BaseTableNamesEnum.LOT_NUMBER.getDbName()%>">
                 <spring:message text="<%=BaseTableNamesEnum.LOT_NUMBER.getViewName()%>"/>
               </form:label>
             </td>
             <td>
-              <form:input path="lotNumber" size="40"/>
+              <form:input path="<%=BaseTableNamesEnum.LOT_NUMBER.getDbName()%>" size="40"/>
             </td>
           </tr>
           <tr>
             <td>
-              <form:label path="kdNumber">
+              <form:label path="<%=BaseTableNamesEnum.KD_NUMBER.getDbName()%>">
                 <spring:message text="<%=BaseTableNamesEnum.KD_NUMBER.getViewName()%>"/>
               </form:label>
             </td>
             <td>
-              <form:input path="kdNumber" size="40"/>
+              <form:input path="<%=BaseTableNamesEnum.KD_NUMBER.getDbName()%>" size="40"/>
             </td>
           </tr>
           <tr>
             <td>
-              <form:label path="startPrice">
+              <form:label path="<%=BaseTableNamesEnum.START_PRICE.getDbName()%>">
                 <spring:message text="<%=BaseTableNamesEnum.START_PRICE.getViewName()%>"/>
               </form:label>
             </td>
             <td>
-              <form:input path="startPrice"/>
+              <form:input path="<%=BaseTableNamesEnum.START_PRICE.getDbName()%>"/>
             </td>
           </tr>
           <tr>
             <td>
-              <form:label path="url">
+              <form:label path="<%=BaseTableNamesEnum.URL.getDbName()%>">
                 <spring:message text="<%=BaseTableNamesEnum.URL.getViewName()%>"/>
               </form:label>
             </td>
             <td>
-              <form:input path="url" size="90"/>
+              <form:input path="<%=BaseTableNamesEnum.URL.getDbName()%>" size="90"/>
             </td>
           </tr>
           <tr>
             <td>
-              <form:label path="propertyDetails">
+              <form:label path="<%=BaseTableNamesEnum.PROPERTY_DETAILS.getDbName()%>">
                 <spring:message text="<%=BaseTableNamesEnum.PROPERTY_DETAILS.getViewName()%>"/>
               </form:label>
             </td>
             <td>
-              <form:textarea path="propertyDetails" rows="15" cols="90" cssStyle="font-weight: normal; resize: none;overflow-y: scroll;"/>
+              <form:textarea path="<%=BaseTableNamesEnum.PROPERTY_DETAILS.getDbName()%>" rows="15" cols="90" cssStyle="font-weight: normal; resize: none;overflow-y: scroll;"/>
             </td>
           </tr>
           <tr>
             <td>
-              <form:label path="loanDebtorFullName">
+              <form:label path="<%=BaseTableNamesEnum.LOAN_DEBTOR_FULL_NAME.getDbName()%>">
                 <spring:message text="<%=BaseTableNamesEnum.LOAN_DEBTOR_FULL_NAME.getViewName()%>"/>
               </form:label>
             </td>
             <td>
-              <form:input path="loanDebtorFullName" size="40"/>
+              <form:input path="<%=BaseTableNamesEnum.LOAN_DEBTOR_FULL_NAME.getDbName()%>" size="40"/>
             </td>
           </tr>
           <tr>
             <td>
-              <form:label path="loanDebtorPhoneNumber">
+              <form:label path="<%=BaseTableNamesEnum.LOAN_DEBTOR_PHONE_NUMBER.getDbName()%>">
                 <spring:message text="<%=BaseTableNamesEnum.LOAN_DEBTOR_PHONE_NUMBER.getViewName()%>"/>
               </form:label>
             </td>
             <td>
-              <form:input path="loanDebtorPhoneNumber"/>
+              <form:input path="<%=BaseTableNamesEnum.LOAN_DEBTOR_PHONE_NUMBER.getDbName()%>"/>
             </td>
           </tr>
           <tr>
             <td>
-              <form:label path="loanDebtorIdentCode">
+              <form:label path="<%=BaseTableNamesEnum.LOAN_DEBTOR_IDENT_CODE.getDbName()%>">
                 <spring:message text="<%=BaseTableNamesEnum.LOAN_DEBTOR_IDENT_CODE.getViewName()%>"/>
               </form:label>
             </td>
             <td>
-              <form:input path="loanDebtorIdentCode"/>
+              <form:input path="<%=BaseTableNamesEnum.LOAN_DEBTOR_IDENT_CODE.getDbName()%>"/>
             </td>
           </tr>
           <tr>
             <td>
-              <form:label path="details">
+              <form:label path="<%=BaseTableNamesEnum.DETAILS.getDbName()%>">
                 <spring:message text="<%=BaseTableNamesEnum.DETAILS.getViewName()%>"/>
               </form:label>
             </td>
             <td>
-              <form:textarea path="details" rows="15" cols="90" cssStyle="font-weight: normal;resize: none;overflow-y: scroll;"/>
+              <form:textarea path="<%=BaseTableNamesEnum.DETAILS.getDbName()%>" rows="15" cols="90" cssStyle="font-weight: normal;resize: none;overflow-y: scroll;"/>
             </td>
           </tr>
           <tr>
             <td>
-              <form:label path="dateOfCall">
+              <form:label path="<%=BaseTableNamesEnum.DATE_OF_CALL.getDbName()%>">
                 <spring:message text="<%=BaseTableNamesEnum.DATE_OF_CALL.getViewName()%>"/>
               </form:label>
             </td>
             <td>
-              <form:input type="date" path="dateOfCall"/>
+              <form:input type="date" path="<%=BaseTableNamesEnum.DATE_OF_CALL.getDbName()%>"/>
             </td>
           </tr>
           <tr>
             <td>
-              <form:label path="statusOfCall">
+              <form:label path="<%=BaseTableNamesEnum.STATUS_OF_CALL.getDbName()%>">
                 <spring:message text="<%=BaseTableNamesEnum.STATUS_OF_CALL.getViewName()%>"/>
               </form:label>
             </td>
             <td>
-              <form:textarea path="statusOfCall"   rows="7" cols="90" cssStyle="font-weight: normal;resize: none;overflow-y: scroll;"/>
+              <form:textarea path="<%=BaseTableNamesEnum.STATUS_OF_CALL.getDbName()%>"   rows="7" cols="90" cssStyle="font-weight: normal;resize: none;overflow-y: scroll;"/>
             </td>
           </tr>
           <tr>
             <td>
-              <form:label path="newPrice">
+              <form:label path="<%=BaseTableNamesEnum.NEW_PRICE.getDbName()%>">
                 <spring:message text="<%=BaseTableNamesEnum.NEW_PRICE.getViewName()%>"/>
               </form:label>
             </td>
             <td>
-              <form:input path="newPrice"/>
+              <form:input path="<%=BaseTableNamesEnum.NEW_PRICE.getDbName()%>"/>
             </td>
           </tr>
           <tr>
             <td>
-              <form:label path="newAuctionDate">
+              <form:label path="<%=BaseTableNamesEnum.NEW_AUCTION_DATE.getDbName()%>">
                 <spring:message text="<%=BaseTableNamesEnum.NEW_AUCTION_DATE.getViewName()%>"/>
               </form:label>
             </td>
             <td>
-              <form:input type="date" path="newAuctionDate"/>
+              <form:input type="date" path="<%=BaseTableNamesEnum.NEW_AUCTION_DATE.getDbName()%>"/>
             </td>
           </tr>
           <tr>
             <td>
-              <form:label path="auctionNumber">
+              <form:label path="<%=BaseTableNamesEnum.AUCTION_NUMBER.getDbName()%>">
                 <spring:message text="<%=BaseTableNamesEnum.AUCTION_NUMBER.getViewName()%>"/>
               </form:label>
             </td>
             <td>
-              <form:input path="auctionNumber"/>
+              <form:input path="<%=BaseTableNamesEnum.AUCTION_NUMBER.getDbName()%>"/>
             </td>
           </tr>
           <tr>
             <td>
-              <form:label path="symptom">
+              <form:label path="<%=BaseTableNamesEnum.SYMPTOM.getDbName()%>">
                 <spring:message text="<%=BaseTableNamesEnum.SYMPTOM.getViewName()%>"/>
               </form:label>
             </td>
             <td>
-              <form:input path="symptom" size="90"/>
+              <form:input path="<%=BaseTableNamesEnum.SYMPTOM.getDbName()%>" size="90"/>
             </td>
           </tr>
 
