@@ -4,12 +4,12 @@ package com.fgvmonserv.model;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fgvmonserv.converter.DateTimeConverter;
 import com.fgvmonserv.converter.JsonDateDeserializer;
 import com.fgvmonserv.converter.JsonDateSerializer;
 import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 
 /**
@@ -139,7 +139,7 @@ public class BaseTable {
     public static BaseTable getShortBaseTableFromCsvLine(String[] lineFromCsv){
         return new BaseTable()
                 .setBank(lineFromCsv[1])
-                .setAuctionDate(LocalDate.parse(lineFromCsv[2], DateTimeFormatter.ofPattern("dd.MM.yyyy")))
+                .setAuctionDate(DateTimeConverter.parseLocalDate(lineFromCsv[2]))
                 .setLotNumber(lineFromCsv[3])
                 .setKdNumber(lineFromCsv[4])
                 .setAboutAuction(lineFromCsv[5])
@@ -148,31 +148,31 @@ public class BaseTable {
                 .setPropertyDetails(lineFromCsv[8]);
     }
 
-    //I know this is harcode. Will re0write it later
-    @JsonIgnore
-    public String[] getValuesAsStringArray(){
-        String[] objectAsArray = new String[19];
-        objectAsArray[0] = getId().toString() ;
-        objectAsArray[1] = getBank();
-        objectAsArray[2] = getAuctionDate() == null ? "-" : getAuctionDate().toString();
-        objectAsArray[3] = getLotNumber();
-        objectAsArray[4] = getKdNumber();
-        objectAsArray[5] = getAboutAuction();
-        objectAsArray[6] = getStartPrice();
-        objectAsArray[7] = getUrl();
-        objectAsArray[8] = getPropertyDetails();
-        objectAsArray[9] = getLoanDebtorFullName();
-        objectAsArray[10] = getLoanDebtorPhoneNumber();
-        objectAsArray[11] = getLoanDebtorIdentCode();
-        objectAsArray[12] = getDetails();
-        objectAsArray[13] = getDateOfCall() == null ? "-" : getDateOfCall().toString();
-        objectAsArray[14] = getStatusOfCall();
-        objectAsArray[15] = getNewPrice();
-        objectAsArray[16] = getNewAuctionDate() == null ? "-" : getNewAuctionDate().toString();
-        objectAsArray[17] = getAuctionNumber();
-        objectAsArray[18] = getSymptom();
-        return objectAsArray;
-    }
+//    //I know this is harcode. Will re0write it later
+//    @JsonIgnore
+//    public String[] getValuesAsStringArray(){
+//        String[] objectAsArray = new String[19];
+//        objectAsArray[0] = getId().toString() ;
+//        objectAsArray[1] = getBank();
+//        objectAsArray[2] = getAuctionDate() == null ? "-" : getAuctionDate().toString();
+//        objectAsArray[3] = getLotNumber();
+//        objectAsArray[4] = getKdNumber();
+//        objectAsArray[5] = getAboutAuction();
+//        objectAsArray[6] = getStartPrice();
+//        objectAsArray[7] = getUrl();
+//        objectAsArray[8] = getPropertyDetails();
+//        objectAsArray[9] = getLoanDebtorFullName();
+//        objectAsArray[10] = getLoanDebtorPhoneNumber();
+//        objectAsArray[11] = getLoanDebtorIdentCode();
+//        objectAsArray[12] = getDetails();
+//        objectAsArray[13] = getDateOfCall() == null ? "-" : getDateOfCall().toString();
+//        objectAsArray[14] = getStatusOfCall();
+//        objectAsArray[15] = getNewPrice();
+//        objectAsArray[16] = getNewAuctionDate() == null ? "-" : getNewAuctionDate().toString();
+//        objectAsArray[17] = getAuctionNumber();
+//        objectAsArray[18] = getSymptom();
+//        return objectAsArray;
+//    }
 
     @JsonProperty("id")
     public Integer getId() {

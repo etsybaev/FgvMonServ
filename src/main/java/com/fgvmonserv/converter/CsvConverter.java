@@ -43,17 +43,17 @@ public class CsvConverter {
     }
 
 
-    public List<String[]> getPreparedListOfStringArrayToWriteToCsvFile(List<BaseTable> allRecordsList) {
-        List<String[]> listOfStringArrayToWriteToCsvFile = new ArrayList<>();
-        //Adding columns header names
-        listOfStringArrayToWriteToCsvFile.add(getColumnNamesThatWillBeShownInexportedCsvFile());
-        //Now need to prepare and add values
-        allRecordsList.forEach(baseTable -> {
-            listOfStringArrayToWriteToCsvFile.add(baseTable.getValuesAsStringArray());
-        });
-
-        return listOfStringArrayToWriteToCsvFile;
-    }
+//    public List<String[]> getPreparedListOfStringArrayToWriteToCsvFile(List<BaseTable> allRecordsList) {
+//        List<String[]> listOfStringArrayToWriteToCsvFile = new ArrayList<>();
+//        //Adding columns header names
+//        listOfStringArrayToWriteToCsvFile.add(getColumnNamesThatWillBeShownInexportedCsvFile());
+//        //Now need to prepare and add values
+//        allRecordsList.forEach(baseTable -> {
+//            listOfStringArrayToWriteToCsvFile.add(baseTable.getValuesAsStringArray());
+//        });
+//
+//        return listOfStringArrayToWriteToCsvFile;
+//    }
 
     public void writeBaseTableToCSVFileAndSendToClientInResponse(HttpServletResponse response, List<BaseTable> allRecordsList,
                                             String[] columnNamesThatWillBeShownInExportedCsvFile, String[] baseTableVariablesNameToBeExported){
