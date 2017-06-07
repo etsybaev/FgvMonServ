@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -21,27 +22,30 @@ import java.util.List;
  */
 public class CsvConverter {
 
-
     public List<BaseTable> getShortBaseTableInfoFromCsvFile(CommonsMultipartFile file) {
+        List<String> knownEncodingList = Arrays.asList("UTF-8", "UTF-16");
         List<BaseTable> resultList = new ArrayList<>();
-        try {
-            // Get the file and save it somewhere
-            byte[] bytes = file.getBytes();
-            //http://opencsv.sourceforge.net/
-            CSVReader reader = new CSVReader(new InputStreamReader(new ByteArrayInputStream(bytes)), ';');
-            List<String[]> csvLines = reader.readAll();
-            //As the first line of CSV document is column titles - need to start from second line, i.e. not from 0, but from 1
-            for(int i = 1; i < csvLines.size(); i++){
-                String[] csvLine = csvLines.get(i);
-                BaseTable shortBaseTableFromCsvLine = BaseTable.getShortBaseTableFromCsvLine(csvLine);
-                resultList.add(shortBaseTableFromCsvLine);
+        for (String knownEncoding : knownEncodingList) {
+            try {
+                // Get the file and save it somewhere
+                byte[] bytes = file.getBytes();
+                //http://opencsv.sourceforge.net/
+                CSVReader reader = new CSVReader(new InputStreamReader(new ByteArrayInputStream(bytes), knownEncoding), ';');
+                List<String[]> csvLines = reader.readAll();
+                //As the first line of CSV document is column titles - need to start from second line, i.e. not from 0, but from 1
+                for (int i = 1; i < csvLines.size(); i++) {
+                    String[] csvLine = csvLines.get(i);
+                    BaseTable shortBaseTableFromCsvLine = BaseTable.getShortBaseTableFromCsvLine(csvLine);
+                    resultList.add(shortBaseTableFromCsvLine);
+                }
+                return resultList;
+            } catch (Exception e) {
+                //Do Nothing. This is just a loop. If we got any fail with one encoding, then will try with another
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
-        return resultList;
+        System.err.println("ERROR! Failed in parsing uploaded file. Probably didn't manage to find find right encoding to parse uploaded file!");
+        return null;
     }
-
 
 //    public List<String[]> getPreparedListOfStringArrayToWriteToCsvFile(List<BaseTable> allRecordsList) {
 //        List<String[]> listOfStringArrayToWriteToCsvFile = new ArrayList<>();
