@@ -4,7 +4,11 @@ import com.fgvmonserv.BaseTableNamesEnum;
 import com.fgvmonserv.model.BaseTable;
 import com.opencsv.CSVReader;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.supercsv.io.CsvBeanWriter;
+import org.supercsv.io.ICsvBeanWriter;
+import org.supercsv.prefs.CsvPreference;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -51,12 +55,57 @@ public class CsvConverter {
         return listOfStringArrayToWriteToCsvFile;
     }
 
-    private String[] getColumnNamesThatWillBeShownInexportedCsvFile(){
+    public void writeBaseTableToCSVFileAndSendToClientInResponse(HttpServletResponse response, List<BaseTable> allRecordsList,
+                                            String[] columnNamesThatWillBeShownInExportedCsvFile, String[] baseTableVariablesNameToBeExported){
+        String csvFileName = "DataBase.csv";
+        response.setContentType("text/csv");
+        String headerKey = "Content-Disposition";
+        String headerValue = String.format("attachment; filename=\"%s\"", csvFileName);
+        response.setHeader(headerKey, headerValue);
+
+        ICsvBeanWriter csvWriter = null;
+        try {
+            csvWriter = new CsvBeanWriter(response.getWriter(),
+                    (new CsvPreference.Builder('\"', ';', "\n")).build());
+            //Write header - i.e. column names that will be shown in exported csv file
+            csvWriter.writeHeader(columnNamesThatWillBeShownInExportedCsvFile);
+            //get records from DB to export to CSV file
+            for (BaseTable baseTable : allRecordsList) {
+                //This column names of variables is used to map values from base table to column. At least it seems so ;)
+                csvWriter.write(baseTable, baseTableVariablesNameToBeExported);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (csvWriter != null){
+                try {
+                    csvWriter.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+
+    public String[] getColumnNamesThatWillBeShownInexportedCsvFile(){
         Field[] declaredFields = BaseTable.class.getDeclaredFields();
         String[] declaredFieldsAsString =  new String[declaredFields.length];
         //Get all declared variables in BaseTable class and find appropriate values in Enum.
         for(int i = 0; i < declaredFields.length; i++){
             declaredFieldsAsString[i] = BaseTableNamesEnum.getViewNameFromDbName(declaredFields[i].getName());
+        }
+        return declaredFieldsAsString;
+    }
+
+
+    public String[] getBaseTableVariablesNameToBeExported(){
+        Field[] declaredFields = BaseTable.class.getDeclaredFields();
+        String[] declaredFieldsAsString =  new String[declaredFields.length];
+        //Get all declared variables in BaseTable class and find appropriate values in Enum.
+        for(int i = 0; i < declaredFields.length; i++){
+            declaredFieldsAsString[i] = declaredFields[i].getName();
+//            declaredFieldsAsString[i] = BaseTableNamesEnum.getViewNameFromDbName(declaredFields[i].getName());
         }
         return declaredFieldsAsString;
     }

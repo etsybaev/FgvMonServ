@@ -29,7 +29,7 @@
 
         <h1></h1>
 
-        <p><a href="/importexport/download">Download</a></p>
+        <p><a href="/importexport/download">Export Database to CSV</a></p>
 
 
         <c:if test="${!empty message}">

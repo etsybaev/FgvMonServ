@@ -7,7 +7,6 @@ import com.fgvmonserv.model.BaseTable;
 import com.fgvmonserv.model.BaseTableListHolder;
 import com.fgvmonserv.model.userauth.User;
 import com.fgvmonserv.service.BaseTableService;
-import com.opencsv.CSVWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,22 +15,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Controller
 public class ImportExportController {
-
-    //Save the uploaded file to this folder
-    private static String UPLOADED_FOLDER = "/home/ievgeniit/tempTomcatUpload/";
-    private static String fileName = "DataBase.csv";
 
     private BaseTableService baseTableService;
     private JsonConverter jsonConverter ;
@@ -114,48 +104,107 @@ public class ImportExportController {
         return "redirect:/importexport/fileupload";
     }
 
-
     @PreAuthorize("isFullyAuthenticated()")
     @RequestMapping("/importexport/download")
-    public void downloadPDFResource( HttpServletRequest request, HttpServletResponse response){
-
-
+    public void downloadPDFResource(HttpServletResponse response){
         //For filter param some oject may be used, ex:
         //   @PreAuthorize("hasRole('ROLE_ADMIN')")
         //   public String addUser(@ModelAttribute("exportParams") ExportParams exportParams){
         // Then we may assemble request using params ex "exportParams.getPeriodRange()" etc.
 
         //Here should be some logic of fetching data from DB and file creation.
-
-
-        List<BaseTable> allRecordsList = this.baseTableService.getAllRecordsList();
-
-        List<String[]> preparedListOfStringArrayToWriteToCsvFile = csvConverter
-                .getPreparedListOfStringArrayToWriteToCsvFile(allRecordsList);
-
-        CSVWriter writer = null;
-        String tmpFilePath = UPLOADED_FOLDER + fileName + System.currentTimeMillis();
-        File tmpFile = new File(tmpFilePath);
-        try {
-            writer = new CSVWriter(new FileWriter(tmpFile), ';');
-            writer.writeAll(preparedListOfStringArrayToWriteToCsvFile);
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        Path file = Paths.get(tmpFilePath);
-        if (Files.exists(file)){
-            response.setContentType("text/csv");
-            response.addHeader("Content-Disposition", "attachment; filename=" + fileName);
-            try{
-                Files.copy(file, response.getOutputStream());
-                response.getOutputStream().flush();
-            }
-            catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        }
-        tmpFile.delete();
+        csvConverter.writeBaseTableToCSVFileAndSendToClientInResponse(response, baseTableService.getAllRecordsList(),
+                csvConverter.getColumnNamesThatWillBeShownInexportedCsvFile(), csvConverter.getBaseTableVariablesNameToBeExported());
     }
+
+
+
+//    @PreAuthorize("isFullyAuthenticated()")
+//    @RequestMapping("/importexport/download")
+//    public void downloadPDFResource(HttpServletResponse response){
+//        //For filter param some oject may be used, ex:
+//        //   @PreAuthorize("hasRole('ROLE_ADMIN')")
+//        //   public String addUser(@ModelAttribute("exportParams") ExportParams exportParams){
+//        // Then we may assemble request using params ex "exportParams.getPeriodRange()" etc.
+//
+//        //Here should be some logic of fetching data from DB and file creation.
+//
+//
+//        String csvFileName = "DataBase.csv";
+//        response.setContentType("text/csv");
+//        String headerKey = "Content-Disposition";
+//        String headerValue = String.format("attachment; filename=\"%s\"", csvFileName);
+//        response.setHeader(headerKey, headerValue);
+//
+//        ICsvBeanWriter csvWriter = null;
+//        try {
+//            csvWriter = new CsvBeanWriter(response.getWriter(),
+//                    (new CsvPreference.Builder('\"', ';', "\n")).build());
+//            //Write header - i.e. column names that will be shown in exported csv file
+//            csvWriter.writeHeader(csvConverter.getColumnNamesThatWillBeShownInexportedCsvFile());
+//            //get records from DB to export to CSV file
+//            List<BaseTable> allRecordsList = this.baseTableService.getAllRecordsList();
+//            for (BaseTable baseTable : allRecordsList) {
+//                //This column names of variables is used to map values from base table to column. At least it seems so ;)
+//                String[] valueNamesThatWillBeExportedToCsvFile = csvConverter.getColumnNamesOfVariables();
+//                csvWriter.write(baseTable, valueNamesThatWillBeExportedToCsvFile);
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } finally {
+//            if (csvWriter != null){
+//                try {
+//                    csvWriter.close();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
+//    }
+
+
+
+//    @PreAuthorize("isFullyAuthenticated()")
+//    @RequestMapping("/importexport/download")
+//    public void downloadPDFResource( HttpServletRequest request, HttpServletResponse response){
+//
+//
+//        //For filter param some oject may be used, ex:
+//        //   @PreAuthorize("hasRole('ROLE_ADMIN')")
+//        //   public String addUser(@ModelAttribute("exportParams") ExportParams exportParams){
+//        // Then we may assemble request using params ex "exportParams.getPeriodRange()" etc.
+//
+//        //Here should be some logic of fetching data from DB and file creation.
+//
+//
+//        List<BaseTable> allRecordsList = this.baseTableService.getAllRecordsList();
+//
+//        List<String[]> preparedListOfStringArrayToWriteToCsvFile = csvConverter
+//                .getPreparedListOfStringArrayToWriteToCsvFile(allRecordsList);
+//
+//        CSVWriter writer = null;
+//        String tmpFilePath = UPLOADED_FOLDER + fileName + System.currentTimeMillis();
+//        File tmpFile = new File(tmpFilePath);
+//        try {
+//            writer = new CSVWriter(new FileWriter(tmpFile), ';');
+//            writer.writeAll(preparedListOfStringArrayToWriteToCsvFile);
+//            writer.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        Path file = Paths.get(tmpFilePath);
+//        if (Files.exists(file)){
+//            response.setContentType("text/csv");
+//            response.addHeader("Content-Disposition", "attachment; filename=" + fileName);
+//            try{
+//                Files.copy(file, response.getOutputStream());
+//                response.getOutputStream().flush();
+//            }
+//            catch (IOException ex) {
+//                ex.printStackTrace();
+//            }
+//        }
+//        tmpFile.delete();
+//    }
 }

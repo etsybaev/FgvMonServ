@@ -57,6 +57,7 @@
           <element id="library" level="project" name="Maven: org.apache.commons:commons-lang3:3.5" />
           <element id="library" level="project" name="Maven: commons-beanutils:commons-beanutils:1.9.3" />
           <element id="library" level="project" name="Maven: commons-collections:commons-collections:3.2.2" />
+          <element id="library" level="project" name="Maven: net.sf.supercsv:super-csv:2.4.0" />
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.8.8" />
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.8.8" />
         </element>
