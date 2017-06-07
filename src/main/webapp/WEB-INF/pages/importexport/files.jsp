@@ -16,24 +16,29 @@
 <head>
     <title>Import/export files</title>
 </head>
-<body>
-    <div style="background-color: #f0f4ce">
+<body style="background-color: #f0f4ce">
 
-        <p><a href="/">Back to main menu</a></p>
-
-        <form id="fileuploadForm" action="/importexport/fileupload" method="POST" enctype="multipart/form-data">
-            <label for="file">File</label>
-            <input id="file" type="file" name="file" />
-            <p><button type="submit">Upload</button></p>
-        </form>
-
-        <h1></h1>
-
-        <p><a href="/importexport/download">Export Database to CSV</a></p>
+        <div style="border-bottom: solid">
+            <p><a href="/">Back to main menu</a></p>
+            <table>
+                <td style="border: double">
+                    <form id="fileuploadForm" action="/importexport/fileupload" method="POST" enctype="multipart/form-data">
+                        <label for="file">File</label>
+                        <input id="file" type="file" name="file" />
+                        <p><button type="submit">Upload</button></p>
+                    </form>
+                </td>
+                <td style="border: double">
+                    <p>
+                        <a href="/importexport/download">Export Database to CSV</a>
+                    </p>
+                </td>
+            </table>
+        </div>
 
 
         <c:if test="${!empty message}">
-            <h2>Message : ${message}</h2>
+            <h2 style="color:red">Important : ${message}</h2>
         </c:if>
 
         <div>
@@ -72,6 +77,5 @@
             <p><a href="/">Back to main menu</a></p>
 
         </div>
-    </div>
 </body>
 </html>
