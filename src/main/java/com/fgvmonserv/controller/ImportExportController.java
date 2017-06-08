@@ -72,15 +72,19 @@ public class ImportExportController {
         }
 
         List<BaseTable> shortBaseTableInfoFromCsvFile = csvConverter.getShortBaseTableInfoFromCsvFile(file);
-        BaseTableListHolder baseTableListHolder = new BaseTableListHolder();
-        baseTableListHolder.getBaseTableList().addAll(shortBaseTableInfoFromCsvFile);
+        if(shortBaseTableInfoFromCsvFile != null){
+            BaseTableListHolder baseTableListHolder = new BaseTableListHolder();
+            baseTableListHolder.getBaseTableList().addAll(shortBaseTableInfoFromCsvFile);
+            redirectAttributes.addFlashAttribute("message", "Please check the records to be uploaded." +
+                    " \n If it looks good please press on Confirm button below. Otherwise fix your CSV file and try again. \n");
 
-        redirectAttributes.addFlashAttribute("message", "Please check the records to be uploaded." +
-                " \n If it looks good please press on Confirm button below. Otherwise fix your CSV file and try again. ");
-
-        redirectAttributes.addFlashAttribute("parsedData", baseTableListHolder);
-        redirectAttributes.addFlashAttribute("jsonData",
-                urlEncoderDecoder.encodeToUrlUtf8((jsonConverter.convertToJson(baseTableListHolder))));
+            redirectAttributes.addFlashAttribute("parsedData", baseTableListHolder);
+            redirectAttributes.addFlashAttribute("jsonData",
+                    urlEncoderDecoder.encodeToUrlUtf8((jsonConverter.convertToJson(baseTableListHolder))));
+        }else {
+            redirectAttributes.addFlashAttribute("message", "OOOPS! Unable to parse your CSV file. " +
+                    "Supported delimited: semicolon, supported encoding formats: UTF-8 and UTF-16 \n");
+        }
         return "redirect:/importexport/fileupload";
     }
 
