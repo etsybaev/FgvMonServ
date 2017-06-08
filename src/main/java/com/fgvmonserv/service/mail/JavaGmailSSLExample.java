@@ -31,6 +31,5 @@ public class JavaGmailSSLExample {
 
         System.out.println("done.");
     }
-
 }
 
