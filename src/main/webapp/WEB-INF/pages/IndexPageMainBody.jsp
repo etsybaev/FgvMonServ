@@ -55,6 +55,19 @@
 
 
 <div class="sortableTable">
+
+    <c:if test="${pageContext.request.isUserInRole('ROLE_ADMIN') == true}">
+        <p>
+            <form action="/basetableconroller/addnewbasetablerecordform">
+                <input type="submit" value="Add new record">
+            </form>
+        </p>
+
+        <p style="color: red">
+            ${message}
+        </p>
+    </c:if>
+
     <p>Records found by provided search criteria: ${allRecordsList.size()}</p>
     <c:if test="${!empty allRecordsList}">
         <table class="sortable" id="sortableTable">

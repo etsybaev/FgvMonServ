@@ -141,18 +141,18 @@
         <dependency>
             <groupId>org.jodd</groupId>
             <artifactId>jodd-mail</artifactId>
-            <version>3.8.1</version>
+            <version>3.8.5</version>
         </dependency>
         <dependency>
             <groupId>org.jodd</groupId>
             <artifactId>jodd-core</artifactId>
-            <version>3.8.1</version>
+            <version>3.8.5</version>
         </dependency>
-        <dependency>
-            <groupId>org.jodd</groupId>
-            <artifactId>jodd-xxx</artifactId>
-            <version>3.8.1</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.jodd</groupId>-->
+            <!--<artifactId>jodd-xxx</artifactId>-->
+            <!--<version>3.8.1</version>-->
+        <!--</dependency>-->
 
         <!--this is html parser-->
         <dependency>

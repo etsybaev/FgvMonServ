@@ -29,6 +29,13 @@ public class BaseTableController {
         this.baseTableService = baseTableService;
     }
 
+    @RequestMapping(value = "/addnewbasetablerecordform")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String addBaseTableRecord(@ModelAttribute("baseTableRecord") BaseTable baseTable, Model model){
+        model.addAttribute("action", "ADD_USER");
+        return "basetable/basetablerecorddetails";
+    }
+
     @RequestMapping("/basetablerecorddetails/{id}")
     @PreAuthorize("isFullyAuthenticated()")
     public String baseTableRecordData(@PathVariable("id") int id, Model model){
@@ -43,11 +50,17 @@ public class BaseTableController {
         return "redirect:/";
     }
 
-    @RequestMapping(value = "/editbasetablerecord", method = RequestMethod.POST)
+    @RequestMapping(value = "/addeditbasetablerecord", method = RequestMethod.POST)
     @PreAuthorize("isFullyAuthenticated()")
-    public String addUser(@ModelAttribute("baseTableRecord") BaseTable baseTable, RedirectAttributes redirectAttributes){
-        this.baseTableService.updateBaseTableRecord(baseTable);
-        redirectAttributes.addFlashAttribute("message", "Record has been successfully updated!");
-        return "redirect:/basetableconroller/basetablerecorddetails/" + baseTable.getId();
+    public String addOrEditBaseTableRecord(@ModelAttribute("baseTableRecord") BaseTable baseTable, RedirectAttributes redirectAttributes){
+        if(baseTable.getId() == null){
+            this.baseTableService.addBaseTableRecord(baseTable);
+            redirectAttributes.addFlashAttribute("message", "Record has been successfully created!");
+            return "redirect:/";
+        }else {
+            this.baseTableService.updateBaseTableRecord(baseTable);
+            redirectAttributes.addFlashAttribute("message", "Record has been successfully updated!");
+            return "redirect:/basetableconroller/basetablerecorddetails/" + baseTable.getId();
+        }
     }
 }

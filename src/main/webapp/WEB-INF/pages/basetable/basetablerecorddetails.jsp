@@ -18,12 +18,8 @@
 
       <p><a href="/">Back to main menu</a></p>
 
-      <c:if test="${pageContext.request.isUserInRole('ROLE_ADMIN') == true}">
-          <%--<form action="/admin">--%>
-              <%--<input type="submit" value="Admin panel">--%>
-          <%--</form>--%>
+      <c:if test="${(pageContext.request.isUserInRole('ROLE_ADMIN') == true) and (action != 'ADD_USER')}">
           <td><button type="button" onclick="javascript:deleteScript.deleteBaseTableRecord(${baseTableRecord.id})">Delete this record</button></td>
-          <%--<td><a href="javascript:deleteScript.deleteBaseTableRecord(${baseTableRecord.id})">Delete</a></td>--%>
       </c:if>
 
       <h1>Details:</h1>
@@ -35,7 +31,7 @@
       </c:if>
 
 
-      <c:url var="addAction" value="/basetableconroller/editbasetablerecord"/>
+      <c:url var="addAction" value="/basetableconroller/addeditbasetablerecord"/>
 
       <form:form action="${addAction}" commandName="baseTableRecord" acceptCharset="UTF-8" >
         <table>
