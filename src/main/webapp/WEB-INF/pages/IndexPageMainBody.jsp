@@ -32,13 +32,27 @@
                 <tr>
                     <td>
                         <form:label path="baseTableNamesEnum">
-                            <spring:message text="Filter By"/>
+                            <spring:message text="Filter by field"/>
                         </form:label>
                     </td>
                     <td>
                         <form:select required="required" path="baseTableNamesEnum">
                             <c:forEach items="${byAuctionDate}" var="filterByCriteria">
                                 <option value="${filterByCriteria}">${filterByCriteria.getViewName()}</option>
+                            </c:forEach>
+                        </form:select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <form:label path="searchByRangeTypeEnum">
+                            <spring:message text="Filter by range"/>
+                        </form:label>
+                    </td>
+                    <td>
+                        <form:select required="required" path="searchByRangeTypeEnum">
+                            <c:forEach items="${searchByRangeType}" var="rangeSearchCriteria">
+                                <option value="${rangeSearchCriteria}">${rangeSearchCriteria.getViewName()}</option>
                             </c:forEach>
                         </form:select>
                     </td>

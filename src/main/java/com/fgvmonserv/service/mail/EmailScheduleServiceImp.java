@@ -21,17 +21,17 @@ public class EmailScheduleServiceImp {
 //
 //    }
 
-    // once every minute, on top of the hour, Mondays to Fridays
-    @Scheduled(cron = "0 * * * * MON-FRI")
-    public void print() {
-
-        System.out.println("==================================================================================");
-        System.out.println("==================================================================================");
-
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        System.out.println("==================================================================================");
-        System.out.println("==================================================================================");
-
-    }
+//    // once every minute, on top of the hour, Mondays to Fridays
+//    @Scheduled(cron = "0 * * * * MON-FRI")
+//    public void print() {
+//
+//        System.out.println("==================================================================================");
+//        System.out.println("==================================================================================");
+//
+//        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+//        System.out.println("==================================================================================");
+//        System.out.println("==================================================================================");
+//
+//    }
 
 }

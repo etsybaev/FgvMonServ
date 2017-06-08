@@ -1,6 +1,7 @@
 package com.fgvmonserv.controller;
 
 import com.fgvmonserv.BaseTableNamesEnum;
+import com.fgvmonserv.enums.SearchByRangeTypeEnum;
 import com.fgvmonserv.model.BaseTableDateFilter;
 import com.fgvmonserv.model.userauth.User;
 import com.fgvmonserv.service.BaseTableService;
@@ -38,6 +39,7 @@ public class RootDomainController {
     public String indexPage(Model model, @ModelAttribute("baseTableDateFilter") BaseTableDateFilter dateFilter){
         model.addAttribute("user", new User());
         model.addAttribute("byAuctionDate",  Arrays.asList(BaseTableNamesEnum.AUCTION_DATE, BaseTableNamesEnum.NEW_AUCTION_DATE));
+        model.addAttribute("searchByRangeType",  Arrays.asList(SearchByRangeTypeEnum.values()));
 
         if(dateFilter.getStartDate() == null){
             dateFilter.setStartDate(LocalDate.now().minusMonths(1));
@@ -45,6 +47,10 @@ public class RootDomainController {
         if(dateFilter.getBaseTableNamesEnum() == null){
             dateFilter.setBaseTableNamesEnum(BaseTableNamesEnum.AUCTION_DATE);
         }
+        if(dateFilter.getSearchByRangeTypeEnum() == null){
+            dateFilter.setSearchByRangeTypeEnum(SearchByRangeTypeEnum.START_FROM);
+        }
+
         model.addAttribute("allRecordsList", this.baseTableService.getAllRecordsList(dateFilter));
         model.addAttribute("baseTableDateFilter", dateFilter);
         return "index";
