@@ -221,12 +221,21 @@
 
           <tr>
             <td>
-              <input type="submit" value="<spring:message text="Save changes"/>"/>
+                <form:label path="<%=BaseTableNamesEnum.IS_UNDER_CONTROL.getDbName()%>">
+                        <spring:message text="<%=BaseTableNamesEnum.IS_UNDER_CONTROL.getViewName()%>"/>
+                </form:label>
+            </td>
+            <td>
+                <form:checkbox path="<%=BaseTableNamesEnum.IS_UNDER_CONTROL.getDbName()%>" value="true" size="90"/>
+            </td>
+          </tr>
+          <tr>
+            <td>
+                <input type="submit" value="<spring:message text="Save changes"/>"/>
             </td>
           </tr>
         </table>
       </form:form>
-
 
     </div>
 </body>

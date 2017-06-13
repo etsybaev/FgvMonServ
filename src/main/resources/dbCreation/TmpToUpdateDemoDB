@@ -1,0 +1,6 @@
+ALTER TABLE `Monserv`.`BaseTable`
+ADD COLUMN `isUnderControl` TINYINT(1) NULL AFTER `symptom`;
+
+---------------------------------------------------------------
+
+

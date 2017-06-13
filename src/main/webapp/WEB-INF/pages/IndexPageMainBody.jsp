@@ -105,6 +105,7 @@
                 <th width="20"><%=BaseTableNamesEnum.NEW_AUCTION_DATE.getViewName()%></th>
                 <th width="20"><%=BaseTableNamesEnum.AUCTION_NUMBER.getViewName()%>r</th>
                 <th width="20"><%=BaseTableNamesEnum.SYMPTOM.getViewName()%></th>
+                <th width="20"><%=BaseTableNamesEnum.IS_UNDER_CONTROL.getViewName()%></th>
 
             </tr>
             <c:forEach items="${allRecordsList}" var="allRecordsList">
@@ -129,6 +130,7 @@
                     <td>${allRecordsList.newAuctionDate}</td>
                     <td>${allRecordsList.auctionNumber}</td>
                     <td>${allRecordsList.symptom}</td>
+                    <td>${allRecordsList.isUnderControl}</td>
                 </tr>
             </c:forEach>
         </table>

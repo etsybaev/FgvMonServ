@@ -116,17 +116,28 @@
                 </td>
             </tr>
 
+            <%--<tr>--%>
+                <%--<td>--%>
+                    <%--<form:label path="enabled">--%>
+                        <%--<spring:message text="Status"/>--%>
+                    <%--</form:label>--%>
+                <%--</td>--%>
+                <%--<td>--%>
+                    <%--<select id="enabled" required="required" name="enabled">--%>
+                        <%--<option value="false">Inactive</option>--%>
+                        <%--<option value="true">Active</option>--%>
+                    <%--</select>--%>
+                <%--</td>--%>
+            <%--</tr>--%>
+
             <tr>
                 <td>
                     <form:label path="enabled">
-                        <spring:message text="Status"/>
+                        <spring:message text="Enable user"/>
                     </form:label>
                 </td>
                 <td>
-                    <select id="enabled" required="required" name="enabled">
-                        <option value="false">Inactive</option>
-                        <option value="true">Active</option>
-                    </select>
+                    <form:checkbox path="enabled" value="true" size="90"/>
                 </td>
             </tr>
 

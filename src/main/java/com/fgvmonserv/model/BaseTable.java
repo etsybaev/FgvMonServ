@@ -36,7 +36,8 @@ import java.time.LocalDate;
         "newPrice",
         "newAuctionDate",
         "auctionNumber",
-        "symptom"
+        "symptom",
+        "isUnderControl"
 })
 
 
@@ -134,6 +135,10 @@ public class BaseTable {
     @JsonProperty("symptom")
     @Column(name = "symptom")
     private String symptom;
+
+    @JsonProperty("isUnderControl")
+    @Column(name = "isUnderControl")
+    private boolean isUnderControl;
 
     @JsonIgnore
     public static BaseTable getShortBaseTableFromCsvLine(String[] lineFromCsv){
@@ -383,6 +388,17 @@ public class BaseTable {
         return this;
     }
 
+    @JsonProperty("isUnderControl")
+    public boolean getIsUnderControl() {
+        return isUnderControl;
+    }
+
+    @JsonProperty("isUnderControl")
+    public BaseTable setIsUnderControl(boolean isUnderControl) {
+        this.isUnderControl = isUnderControl;
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -390,7 +406,8 @@ public class BaseTable {
 
         BaseTable baseTable = (BaseTable) o;
 
-        if (id != baseTable.id) return false;
+        if (isUnderControl != baseTable.isUnderControl) return false;
+        if (id != null ? !id.equals(baseTable.id) : baseTable.id != null) return false;
         if (bank != null ? !bank.equals(baseTable.bank) : baseTable.bank != null) return false;
         if (auctionDate != null ? !auctionDate.equals(baseTable.auctionDate) : baseTable.auctionDate != null)
             return false;
@@ -422,7 +439,7 @@ public class BaseTable {
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (bank != null ? bank.hashCode() : 0);
         result = 31 * result + (auctionDate != null ? auctionDate.hashCode() : 0);
         result = 31 * result + (lotNumber != null ? lotNumber.hashCode() : 0);
@@ -441,6 +458,7 @@ public class BaseTable {
         result = 31 * result + (newAuctionDate != null ? newAuctionDate.hashCode() : 0);
         result = 31 * result + (auctionNumber != null ? auctionNumber.hashCode() : 0);
         result = 31 * result + (symptom != null ? symptom.hashCode() : 0);
+        result = 31 * result + (isUnderControl ? 1 : 0);
         return result;
     }
 
@@ -466,6 +484,7 @@ public class BaseTable {
                 ", newAuctionDate=" + newAuctionDate +
                 ", auctionNumber='" + auctionNumber + '\'' +
                 ", symptom='" + symptom + '\'' +
+                ", isUnderControl=" + isUnderControl +
                 '}';
     }
 }
