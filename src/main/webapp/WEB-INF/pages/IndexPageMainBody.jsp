@@ -91,6 +91,7 @@
                 <th width="20"><%=BaseTableNamesEnum.AUCTION_DATE.getViewName()%></th>
                 <th width="20"><%=BaseTableNamesEnum.LOT_NUMBER.getViewName()%></th>
                 <th width="20"><%=BaseTableNamesEnum.KD_NUMBER.getViewName()%></th>
+                <th width="20"><%=BaseTableNamesEnum.ABOUT_AUCTION.getViewName()%></th>
                 <th width="20"><%=BaseTableNamesEnum.START_PRICE.getViewName()%></th>
                 <th width="20"><%=BaseTableNamesEnum.URL.getViewName()%></th>
                 <th width="20"><%=BaseTableNamesEnum.PROPERTY_DETAILS.getViewName()%></th>
@@ -114,6 +115,7 @@
                     <td>${allRecordsList.auctionDate}</td>
                     <td>${allRecordsList.lotNumber}</td>
                     <td>${allRecordsList.kdNumber}</td>
+                    <td>${allRecordsList.aboutAuction}</td>
                     <td>${allRecordsList.startPrice}</td>
                     <td>${allRecordsList.url}</td>
                     <td>${allRecordsList.propertyDetails}</td>
