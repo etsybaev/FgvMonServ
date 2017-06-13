@@ -238,11 +238,11 @@
             </tr>
             <tr>
                 <td>
-                    <form:label path="manager.Id">User Role</form:label>
+                    <form:label path="<%=BaseTableNamesEnum.MANAGER.getJoinedIdDbName()%>"><%=BaseTableNamesEnum.MANAGER.getViewName()%></form:label>
                 </td>
                 <td>
-                    <form:select required="required" path="manager.Id">
-                        <option value="-1">No manager assigned</option>
+                    <form:select required="required" path="<%=BaseTableNamesEnum.MANAGER.getJoinedIdDbName()%>">
+                        <option value="0">No manager assigned</option>
                         <c:forEach items="${allUsersList}" var="manager">
                             <c:choose>
                                 <c:when test="${manager.id == baseTableRecord.manager.id}">
@@ -256,6 +256,28 @@
                     </form:select>
                 </td>
             </tr>
+
+            <tr>
+                <td>
+                    <form:label path="<%=BaseTableNamesEnum.STATUS_OF_DEAL.getJoinedIdDbName()%>"><%=BaseTableNamesEnum.STATUS_OF_DEAL.getViewName()%></form:label>
+                </td>
+                <td>
+                    <form:select required="required" path="<%=BaseTableNamesEnum.STATUS_OF_DEAL.getJoinedIdDbName()%>">
+                        <option value="0">No status assigned</option>
+                        <c:forEach items="${statusOfDealList}" var="status">
+                            <c:choose>
+                                <c:when test="${status.id == baseTableRecord.statusOfDeal.id}">
+                                    <option selected value="${status.id}">${status.status}</option>
+                                </c:when>
+                                <c:otherwise>
+                                    <option value="${status.id}">${status.status}</option>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:forEach>
+                    </form:select>
+                </td>
+            </tr>
+
 
             <tr>
                 <td>

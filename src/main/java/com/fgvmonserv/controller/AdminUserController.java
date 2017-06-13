@@ -49,7 +49,7 @@ public class AdminUserController {
     @RequestMapping(value = "/admin/adduser", method = RequestMethod.POST)
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String addUser(@ModelAttribute("user") User user){
-        if(user.getId() == 0){
+        if(user.getId() == null){
             System.out.println("Adding new user with params " + user.toString());
             this.userService.addUser(user);
         }else {

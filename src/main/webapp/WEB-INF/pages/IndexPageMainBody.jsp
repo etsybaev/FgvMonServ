@@ -107,6 +107,7 @@
                 <th width="20"><%=BaseTableNamesEnum.SYMPTOM.getViewName()%></th>
                 <th width="20"><%=BaseTableNamesEnum.IS_UNDER_CONTROL.getViewName()%></th>
                 <th width="20"><%=BaseTableNamesEnum.MANAGER.getViewName()%></th>
+                <th width="20"><%=BaseTableNamesEnum.STATUS_OF_DEAL.getViewName()%></th>
 
             </tr>
             <c:forEach items="${allRecordsList}" var="allRecordsList">
@@ -133,6 +134,7 @@
                     <td>${allRecordsList.symptom}</td>
                     <td>${allRecordsList.isUnderControl}</td>
                     <td>${allRecordsList.manager.firstName}</td>
+                    <td>${allRecordsList.statusOfDeal.status}</td>
                 </tr>
             </c:forEach>
         </table>

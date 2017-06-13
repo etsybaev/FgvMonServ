@@ -63,6 +63,13 @@
         <property name="baseTableDao" ref="baseTableDao"/>
     </bean>
 
+    <bean id="statusOfDealDao" class="com.fgvmonserv.dao.StatusOfDealDaoImp">
+        <property name="sessionFactory" ref="hibernate5AnnotatedSessionFactory"/>
+    </bean>
+    <bean id="statusOfDealService" class="com.fgvmonserv.service.StatusOfDealServiceImpl">
+        <property name="statusOfDealDao" ref="statusOfDealDao"/>
+    </bean>
+
     <bean id="jsonConverter" class="com.fgvmonserv.converter.JsonConverter" />
     <bean id="urlEncoderDecoder" class="com.fgvmonserv.converter.UrlEncoderDecoder" />
     <bean id="csvConverter" class="com.fgvmonserv.converter.CsvConverter" />

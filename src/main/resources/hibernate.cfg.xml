@@ -6,5 +6,6 @@
         <mapping class="com.fgvmonserv.model.userauth.User"/>
         <mapping class="com.fgvmonserv.model.userauth.UserRoles"/>
         <mapping class="com.fgvmonserv.model.BaseTable"/>
+        <mapping class="com.fgvmonserv.model.StatusOfDeal"/>
     </session-factory>
 </hibernate-configuration>

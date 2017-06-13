@@ -8,5 +8,32 @@ ALTER TABLE `Monserv`.`BaseTable`
 CHANGE COLUMN `id` `id` INT(11) NOT NULL ,
 ADD COLUMN `manager` INT(11) NULL AFTER `isUnderControl`;
 
+-----------------------------------------
+
+CREATE TABLE `Monserv`.`StatusOfDeal` (
+  `id` INT NOT NULL,
+  `status` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`))
+DEFAULT CHARACTER SET = utf8;
+
+---------------------------------------------------
+
+INSERT INTO `Monserv`.`StatusOfDeal` (`id`, `status`) VALUES ('1', 'Proposal has been sent');
+INSERT INTO `Monserv`.`StatusOfDeal` (`id`, `status`) VALUES ('2', 'Prepaid received');
+INSERT INTO `Monserv`.`StatusOfDeal` (`id`, `status`) VALUES ('3', 'Deal is closed');
+
+-----------------------------------------------------------------------
+
+ALTER TABLE `Monserv`.`BaseTable`
+ADD COLUMN `statusOfDeal` INT(11) NULL AFTER `manager`;
+
+-------------------------------------------------------------
+
+ALTER TABLE `Monserv`.`BaseTable`
+CHANGE COLUMN `manager` `manager` INT(11) NULL DEFAULT 0 ,
+CHANGE COLUMN `statusOfDeal` `statusOfDeal` INT(11) NULL DEFAULT 0 ;
+
+
+
 
 

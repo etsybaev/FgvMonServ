@@ -2,6 +2,8 @@ package com.fgvmonserv.controller;
 
 import com.fgvmonserv.model.BaseTable;
 import com.fgvmonserv.service.BaseTableService;
+import com.fgvmonserv.service.StatusOfDealService;
+import com.fgvmonserv.service.StatusOfDealServiceImpl;
 import com.fgvmonserv.service.userauth.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -24,6 +26,7 @@ public class BaseTableController {
 
     private BaseTableService baseTableService;
     private UserService userService;
+    private StatusOfDealService statusOfDealService;
 
     @Autowired(required = true)
     @Qualifier(value = "baseTableService")
@@ -38,10 +41,20 @@ public class BaseTableController {
         return this;
     }
 
+    @Autowired
+    @Qualifier("statusOfDealService")
+    public BaseTableController setStatusOfDealService(StatusOfDealService statusOfDealService) {
+        this.statusOfDealService = statusOfDealService;
+        return this;
+    }
+
+
     @RequestMapping(value = "/addnewbasetablerecordform")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String addBaseTableRecord(@ModelAttribute("baseTableRecord") BaseTable baseTable, Model model){
         model.addAttribute("action", "ADD_USER");
+        model.addAttribute("allUsersList", this.userService.listUsers());
+        model.addAttribute("statusOfDealList", this.statusOfDealService.getAllStatusList());
         return "basetable/basetablerecorddetails";
     }
 
@@ -50,6 +63,7 @@ public class BaseTableController {
     public String baseTableRecordData(@PathVariable("id") int id, Model model){
         model.addAttribute("baseTableRecord", this.baseTableService.getRecordById(id));
         model.addAttribute("allUsersList", this.userService.listUsers());
+        model.addAttribute("statusOfDealList", this.statusOfDealService.getAllStatusList());
         return "basetable/basetablerecorddetails";
     }
 

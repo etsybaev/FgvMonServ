@@ -40,7 +40,8 @@ import java.time.LocalDate;
         "newAuctionDate",
         "auctionNumber",
         "symptom",
-        "isUnderControl"
+        "isUnderControl",
+        "statusOfDeal"
 })
 
 
@@ -149,6 +150,12 @@ public class BaseTable {
     @NotFound(action = NotFoundAction.IGNORE)
     private User manager;
 
+    @JsonProperty("statusOfDeal")
+    @OneToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="statusOfDeal")
+    @NotFound(action = NotFoundAction.IGNORE)
+    private StatusOfDeal statusOfDeal;
+
 
     @JsonIgnore
     public static BaseTable getShortBaseTableFromCsvLine(String[] lineFromCsv){
@@ -162,32 +169,6 @@ public class BaseTable {
                 .setUrl(lineFromCsv[7])
                 .setPropertyDetails(lineFromCsv[8]);
     }
-
-//    //I know this is harcode. Will re0write it later
-//    @JsonIgnore
-//    public String[] getValuesAsStringArray(){
-//        String[] objectAsArray = new String[19];
-//        objectAsArray[0] = getId().toString() ;
-//        objectAsArray[1] = getBank();
-//        objectAsArray[2] = getAuctionDate() == null ? "-" : getAuctionDate().toString();
-//        objectAsArray[3] = getLotNumber();
-//        objectAsArray[4] = getKdNumber();
-//        objectAsArray[5] = getAboutAuction();
-//        objectAsArray[6] = getStartPrice();
-//        objectAsArray[7] = getUrl();
-//        objectAsArray[8] = getPropertyDetails();
-//        objectAsArray[9] = getLoanDebtorFullName();
-//        objectAsArray[10] = getLoanDebtorPhoneNumber();
-//        objectAsArray[11] = getLoanDebtorIdentCode();
-//        objectAsArray[12] = getDetails();
-//        objectAsArray[13] = getDateOfCall() == null ? "-" : getDateOfCall().toString();
-//        objectAsArray[14] = getStatusOfCall();
-//        objectAsArray[15] = getNewPrice();
-//        objectAsArray[16] = getNewAuctionDate() == null ? "-" : getNewAuctionDate().toString();
-//        objectAsArray[17] = getAuctionNumber();
-//        objectAsArray[18] = getSymptom();
-//        return objectAsArray;
-//    }
 
     @JsonProperty("id")
     public Integer getId() {
@@ -409,7 +390,6 @@ public class BaseTable {
         return this;
     }
 
-
     @JsonProperty("manager")
     public User getManager() {
         return manager;
@@ -421,6 +401,16 @@ public class BaseTable {
         return this;
     }
 
+    @JsonProperty("statusOfDeal")
+    public StatusOfDeal getStatusOfDeal() {
+        return statusOfDeal;
+    }
+
+    @JsonProperty("statusOfDeal")
+    public BaseTable setStatusOfDeal(StatusOfDeal statusOfDeal) {
+        this.statusOfDeal = statusOfDeal;
+        return this;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -458,7 +448,8 @@ public class BaseTable {
         if (auctionNumber != null ? !auctionNumber.equals(baseTable.auctionNumber) : baseTable.auctionNumber != null)
             return false;
         if (symptom != null ? !symptom.equals(baseTable.symptom) : baseTable.symptom != null) return false;
-        return manager != null ? manager.equals(baseTable.manager) : baseTable.manager == null;
+        if (manager != null ? !manager.equals(baseTable.manager) : baseTable.manager != null) return false;
+        return statusOfDeal != null ? statusOfDeal.equals(baseTable.statusOfDeal) : baseTable.statusOfDeal == null;
     }
 
     @Override
@@ -484,6 +475,7 @@ public class BaseTable {
         result = 31 * result + (symptom != null ? symptom.hashCode() : 0);
         result = 31 * result + (isUnderControl ? 1 : 0);
         result = 31 * result + (manager != null ? manager.hashCode() : 0);
+        result = 31 * result + (statusOfDeal != null ? statusOfDeal.hashCode() : 0);
         return result;
     }
 
@@ -511,6 +503,7 @@ public class BaseTable {
                 ", symptom='" + symptom + '\'' +
                 ", isUnderControl=" + isUnderControl +
                 ", manager=" + manager +
+                ", statusOfDeal=" + statusOfDeal +
                 '}';
     }
 }

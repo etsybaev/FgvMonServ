@@ -26,7 +26,8 @@ public enum BaseTableNamesEnum {
     AUCTION_NUMBER("auctionNumber", "Auction number"),
     SYMPTOM("symptom", "Symptom"),
     IS_UNDER_CONTROL("isUnderControl", "Is under control"),
-    MANAGER("manager", "Manager");
+    MANAGER("manager", "Manager"),
+    STATUS_OF_DEAL("statusOfDeal", "Status of deal");
 
 
     private String dbName;
@@ -40,6 +41,10 @@ public enum BaseTableNamesEnum {
     public String getDbName(){
         return dbName;
     }
+    public String getJoinedIdDbName(){
+        return dbName + ".id";
+    }
+
 
     public String getViewName(){
         return viewName;
