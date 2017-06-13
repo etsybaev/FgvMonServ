@@ -84,57 +84,57 @@
 
     <p>Records found by provided search criteria: ${allRecordsList.size()}</p>
     <c:if test="${!empty allRecordsList}">
-        <table class="sortable" id="sortableTable">
+        <table class="sortable table" id="sortableTable">
             <tr>
-                <th width="10"><%=BaseTableNamesEnum.ID.getViewName()%></th>
-                <th width="70"><%=BaseTableNamesEnum.BANK.getViewName()%></th>
-                <th width="20"><%=BaseTableNamesEnum.AUCTION_DATE.getViewName()%></th>
-                <th width="20"><%=BaseTableNamesEnum.LOT_NUMBER.getViewName()%></th>
-                <th width="20"><%=BaseTableNamesEnum.KD_NUMBER.getViewName()%></th>
-                <th width="20"><%=BaseTableNamesEnum.ABOUT_AUCTION.getViewName()%></th>
-                <th width="20"><%=BaseTableNamesEnum.START_PRICE.getViewName()%></th>
-                <th width="20"><%=BaseTableNamesEnum.URL.getViewName()%></th>
-                <th width="20"><%=BaseTableNamesEnum.PROPERTY_DETAILS.getViewName()%></th>
-                <th width="20"><%=BaseTableNamesEnum.LOAN_DEBTOR_FULL_NAME.getViewName()%></th>
-                <th width="20"><%=BaseTableNamesEnum.LOAN_DEBTOR_PHONE_NUMBER.getViewName()%></th>
-                <th width="20"><%=BaseTableNamesEnum.LOAN_DEBTOR_IDENT_CODE.getViewName()%></th>
-                <th width="20"><%=BaseTableNamesEnum.DETAILS.getViewName()%></th>
-                <th width="20"><%=BaseTableNamesEnum.DATE_OF_CALL.getViewName()%></th>
-                <th width="20"><%=BaseTableNamesEnum.STATUS_OF_CALL.getViewName()%></th>
-                <th width="20"><%=BaseTableNamesEnum.NEW_PRICE.getViewName()%></th>
-                <th width="20"><%=BaseTableNamesEnum.NEW_AUCTION_DATE.getViewName()%></th>
-                <th width="20"><%=BaseTableNamesEnum.AUCTION_NUMBER.getViewName()%>r</th>
-                <th width="20"><%=BaseTableNamesEnum.SYMPTOM.getViewName()%></th>
-                <th width="20"><%=BaseTableNamesEnum.IS_UNDER_CONTROL.getViewName()%></th>
-                <th width="20"><%=BaseTableNamesEnum.MANAGER.getViewName()%></th>
-                <th width="20"><%=BaseTableNamesEnum.STATUS_OF_DEAL.getViewName()%></th>
+                <th><%=BaseTableNamesEnum.ID.getViewName()%></th>
+                <th><%=BaseTableNamesEnum.BANK.getViewName()%></th>
+                <th><%=BaseTableNamesEnum.AUCTION_DATE.getViewName()%></th>
+                <th><%=BaseTableNamesEnum.LOT_NUMBER.getViewName()%></th>
+                <th><%=BaseTableNamesEnum.KD_NUMBER.getViewName()%></th>
+                <th><%=BaseTableNamesEnum.ABOUT_AUCTION.getViewName()%></th>
+                <th><%=BaseTableNamesEnum.START_PRICE.getViewName()%></th>
+                <th><%=BaseTableNamesEnum.URL.getViewName()%></th>
+                <th><%=BaseTableNamesEnum.PROPERTY_DETAILS.getViewName()%></th>
+                <th><%=BaseTableNamesEnum.LOAN_DEBTOR_FULL_NAME.getViewName()%></th>
+                <th><%=BaseTableNamesEnum.LOAN_DEBTOR_PHONE_NUMBER.getViewName()%></th>
+                <th><%=BaseTableNamesEnum.LOAN_DEBTOR_IDENT_CODE.getViewName()%></th>
+                <th><%=BaseTableNamesEnum.DETAILS.getViewName()%></th>
+                <th><%=BaseTableNamesEnum.DATE_OF_CALL.getViewName()%></th>
+                <th><%=BaseTableNamesEnum.STATUS_OF_CALL.getViewName()%></th>
+                <th><%=BaseTableNamesEnum.NEW_PRICE.getViewName()%></th>
+                <th><%=BaseTableNamesEnum.NEW_AUCTION_DATE.getViewName()%></th>
+                <th><%=BaseTableNamesEnum.AUCTION_NUMBER.getViewName()%>r</th>
+                <th><%=BaseTableNamesEnum.SYMPTOM.getViewName()%></th>
+                <th><%=BaseTableNamesEnum.IS_UNDER_CONTROL.getViewName()%></th>
+                <th><%=BaseTableNamesEnum.MANAGER.getViewName()%></th>
+                <th><%=BaseTableNamesEnum.STATUS_OF_DEAL.getViewName()%></th>
 
             </tr>
             <c:forEach items="${allRecordsList}" var="allRecordsList">
                 <tr>
                     <%--<td>${allRecordsList.id}</td>--%>
-                    <td><a href="/basetableconroller/basetablerecorddetails/${allRecordsList.id}" >${allRecordsList.id}</a></td>
-                    <td>${allRecordsList.bank}</td>
-                    <td>${allRecordsList.auctionDate}</td>
-                    <td>${allRecordsList.lotNumber}</td>
-                    <td>${allRecordsList.kdNumber}</td>
-                    <td>${allRecordsList.aboutAuction}</td>
-                    <td>${allRecordsList.startPrice}</td>
-                    <td><a target="_blank" href="${allRecordsList.url}">${allRecordsList.url}</a></td>
-                    <td>${allRecordsList.propertyDetails}</td>
-                    <td>${allRecordsList.loanDebtorFullName}</td>
-                    <td>${allRecordsList.loanDebtorPhoneNumber}</td>
-                    <td>${allRecordsList.loanDebtorIdentCode}</td>
-                    <td>${allRecordsList.details}</td>
-                    <td>${allRecordsList.dateOfCall}</td>
-                    <td>${allRecordsList.statusOfCall}</td>
-                    <td>${allRecordsList.newPrice}</td>
-                    <td>${allRecordsList.newAuctionDate}</td>
-                    <td>${allRecordsList.auctionNumber}</td>
-                    <td>${allRecordsList.symptom}</td>
-                    <td>${allRecordsList.isUnderControl}</td>
-                    <td>${allRecordsList.manager.firstName}</td>
-                    <td>${allRecordsList.statusOfDeal.status}</td>
+                    <td title="${allRecordsList.id}"><a href="/basetableconroller/basetablerecorddetails/${allRecordsList.id}" >${allRecordsList.id}</a></td>
+                    <td title="${allRecordsList.bank}">${allRecordsList.bank}</td>
+                    <td title="${allRecordsList.auctionDate}">${allRecordsList.auctionDate}</td>
+                    <td title="${allRecordsList.lotNumber}">${allRecordsList.lotNumber}</td>
+                    <td title="${allRecordsList.kdNumber}">${allRecordsList.kdNumber}</td>
+                    <td title="${allRecordsList.aboutAuction}">${allRecordsList.aboutAuction}</td>
+                    <td title="${allRecordsList.startPrice}">${allRecordsList.startPrice}</td>
+                    <td title="${allRecordsList.url}"><a target="_blank" href="${allRecordsList.url}">${allRecordsList.url}</a></td>
+                    <td title="${allRecordsList.propertyDetails}">${allRecordsList.propertyDetails}</td>
+                    <td title="${allRecordsList.loanDebtorFullName}">${allRecordsList.loanDebtorFullName}</td>
+                    <td title="${allRecordsList.loanDebtorPhoneNumber}">${allRecordsList.loanDebtorPhoneNumber}</td>
+                    <td title="${allRecordsList.loanDebtorIdentCode}">${allRecordsList.loanDebtorIdentCode}</td>
+                    <td title="${allRecordsList.details}">${allRecordsList.details}</td>
+                    <td title="${allRecordsList.dateOfCall}">${allRecordsList.dateOfCall}</td>
+                    <td title="${allRecordsList.statusOfCall}">${allRecordsList.statusOfCall}</td>
+                    <td title="${allRecordsList.newPrice}">${allRecordsList.newPrice}</td>
+                    <td title="${allRecordsList.newAuctionDate}">${allRecordsList.newAuctionDate}</td>
+                    <td title="${allRecordsList.auctionNumber}">${allRecordsList.auctionNumber}</td>
+                    <td title="${allRecordsList.symptom}">${allRecordsList.symptom}</td>
+                    <td title="${allRecordsList.isUnderControl}">${allRecordsList.isUnderControl}</td>
+                    <td title="${allRecordsList.manager.firstName}">${allRecordsList.manager.firstName}</td>
+                    <td title="${allRecordsList.statusOfDeal.status}">${allRecordsList.statusOfDeal.status}</td>
                 </tr>
             </c:forEach>
         </table>

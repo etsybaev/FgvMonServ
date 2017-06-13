@@ -1,6 +1,16 @@
-th, td {
+th{
     padding: 3px !important;
 }
+
+td{
+    padding: 3px !important;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    max-width: 150px !important;
+    /*max-height: 150px !important;*/
+}
+
 /* Sortable tables */
 table.sortable thead {
     background-color: #333;
