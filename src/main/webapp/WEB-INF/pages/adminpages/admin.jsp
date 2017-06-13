@@ -149,7 +149,15 @@
                     <form:select required="required" path="userRoles.Id">
                         <option value="-1">Select a type</option>
                         <c:forEach items="${userRolesList}" var="role">
-                            <option value="${role.id}">${role.role}</option>
+                            <%--<option value="${role.id}">${role.role}</option>--%>
+                            <c:choose>
+                                <c:when test="${role.id == user.userRoles.id}">
+                                    <option selected value="${role.id}">${role.role}</option>
+                                </c:when>
+                                <c:otherwise>
+                                    <option value="${role.id}">${role.role}</option>
+                                </c:otherwise>
+                            </c:choose>
                         </c:forEach>
                     </form:select>
                 </td>

@@ -117,19 +117,12 @@ public class User {
         this.updatedtime = updatedtime;
     }
 
+
+    //This method is called during export to CSV. So need to be very carefully to do not export pass etc.
     @Override
     public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", contactPhoneNumber='" + contactPhoneNumber + '\'' +
-                ", password='" + password + '\'' +
-                ", enabled=" + enabled +
-                ", userRoles=" + userRoles +
-                ", createdtime=" + createdtime +
-                ", updatedtime=" + updatedtime +
-                '}';
+        return firstName +
+                " " + lastName;
     }
 }
 

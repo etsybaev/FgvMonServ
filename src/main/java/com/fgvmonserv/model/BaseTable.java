@@ -7,6 +7,9 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fgvmonserv.converter.DateTimeConverter;
 import com.fgvmonserv.converter.JsonDateDeserializer;
 import com.fgvmonserv.converter.JsonDateSerializer;
+import com.fgvmonserv.model.userauth.User;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -139,6 +142,13 @@ public class BaseTable {
     @JsonProperty("isUnderControl")
     @Column(name = "isUnderControl")
     private boolean isUnderControl;
+
+    @JsonProperty("manager")
+    @OneToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="manager")
+    @NotFound(action = NotFoundAction.IGNORE)
+    private User manager;
+
 
     @JsonIgnore
     public static BaseTable getShortBaseTableFromCsvLine(String[] lineFromCsv){
@@ -399,6 +409,19 @@ public class BaseTable {
         return this;
     }
 
+
+    @JsonProperty("manager")
+    public User getManager() {
+        return manager;
+    }
+
+    @JsonProperty("manager")
+    public BaseTable setManager(User manager) {
+        this.manager = manager;
+        return this;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -434,7 +457,8 @@ public class BaseTable {
             return false;
         if (auctionNumber != null ? !auctionNumber.equals(baseTable.auctionNumber) : baseTable.auctionNumber != null)
             return false;
-        return symptom != null ? symptom.equals(baseTable.symptom) : baseTable.symptom == null;
+        if (symptom != null ? !symptom.equals(baseTable.symptom) : baseTable.symptom != null) return false;
+        return manager != null ? manager.equals(baseTable.manager) : baseTable.manager == null;
     }
 
     @Override
@@ -459,6 +483,7 @@ public class BaseTable {
         result = 31 * result + (auctionNumber != null ? auctionNumber.hashCode() : 0);
         result = 31 * result + (symptom != null ? symptom.hashCode() : 0);
         result = 31 * result + (isUnderControl ? 1 : 0);
+        result = 31 * result + (manager != null ? manager.hashCode() : 0);
         return result;
     }
 
@@ -485,6 +510,7 @@ public class BaseTable {
                 ", auctionNumber='" + auctionNumber + '\'' +
                 ", symptom='" + symptom + '\'' +
                 ", isUnderControl=" + isUnderControl +
+                ", manager=" + manager +
                 '}';
     }
 }

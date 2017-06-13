@@ -25,7 +25,8 @@ public enum BaseTableNamesEnum {
     NEW_AUCTION_DATE("newAuctionDate", "New Auction date"),
     AUCTION_NUMBER("auctionNumber", "Auction number"),
     SYMPTOM("symptom", "Symptom"),
-    IS_UNDER_CONTROL("isUnderControl", "Is under control");
+    IS_UNDER_CONTROL("isUnderControl", "Is under control"),
+    MANAGER("manager", "Manager");
 
 
     private String dbName;

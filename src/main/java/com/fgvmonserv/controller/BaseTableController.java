@@ -2,6 +2,7 @@ package com.fgvmonserv.controller;
 
 import com.fgvmonserv.model.BaseTable;
 import com.fgvmonserv.service.BaseTableService;
+import com.fgvmonserv.service.userauth.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,11 +23,19 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class BaseTableController {
 
     private BaseTableService baseTableService;
+    private UserService userService;
 
     @Autowired(required = true)
     @Qualifier(value = "baseTableService")
     public void setBaseTableService(BaseTableService baseTableService) {
         this.baseTableService = baseTableService;
+    }
+
+    @Autowired
+    @Qualifier("userService")
+    public BaseTableController setUserService(UserService userService) {
+        this.userService = userService;
+        return this;
     }
 
     @RequestMapping(value = "/addnewbasetablerecordform")
@@ -40,6 +49,7 @@ public class BaseTableController {
     @PreAuthorize("isFullyAuthenticated()")
     public String baseTableRecordData(@PathVariable("id") int id, Model model){
         model.addAttribute("baseTableRecord", this.baseTableService.getRecordById(id));
+        model.addAttribute("allUsersList", this.userService.listUsers());
         return "basetable/basetablerecorddetails";
     }
 

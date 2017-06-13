@@ -4,3 +4,9 @@ ADD COLUMN `isUnderControl` TINYINT(1) NULL AFTER `symptom`;
 ---------------------------------------------------------------
 
 
+ALTER TABLE `Monserv`.`BaseTable`
+CHANGE COLUMN `id` `id` INT(11) NOT NULL ,
+ADD COLUMN `manager` INT(11) NULL AFTER `isUnderControl`;
+
+
+
