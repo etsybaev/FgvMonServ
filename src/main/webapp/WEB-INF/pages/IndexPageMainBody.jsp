@@ -117,7 +117,7 @@
                     <td>${allRecordsList.kdNumber}</td>
                     <td>${allRecordsList.aboutAuction}</td>
                     <td>${allRecordsList.startPrice}</td>
-                    <td>${allRecordsList.url}</td>
+                    <td><a target="_blank" href="${allRecordsList.url}">${allRecordsList.url}</a></td>
                     <td>${allRecordsList.propertyDetails}</td>
                     <td>${allRecordsList.loanDebtorFullName}</td>
                     <td>${allRecordsList.loanDebtorPhoneNumber}</td>
