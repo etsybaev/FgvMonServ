@@ -5,6 +5,8 @@ import com.fgvmonserv.enums.SearchByRangeTypeEnum;
 import com.fgvmonserv.model.BaseTableDateFilter;
 import com.fgvmonserv.model.userauth.User;
 import com.fgvmonserv.service.BaseTableService;
+import com.fgvmonserv.service.StatusOfDealService;
+import com.fgvmonserv.service.userauth.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -24,12 +26,28 @@ import java.util.Arrays;
 public class RootDomainController {
 
     private BaseTableService baseTableService;
+    private UserService userService;
+    private StatusOfDealService statusOfDealService;
 
 
     @Autowired
     @Qualifier("baseTableService")
     public RootDomainController setBaseTableService(BaseTableService baseTableService) {
         this.baseTableService = baseTableService;
+        return this;
+    }
+
+    @Autowired
+    @Qualifier("userService")
+    public RootDomainController setUserService(UserService userService) {
+        this.userService = userService;
+        return this;
+    }
+
+    @Autowired
+    @Qualifier("statusOfDealService")
+    public RootDomainController setStatusOfDealService(StatusOfDealService statusOfDealService) {
+        this.statusOfDealService = statusOfDealService;
         return this;
     }
 
@@ -53,6 +71,8 @@ public class RootDomainController {
 
         model.addAttribute("allRecordsList", this.baseTableService.getAllRecordsList(dateFilter));
         model.addAttribute("baseTableDateFilter", dateFilter);
+        model.addAttribute("allUsersList", this.userService.listUsers());
+        model.addAttribute("statusOfDealList", this.statusOfDealService.getAllStatusList());
         return "index";
     }
 }

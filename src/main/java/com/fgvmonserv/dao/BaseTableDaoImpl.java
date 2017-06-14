@@ -1,5 +1,6 @@
 package com.fgvmonserv.dao;
 
+import com.fgvmonserv.BaseTableNamesEnum;
 import com.fgvmonserv.model.BaseTable;
 import com.fgvmonserv.model.BaseTableDateFilter;
 import org.hibernate.Session;
@@ -62,16 +63,41 @@ public class BaseTableDaoImpl implements BaseTableDao {
     public List<BaseTable> getAllRecordsList(BaseTableDateFilter baseTableDateFilter) {
         System.out.println("Getting all user list");
         Session session = this.sessionFactory.getCurrentSession();
-        Query query = session.createQuery("from BaseTable where " + baseTableDateFilter.getBaseTableNamesEnum().getDbName() +
-                baseTableDateFilter.getSearchByRangeTypeEnum().getSqlSymbol() + ":auctionDateStartFromFilter");
-        query.setParameter("auctionDateStartFromFilter", baseTableDateFilter.getStartDate());
 
-        List<BaseTable> list = query.list();
+        List<BaseTable> list = getQueryForFetchAllRecordsAccordingToFilter(baseTableDateFilter, session).list();
 
         for(BaseTable baseTable : list){
             System.out.println("Got user " + baseTable);
         }
         return list;
+    }
+
+    //TODO to investigate options and rewrite!!!!!!!!!!!!!!!!!!!!!!!!
+    private Query getQueryForFetchAllRecordsAccordingToFilter(BaseTableDateFilter baseTableDateFilter, Session session){
+        StringBuffer sb = new StringBuffer();
+
+        sb.append("from BaseTable where " + baseTableDateFilter.getBaseTableNamesEnum().getDbName() +
+                baseTableDateFilter.getSearchByRangeTypeEnum().getSqlSymbol() + ":auctionDateStartFromFilter ");
+
+
+        if(baseTableDateFilter.getManager() != null && baseTableDateFilter.getManager().getId() != null ){
+            sb.append(" and " + BaseTableNamesEnum.MANAGER.getDbName() + "=:manager ");
+        }
+
+        if(baseTableDateFilter.getStatusOfDeal() != null && baseTableDateFilter.getStatusOfDeal().getId() != null ){
+            sb.append(" and " + BaseTableNamesEnum.STATUS_OF_DEAL.getDbName() + "=:statusOfDeal ");
+        }
+
+        Query query = session.createQuery(sb.toString());
+        query.setParameter("auctionDateStartFromFilter", baseTableDateFilter.getStartDate());
+
+        if(baseTableDateFilter.getManager() != null && baseTableDateFilter.getManager().getId() != null ){
+            query.setParameter("manager", baseTableDateFilter.getManager());
+        }
+        if(baseTableDateFilter.getStatusOfDeal() != null && baseTableDateFilter.getStatusOfDeal().getId() != null){
+            query.setParameter("statusOfDeal", baseTableDateFilter.getStatusOfDeal());
+        }
+        return query;
     }
 
     @Override

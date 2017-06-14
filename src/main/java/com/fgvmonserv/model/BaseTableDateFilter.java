@@ -2,6 +2,7 @@ package com.fgvmonserv.model;
 
 import com.fgvmonserv.BaseTableNamesEnum;
 import com.fgvmonserv.enums.SearchByRangeTypeEnum;
+import com.fgvmonserv.model.userauth.User;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
@@ -15,6 +16,8 @@ public class BaseTableDateFilter {
     private LocalDate startDate;
     private BaseTableNamesEnum baseTableNamesEnum;
     private SearchByRangeTypeEnum searchByRangeTypeEnum;
+    private User manager;
+    private StatusOfDeal statusOfDeal;
 
     public LocalDate getStartDate() {
         return startDate;
@@ -43,6 +46,24 @@ public class BaseTableDateFilter {
         return this;
     }
 
+    public User getManager() {
+        return manager;
+    }
+
+    public BaseTableDateFilter setManager(User manager) {
+        this.manager = manager;
+        return this;
+    }
+
+    public StatusOfDeal getStatusOfDeal() {
+        return statusOfDeal;
+    }
+
+    public BaseTableDateFilter setStatusOfDeal(StatusOfDeal statusOfDeal) {
+        this.statusOfDeal = statusOfDeal;
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -52,7 +73,9 @@ public class BaseTableDateFilter {
 
         if (startDate != null ? !startDate.equals(that.startDate) : that.startDate != null) return false;
         if (baseTableNamesEnum != that.baseTableNamesEnum) return false;
-        return searchByRangeTypeEnum == that.searchByRangeTypeEnum;
+        if (searchByRangeTypeEnum != that.searchByRangeTypeEnum) return false;
+        if (manager != null ? !manager.equals(that.manager) : that.manager != null) return false;
+        return statusOfDeal != null ? statusOfDeal.equals(that.statusOfDeal) : that.statusOfDeal == null;
     }
 
     @Override
@@ -60,6 +83,8 @@ public class BaseTableDateFilter {
         int result = startDate != null ? startDate.hashCode() : 0;
         result = 31 * result + (baseTableNamesEnum != null ? baseTableNamesEnum.hashCode() : 0);
         result = 31 * result + (searchByRangeTypeEnum != null ? searchByRangeTypeEnum.hashCode() : 0);
+        result = 31 * result + (manager != null ? manager.hashCode() : 0);
+        result = 31 * result + (statusOfDeal != null ? statusOfDeal.hashCode() : 0);
         return result;
     }
 
@@ -69,6 +94,8 @@ public class BaseTableDateFilter {
                 "startDate=" + startDate +
                 ", baseTableNamesEnum=" + baseTableNamesEnum +
                 ", searchByRangeTypeEnum=" + searchByRangeTypeEnum +
+                ", manager=" + manager +
+                ", statusOfDeal=" + statusOfDeal +
                 '}';
     }
 }

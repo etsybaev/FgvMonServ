@@ -58,13 +58,13 @@ DEFAULT CHARACTER SET = utf8;
 
 ------------------------------------------------------------------------------------------
 
-CREATE TABLE `Monserv`.`Bank` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `bankName` VARCHAR(45) NULL,
-  PRIMARY KEY (`id`))
-DEFAULT CHARACTER SET = cp1251
-COLLATE = cp1251_ukrainian_ci;
+//Need to create a triggers from Null to 0 on insert for manager and StatusOfDeal fields !!!!!!!!!!!!!!!!!!!!!!!
 
+CREATE DEFINER=`evg`@`localhost` TRIGGER `Monserv`.`BaseTable_BEFORE_INSERT` BEFORE INSERT ON `BaseTable` FOR EACH ROW
+BEGIN
+	IF NEW.manager is null then SET New.manager =0; END IF;
+    IF NEW.statusOfDeal is null then SET New.statusOfDeal =0; END IF;
+END
 
 -------------------------------------------------------------------------------------------------
 

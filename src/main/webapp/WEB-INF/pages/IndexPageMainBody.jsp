@@ -4,11 +4,16 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%--<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>--%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" %>
-    <script src="<c:url value="/resources/script/sorttable.js" />"></script>
-    <%--<link href="<c:url value="/resources/css/sortableTable.css" />" rel="tableStyle">--%>
+<script src="<c:url value="/resources/script/sorttable.js" />"></script>
+<%--<link href="<c:url value="/resources/css/sortableTable.css" />" rel="tableStyle">--%>
 
 <style type="text/css">
     @import "/resources/css/sortableTable.css";
+
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
 </style>
 
 
@@ -16,54 +21,79 @@
 
 <div id="timePickers" style="border: double">
     <h1>Filter result options</h1>
-        <form:form action="/" commandName="baseTableDateFilter" acceptCharset="UTF-8" method="get" >
-            <table>
-                <tr>
-                    <td>
-                        <form:label path="startDate">
-                            <spring:message text="Start Date"/>
-                        </form:label>
-                    </td>
-                    <td>
-                        <form:input type="date" path="startDate"/>
-                    </td>
-                </tr>
+    <form:form action="/" commandName="baseTableDateFilter" acceptCharset="UTF-8" method="get">
+        <table>
+            <tr>
+                <th>Date filter</th>
+                <th>Manager filter</th>
+                <th>Status of deal filter</th>
+            </tr>
+            <tr>
+                <td>
+                    <table>
+                        <tr>
+                            <td>
+                                <form:label path="startDate">
+                                    <spring:message text="Start Date"/>
+                                </form:label>
+                            </td>
+                            <td>
+                                <form:input type="date" path="startDate"/>
+                            </td>
+                        </tr>
 
-                <tr>
-                    <td>
-                        <form:label path="baseTableNamesEnum">
-                            <spring:message text="Filter by field"/>
-                        </form:label>
-                    </td>
-                    <td>
-                        <form:select required="required" path="baseTableNamesEnum">
-                            <c:forEach items="${byAuctionDate}" var="filterByCriteria">
-                                <option value="${filterByCriteria}">${filterByCriteria.getViewName()}</option>
-                            </c:forEach>
-                        </form:select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <form:label path="searchByRangeTypeEnum">
-                            <spring:message text="Filter by range"/>
-                        </form:label>
-                    </td>
-                    <td>
-                        <form:select required="required" path="searchByRangeTypeEnum">
-                            <c:forEach items="${searchByRangeType}" var="rangeSearchCriteria">
-                                <option value="${rangeSearchCriteria}">${rangeSearchCriteria.getViewName()}</option>
-                            </c:forEach>
-                        </form:select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <input type="submit" value="<spring:message text="Apply filter"/>"/>
-                    </td>
-                </tr>
-            </table>
-        </form:form>
+                        <tr>
+                            <td>
+                                <form:label path="baseTableNamesEnum">
+                                    <spring:message text="Filter by field"/>
+                                </form:label>
+                            </td>
+                            <td>
+                                <form:select required="required" path="baseTableNamesEnum">
+                                    <c:forEach items="${byAuctionDate}" var="filterByCriteria">
+                                        <option value="${filterByCriteria}">${filterByCriteria.getViewName()}</option>
+                                    </c:forEach>
+                                </form:select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <form:label path="searchByRangeTypeEnum">
+                                    <spring:message text="Filter by range"/>
+                                </form:label>
+                            </td>
+                            <td>
+                                <form:select required="required" path="searchByRangeTypeEnum">
+                                    <c:forEach items="${searchByRangeType}" var="rangeSearchCriteria">
+                                        <option value="${rangeSearchCriteria}">${rangeSearchCriteria.getViewName()}</option>
+                                    </c:forEach>
+                                </form:select>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td>
+                    <form:select path="<%=BaseTableNamesEnum.MANAGER.getJoinedIdDbName()%>">
+                        <option selected value="">Show all records</option>
+                        <option value="0">No manager assigned</option>
+                        <c:forEach items="${allUsersList}" var="manager">
+                            <option value="${manager.id}">${manager.firstName}</option>
+                        </c:forEach>
+                    </form:select>
+                </td>
+                <td>
+                    <form:select path="<%=BaseTableNamesEnum.STATUS_OF_DEAL.getJoinedIdDbName()%>">
+                        <option selected value="">Show all records</option>
+                        <option value="0">No status assigned</option>
+                        <c:forEach items="${statusOfDealList}" var="status">
+                            <option value="${status.id}">${status.status}</option>
+                        </c:forEach>
+                    </form:select>
+                </td>
+            </tr>
+        </table>
+        <input type="submit" value="<spring:message text="Apply filter"/>"/>
+    </form:form>
 </div>
 
 
