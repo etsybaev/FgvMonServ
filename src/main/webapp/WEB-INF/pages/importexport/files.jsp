@@ -56,14 +56,14 @@
                     </tr>
                     <c:forEach items="${parsedData.getBaseTableList()}" var="baseTable">
                         <tr>
-                            <td>${baseTable.bank}</td>
-                            <td>${baseTable.auctionDate}</td>
-                            <td>${baseTable.lotNumber}</td>
-                            <td>${baseTable.aboutAuction}</td>
-                            <td>${baseTable.kdNumber}</td>
-                            <td>${baseTable.startPrice}</td>
-                            <td>${baseTable.url}</td>
-                            <td>${baseTable.propertyDetails}</td>
+                            <td title="${baseTable.bank}">${baseTable.bank}</td>
+                            <td title="${baseTable.auctionDate}">${baseTable.auctionDate}</td>
+                            <td title="${baseTable.lotNumber}">${baseTable.lotNumber}</td>
+                            <td title="${baseTable.aboutAuction}">${baseTable.aboutAuction}</td>
+                            <td title="${baseTable.kdNumber}">${baseTable.kdNumber}</td>
+                            <td title="${baseTable.startPrice}">${baseTable.startPrice}</td>
+                            <td title="${baseTable.url}"><a target="_blank" href="${baseTable.url}">${baseTable.url}</a></td>
+                            <td title="${baseTable.propertyDetails}">${baseTable.propertyDetails}</td>
                         </tr>
                     </c:forEach>
                 </table>
