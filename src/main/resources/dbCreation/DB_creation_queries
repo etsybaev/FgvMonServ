@@ -62,9 +62,27 @@ DEFAULT CHARACTER SET = utf8;
 
 CREATE DEFINER = CURRENT_USER TRIGGER `Monserv`.`BaseTable_BEFORE_INSERT` BEFORE INSERT ON `BaseTable` FOR EACH ROW
 BEGIN
-	IF NEW.manager is null then SET New.manager =0; END IF;
-    IF NEW.statusOfDeal is null then SET New.statusOfDeal =0; END IF;
+		IF NEW.manager is null then SET New.manager =0; END IF;
+        IF NEW.statusOfDeal is null then SET New.statusOfDeal =0; END IF;
+        IF NEW.statusOfCall is null then SET New.statusOfCall =0; END IF;
 END
 
 -------------------------------------------------------------------------------------------------
+CREATE TABLE `Monserv`.`StatusOfCall` (
+  `id` INT NOT NULL,
+  `status` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+DEFAULT CHARACTER SET = utf8;
+
+-------------------------------------------------------------------------------
+
+INSERT INTO `Monserv`.`CallStatus` (`id`, `status`) VALUES ('1', 'Re-Dial');
+INSERT INTO `Monserv`.`CallStatus` (`id`, `status`) VALUES ('2', 'Invalid Number');
+INSERT INTO `Monserv`.`CallStatus` (`id`, `status`) VALUES ('3', 'Number not available');
+INSERT INTO `Monserv`.`CallStatus` (`id`, `status`) VALUES ('4', 'Not interesting');
+INSERT INTO `Monserv`.`CallStatus` (`id`, `status`) VALUES ('5', 'Interesting');
+----------------------------------------------------------------------------------
+
+ALTER TABLE `Monserv`.`BaseTable`
+CHANGE COLUMN `statusOfCall` `statusOfCall` INT(11) NULL DEFAULT 0 ;
 

@@ -2,6 +2,7 @@ package com.fgvmonserv.controller;
 
 import com.fgvmonserv.model.BaseTable;
 import com.fgvmonserv.service.BaseTableService;
+import com.fgvmonserv.service.StatusOfCallService;
 import com.fgvmonserv.service.StatusOfDealService;
 import com.fgvmonserv.service.StatusOfDealServiceImpl;
 import com.fgvmonserv.service.userauth.UserService;
@@ -27,6 +28,7 @@ public class BaseTableController {
     private BaseTableService baseTableService;
     private UserService userService;
     private StatusOfDealService statusOfDealService;
+    private StatusOfCallService statusOfCallService;
 
     @Autowired(required = true)
     @Qualifier(value = "baseTableService")
@@ -48,6 +50,12 @@ public class BaseTableController {
         return this;
     }
 
+    @Autowired
+    @Qualifier("statusOfCallService")
+    public BaseTableController setStatusOfCallService(StatusOfCallService statusOfCallService) {
+        this.statusOfCallService = statusOfCallService;
+        return this;
+    }
 
     @RequestMapping(value = "/addnewbasetablerecordform")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -55,6 +63,7 @@ public class BaseTableController {
         model.addAttribute("action", "ADD_USER");
         model.addAttribute("allUsersList", this.userService.listUsers());
         model.addAttribute("statusOfDealList", this.statusOfDealService.getAllStatusList());
+        model.addAttribute("allCallStatusesList", this.statusOfCallService.getAllStatusesList());
         return "basetable/basetablerecorddetails";
     }
 
@@ -64,6 +73,7 @@ public class BaseTableController {
         model.addAttribute("baseTableRecord", this.baseTableService.getRecordById(id));
         model.addAttribute("allUsersList", this.userService.listUsers());
         model.addAttribute("statusOfDealList", this.statusOfDealService.getAllStatusList());
+        model.addAttribute("allCallStatusesList", this.statusOfCallService.getAllStatusesList());
         return "basetable/basetablerecorddetails";
     }
 

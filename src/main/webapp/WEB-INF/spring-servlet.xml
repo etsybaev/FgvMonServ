@@ -70,6 +70,14 @@
         <property name="statusOfDealDao" ref="statusOfDealDao"/>
     </bean>
 
+
+    <bean id="statusOfCallDao" class="com.fgvmonserv.dao.StatusOfCallDaoImpl">
+        <property name="sessionFactory" ref="hibernate5AnnotatedSessionFactory"/>
+    </bean>
+    <bean id="statusOfCallService" class="com.fgvmonserv.service.StatusOfCallServiceImpl">
+        <property name="statusOfCallDao" ref="statusOfCallDao"/>
+    </bean>
+
     <bean id="jsonConverter" class="com.fgvmonserv.converter.JsonConverter" />
     <bean id="urlEncoderDecoder" class="com.fgvmonserv.converter.UrlEncoderDecoder" />
     <bean id="csvConverter" class="com.fgvmonserv.converter.CsvConverter" />

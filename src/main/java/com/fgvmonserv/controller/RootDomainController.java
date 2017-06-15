@@ -5,6 +5,7 @@ import com.fgvmonserv.enums.SearchByRangeTypeEnum;
 import com.fgvmonserv.model.BaseTableDateFilter;
 import com.fgvmonserv.model.userauth.User;
 import com.fgvmonserv.service.BaseTableService;
+import com.fgvmonserv.service.StatusOfCallService;
 import com.fgvmonserv.service.StatusOfDealService;
 import com.fgvmonserv.service.userauth.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,7 @@ public class RootDomainController {
     private BaseTableService baseTableService;
     private UserService userService;
     private StatusOfDealService statusOfDealService;
+    private StatusOfCallService statusOfCallService;
 
 
     @Autowired
@@ -51,6 +53,12 @@ public class RootDomainController {
         return this;
     }
 
+    @Autowired
+    @Qualifier("statusOfCallService")
+    public RootDomainController setStatusOfCallService(StatusOfCallService statusOfCallService) {
+        this.statusOfCallService = statusOfCallService;
+        return this;
+    }
 
     @PreAuthorize("isFullyAuthenticated()")
     @RequestMapping(value = "/", method = RequestMethod.GET)
@@ -74,6 +82,7 @@ public class RootDomainController {
         model.addAttribute("allUsersList", this.userService.listUsers());
         model.addAttribute("statusOfDealList", this.statusOfDealService.getAllStatusList());
         model.addAttribute("allBanksList", this.baseTableService.getAllBanksList());
+        model.addAttribute("allCallStatusesList", this.statusOfCallService.getAllStatusesList());
         return "index";
     }
 }

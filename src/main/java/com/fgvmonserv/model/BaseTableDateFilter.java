@@ -20,6 +20,7 @@ public class BaseTableDateFilter {
     private StatusOfDeal statusOfDeal;
     private Boolean isUnderControl;
     private String bank;
+    private StatusOfCall statusOfCall;
 
     public LocalDate getStartDate() {
         return startDate;
@@ -84,6 +85,15 @@ public class BaseTableDateFilter {
         return this;
     }
 
+    public StatusOfCall getStatusOfCall() {
+        return statusOfCall;
+    }
+
+    public BaseTableDateFilter setStatusOfCall(StatusOfCall statusOfCall) {
+        this.statusOfCall = statusOfCall;
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -98,7 +108,8 @@ public class BaseTableDateFilter {
         if (statusOfDeal != null ? !statusOfDeal.equals(that.statusOfDeal) : that.statusOfDeal != null) return false;
         if (isUnderControl != null ? !isUnderControl.equals(that.isUnderControl) : that.isUnderControl != null)
             return false;
-        return bank != null ? bank.equals(that.bank) : that.bank == null;
+        if (bank != null ? !bank.equals(that.bank) : that.bank != null) return false;
+        return statusOfCall != null ? statusOfCall.equals(that.statusOfCall) : that.statusOfCall == null;
     }
 
     @Override
@@ -110,6 +121,7 @@ public class BaseTableDateFilter {
         result = 31 * result + (statusOfDeal != null ? statusOfDeal.hashCode() : 0);
         result = 31 * result + (isUnderControl != null ? isUnderControl.hashCode() : 0);
         result = 31 * result + (bank != null ? bank.hashCode() : 0);
+        result = 31 * result + (statusOfCall != null ? statusOfCall.hashCode() : 0);
         return result;
     }
 
@@ -123,6 +135,7 @@ public class BaseTableDateFilter {
                 ", statusOfDeal=" + statusOfDeal +
                 ", isUnderControl=" + isUnderControl +
                 ", bank='" + bank + '\'' +
+                ", statusOfCall=" + statusOfCall +
                 '}';
     }
 }

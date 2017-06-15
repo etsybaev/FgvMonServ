@@ -117,9 +117,15 @@ public class BaseTable {
     @Column(name = "dateOfCall")
     private LocalDate dateOfCall;
 
+//    @JsonProperty("statusOfCall")
+//    @Column(name = "statusOfCall")
+//    private String statusOfCall;
+
     @JsonProperty("statusOfCall")
-    @Column(name = "statusOfCall")
-    private String statusOfCall;
+    @OneToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="statusOfCall")
+    @NotFound(action = NotFoundAction.IGNORE)
+    private StatusOfCall statusOfCall;
 
     @JsonProperty("newPrice")
     @Column(name = "newPrice")
@@ -325,12 +331,12 @@ public class BaseTable {
     }
 
     @JsonProperty("statusOfCall")
-    public String getStatusOfCall() {
+    public StatusOfCall getStatusOfCall() {
         return statusOfCall;
     }
 
     @JsonProperty("statusOfCall")
-    public BaseTable setStatusOfCall(String statusOfCall) {
+    public BaseTable setStatusOfCall(StatusOfCall statusOfCall) {
         this.statusOfCall = statusOfCall;
         return this;
     }

@@ -181,8 +181,26 @@
                     </form:label>
                 </td>
                 <td>
-                    <form:textarea path="<%=BaseTableNamesEnum.STATUS_OF_CALL.getDbName()%>" rows="7" cols="90"
-                                   cssStyle="font-weight: normal;resize: none;overflow-y: scroll;"/>
+                    <%--<form:textarea path="<%=BaseTableNamesEnum.STATUS_OF_CALL.getDbName()%>" rows="7" cols="90"--%>
+                                   <%--cssStyle="font-weight: normal;resize: none;overflow-y: scroll;"/>--%>
+                        <form:select path="<%=BaseTableNamesEnum.STATUS_OF_CALL.getJoinedIdDbName()%>">
+                            <%--<option value="0">No status assigned</option>--%>
+                            <%--<c:forEach items="${allCallStatusesList}" var="status">--%>
+                                <%--<option value="${status.id}">${status.status}</option>--%>
+                            <%--</c:forEach>--%>
+                            <option value="0">No status assigned</option>
+                            <c:forEach items="${allCallStatusesList}" var="status">
+                                <c:choose>
+                                    <c:when test="${status.id == baseTableRecord.statusOfCall.id}">
+                                        <option selected value="${status.id}">${status.status}</option>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <option value="${status.id}">${status.status}</option>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:forEach>
+
+                        </form:select>
                 </td>
             </tr>
             <tr>

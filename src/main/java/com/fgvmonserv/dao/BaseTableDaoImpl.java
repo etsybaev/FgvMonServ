@@ -101,6 +101,9 @@ public class BaseTableDaoImpl implements BaseTableDao {
         if(baseTableDateFilter.getBank() != null && !baseTableDateFilter.getBank().isEmpty()){
             sb.append(" and " + BaseTableNamesEnum.BANK.getDbName() + "=:bank ");
         }
+        if(baseTableDateFilter.getStatusOfCall() != null && baseTableDateFilter.getStatusOfCall().getId() != null ){
+            sb.append(" and " + BaseTableNamesEnum.STATUS_OF_CALL.getDbName() + "=:statusOfCall ");
+        }
 
         Query query = session.createQuery(sb.toString());
         query.setParameter("auctionDateStartFromFilter", baseTableDateFilter.getStartDate());
@@ -116,6 +119,9 @@ public class BaseTableDaoImpl implements BaseTableDao {
         }
         if(baseTableDateFilter.getBank() != null && !baseTableDateFilter.getBank().isEmpty()){
             query.setParameter("bank", baseTableDateFilter.getBank());
+        }
+        if(baseTableDateFilter.getStatusOfCall() != null && baseTableDateFilter.getStatusOfCall().getId() != null){
+            query.setParameter("statusOfCall", baseTableDateFilter.getStatusOfCall());
         }
         return query;
     }

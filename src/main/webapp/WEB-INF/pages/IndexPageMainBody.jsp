@@ -29,6 +29,7 @@
                 <th>Status of deal filter</th>
                 <th>Is under control filter</th>
                 <th>Bank filter</th>
+                <th>Status of call filter</th>
             </tr>
             <tr>
                 <td>
@@ -107,6 +108,16 @@
                         </c:forEach>
                     </form:select>
                 </td>
+                <td>
+                    <%--<form:select path="statusOfCall.id">--%>
+                    <form:select path="<%=BaseTableNamesEnum.STATUS_OF_CALL.getJoinedIdDbName()%>">
+                        <option selected value="">Show all records</option>
+                        <option value="0">No status assigned</option>
+                        <c:forEach items="${allCallStatusesList}" var="status">
+                            <option value="${status.id}">${status.status}</option>
+                        </c:forEach>
+                    </form:select>
+                </td>
             </tr>
         </table>
         <input type="submit" value="<spring:message text="Apply filter"/>"/>
@@ -174,7 +185,7 @@
                     <td title="${allRecordsList.loanDebtorIdentCode}">${allRecordsList.loanDebtorIdentCode}</td>
                     <td title="${allRecordsList.details}">${allRecordsList.details}</td>
                     <td title="${allRecordsList.dateOfCall}">${allRecordsList.dateOfCall}</td>
-                    <td title="${allRecordsList.statusOfCall}">${allRecordsList.statusOfCall}</td>
+                    <td title="${allRecordsList.statusOfCall.status}">${allRecordsList.statusOfCall.status}</td>
                     <td title="${allRecordsList.newPrice}">${allRecordsList.newPrice}</td>
                     <td title="${allRecordsList.newAuctionDate}">${allRecordsList.newAuctionDate}</td>
                     <td title="${allRecordsList.auctionNumber}">${allRecordsList.auctionNumber}</td>

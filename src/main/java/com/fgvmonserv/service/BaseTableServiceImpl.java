@@ -1,19 +1,10 @@
 package com.fgvmonserv.service;
 
-import com.fgvmonserv.BaseTableNamesEnum;
 import com.fgvmonserv.dao.BaseTableDao;
 import com.fgvmonserv.model.BaseTable;
 import com.fgvmonserv.model.BaseTableDateFilter;
-import com.opencsv.CSVReader;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
-
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,12 +15,12 @@ import java.util.List;
 @Service
 public class BaseTableServiceImpl implements BaseTableService {
 
+    BaseTableDao baseTableDao;
+
     public BaseTableServiceImpl setBaseTableDao(BaseTableDao baseTableDao) {
         this.baseTableDao = baseTableDao;
         return this;
     }
-
-    BaseTableDao baseTableDao;
 
 
     @Override
