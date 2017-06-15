@@ -36,9 +36,8 @@ import java.time.LocalDate;
         "details",
         "dateOfCall",
         "statusOfCall",
-        "newPrice",
         "newAuctionDate",
-        "auctionNumber",
+        "managersComment",
         "symptom",
         "isUnderControl",
         "statusOfDeal"
@@ -117,19 +116,11 @@ public class BaseTable {
     @Column(name = "dateOfCall")
     private LocalDate dateOfCall;
 
-//    @JsonProperty("statusOfCall")
-//    @Column(name = "statusOfCall")
-//    private String statusOfCall;
-
     @JsonProperty("statusOfCall")
     @OneToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="statusOfCall")
     @NotFound(action = NotFoundAction.IGNORE)
     private StatusOfCall statusOfCall;
-
-    @JsonProperty("newPrice")
-    @Column(name = "newPrice")
-    private String newPrice;
 
     @JsonProperty("newAuctionDate")
     @JsonDeserialize(using = JsonDateDeserializer.class)
@@ -138,9 +129,9 @@ public class BaseTable {
     @Column(name = "newAuctionDate")
     private LocalDate newAuctionDate;
 
-    @JsonProperty("auctionNumber")
-    @Column(name = "auctionNumber")
-    private String auctionNumber;
+    @JsonProperty("managersComment")
+    @Column(name = "managersComment")
+    private String managersComment;
 
     @JsonProperty("symptom")
     @Column(name = "symptom")
@@ -341,17 +332,6 @@ public class BaseTable {
         return this;
     }
 
-    @JsonProperty("newPrice")
-    public String getNewPrice() {
-        return newPrice;
-    }
-
-    @JsonProperty("newPrice")
-    public BaseTable setNewPrice(String newPrice) {
-        this.newPrice = newPrice;
-        return this;
-    }
-
     @JsonProperty("newAuctionDate")
     public LocalDate getNewAuctionDate() {
         return newAuctionDate;
@@ -363,14 +343,14 @@ public class BaseTable {
         return this;
     }
 
-    @JsonProperty("auctionNumber")
-    public String getAuctionNumber() {
-        return auctionNumber;
+    @JsonProperty("managersComment")
+    public String getManagersComment() {
+        return managersComment;
     }
 
-    @JsonProperty("auctionNumber")
-    public BaseTable setAuctionNumber(String auctionNumber) {
-        this.auctionNumber = auctionNumber;
+    @JsonProperty("managersComment")
+    public BaseTable setManagersComment(String managersComment) {
+        this.managersComment = managersComment;
         return this;
     }
 
@@ -448,10 +428,9 @@ public class BaseTable {
         if (dateOfCall != null ? !dateOfCall.equals(baseTable.dateOfCall) : baseTable.dateOfCall != null) return false;
         if (statusOfCall != null ? !statusOfCall.equals(baseTable.statusOfCall) : baseTable.statusOfCall != null)
             return false;
-        if (newPrice != null ? !newPrice.equals(baseTable.newPrice) : baseTable.newPrice != null) return false;
         if (newAuctionDate != null ? !newAuctionDate.equals(baseTable.newAuctionDate) : baseTable.newAuctionDate != null)
             return false;
-        if (auctionNumber != null ? !auctionNumber.equals(baseTable.auctionNumber) : baseTable.auctionNumber != null)
+        if (managersComment != null ? !managersComment.equals(baseTable.managersComment) : baseTable.managersComment != null)
             return false;
         if (symptom != null ? !symptom.equals(baseTable.symptom) : baseTable.symptom != null) return false;
         if (manager != null ? !manager.equals(baseTable.manager) : baseTable.manager != null) return false;
@@ -475,9 +454,8 @@ public class BaseTable {
         result = 31 * result + (details != null ? details.hashCode() : 0);
         result = 31 * result + (dateOfCall != null ? dateOfCall.hashCode() : 0);
         result = 31 * result + (statusOfCall != null ? statusOfCall.hashCode() : 0);
-        result = 31 * result + (newPrice != null ? newPrice.hashCode() : 0);
         result = 31 * result + (newAuctionDate != null ? newAuctionDate.hashCode() : 0);
-        result = 31 * result + (auctionNumber != null ? auctionNumber.hashCode() : 0);
+        result = 31 * result + (managersComment != null ? managersComment.hashCode() : 0);
         result = 31 * result + (symptom != null ? symptom.hashCode() : 0);
         result = 31 * result + (isUnderControl ? 1 : 0);
         result = 31 * result + (manager != null ? manager.hashCode() : 0);
@@ -503,9 +481,8 @@ public class BaseTable {
                 ", details='" + details + '\'' +
                 ", dateOfCall=" + dateOfCall +
                 ", statusOfCall='" + statusOfCall + '\'' +
-                ", newPrice='" + newPrice + '\'' +
                 ", newAuctionDate=" + newAuctionDate +
-                ", auctionNumber='" + auctionNumber + '\'' +
+                ", managersComment='" + managersComment + '\'' +
                 ", symptom='" + symptom + '\'' +
                 ", isUnderControl=" + isUnderControl +
                 ", manager=" + manager +

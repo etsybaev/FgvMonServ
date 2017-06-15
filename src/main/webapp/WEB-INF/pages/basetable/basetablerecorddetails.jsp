@@ -205,16 +205,6 @@
             </tr>
             <tr>
                 <td>
-                    <form:label path="<%=BaseTableNamesEnum.NEW_PRICE.getDbName()%>">
-                        <spring:message text="<%=BaseTableNamesEnum.NEW_PRICE.getViewName()%>"/>
-                    </form:label>
-                </td>
-                <td>
-                    <form:input path="<%=BaseTableNamesEnum.NEW_PRICE.getDbName()%>"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
                     <form:label path="<%=BaseTableNamesEnum.NEW_AUCTION_DATE.getDbName()%>">
                         <spring:message text="<%=BaseTableNamesEnum.NEW_AUCTION_DATE.getViewName()%>"/>
                     </form:label>
@@ -225,12 +215,13 @@
             </tr>
             <tr>
                 <td>
-                    <form:label path="<%=BaseTableNamesEnum.AUCTION_NUMBER.getDbName()%>">
-                        <spring:message text="<%=BaseTableNamesEnum.AUCTION_NUMBER.getViewName()%>"/>
+                    <form:label path="<%=BaseTableNamesEnum.MANAGERS_COMMENT.getDbName()%>">
+                        <spring:message text="<%=BaseTableNamesEnum.MANAGERS_COMMENT.getViewName()%>"/>
                     </form:label>
                 </td>
                 <td>
-                    <form:input path="<%=BaseTableNamesEnum.AUCTION_NUMBER.getDbName()%>"/>
+                    <form:textarea path="<%=BaseTableNamesEnum.MANAGERS_COMMENT.getDbName()%>" rows="15" cols="90"
+                                cssStyle="font-weight: normal; resize: none;overflow-y: scroll;"/>
                 </td>
             </tr>
             <tr>

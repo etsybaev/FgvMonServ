@@ -159,9 +159,8 @@
                 <th><%=BaseTableNamesEnum.DETAILS.getViewName()%></th>
                 <th><%=BaseTableNamesEnum.DATE_OF_CALL.getViewName()%></th>
                 <th><%=BaseTableNamesEnum.STATUS_OF_CALL.getViewName()%></th>
-                <th><%=BaseTableNamesEnum.NEW_PRICE.getViewName()%></th>
                 <th><%=BaseTableNamesEnum.NEW_AUCTION_DATE.getViewName()%></th>
-                <th><%=BaseTableNamesEnum.AUCTION_NUMBER.getViewName()%>r</th>
+                <th><%=BaseTableNamesEnum.MANAGERS_COMMENT.getViewName()%>r</th>
                 <th><%=BaseTableNamesEnum.SYMPTOM.getViewName()%></th>
                 <th><%=BaseTableNamesEnum.IS_UNDER_CONTROL.getViewName()%></th>
                 <th><%=BaseTableNamesEnum.MANAGER.getViewName()%></th>
@@ -186,9 +185,8 @@
                     <td title="${allRecordsList.details}">${allRecordsList.details}</td>
                     <td title="${allRecordsList.dateOfCall}">${allRecordsList.dateOfCall}</td>
                     <td title="${allRecordsList.statusOfCall.status}">${allRecordsList.statusOfCall.status}</td>
-                    <td title="${allRecordsList.newPrice}">${allRecordsList.newPrice}</td>
                     <td title="${allRecordsList.newAuctionDate}">${allRecordsList.newAuctionDate}</td>
-                    <td title="${allRecordsList.auctionNumber}">${allRecordsList.auctionNumber}</td>
+                    <td title="${allRecordsList.managersComment}">${allRecordsList.managersComment}</td>
                     <td title="${allRecordsList.symptom}">${allRecordsList.symptom}</td>
                     <td title="${allRecordsList.isUnderControl}">${allRecordsList.isUnderControl}</td>
                     <td title="${allRecordsList.manager.firstName}">${allRecordsList.manager.firstName}</td>

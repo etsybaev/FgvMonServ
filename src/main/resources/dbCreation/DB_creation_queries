@@ -47,9 +47,8 @@ CREATE TABLE `Monserv`.`BaseTable` (
   `details` MEDIUMTEXT NULL,
   `dateOfCall` DATE NULL,
   `statusOfCall` VARCHAR(45) NULL,
-  `newPrice` VARCHAR(45) NULL,
   `newAuctionDate` DATE NULL,
-  `auctionNumber` VARCHAR(45) NULL,
+  `managersComment` VARCHAR(45) NULL,
   `symptom` VARCHAR(45) NULL,
   PRIMARY KEY (`id`))
 DEFAULT CHARACTER SET = utf8;
