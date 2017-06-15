@@ -60,7 +60,7 @@ DEFAULT CHARACTER SET = utf8;
 
 //Need to create a triggers from Null to 0 on insert for manager and StatusOfDeal fields !!!!!!!!!!!!!!!!!!!!!!!
 
-CREATE DEFINER=`evg`@`localhost` TRIGGER `Monserv`.`BaseTable_BEFORE_INSERT` BEFORE INSERT ON `BaseTable` FOR EACH ROW
+CREATE DEFINER = CURRENT_USER TRIGGER `Monserv`.`BaseTable_BEFORE_INSERT` BEFORE INSERT ON `BaseTable` FOR EACH ROW
 BEGIN
 	IF NEW.manager is null then SET New.manager =0; END IF;
     IF NEW.statusOfDeal is null then SET New.statusOfDeal =0; END IF;
@@ -68,38 +68,3 @@ END
 
 -------------------------------------------------------------------------------------------------
 
-
-CREATE TABLE `Monserv`.`Exchange` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `exchangeName` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id`))
-DEFAULT CHARACTER SET = cp1251
-COLLATE = cp1251_ukrainian_ci;
-
-
-
----------------------------------------------------------------------------------------------
-
-
-CREATE TABLE `Monserv`.`Aassets` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `bankId` INT NULL,
-  `exchangeId` INT NULL,
-  `auctionDate` DATE NULL,
-  `lotNumber` VARCHAR(45) NULL,
-  `debtSize` FLOAT NULL,
-  `startPrice` FLOAT NULL,
-  `priceForClient` FLOAT NULL,
-  `discount` VARCHAR(10) NULL,
-  `url` TEXT NULL,
-  `lotOverview` TEXT NULL,
-  `fullName` VARCHAR(45) NULL,
-  `phoneNumber` VARCHAR(45) NULL,
-  `details` LONGTEXT NULL,
-  `callDate` DATE NULL,
-  `callStatus` VARCHAR(45) NULL,
-  `newPrice` VARCHAR(45) NULL,
-  `newAuctionDate` DATE NULL,
-  PRIMARY KEY (`id`))
-DEFAULT CHARACTER SET = cp1251
-COLLATE = cp1251_ukrainian_ci;

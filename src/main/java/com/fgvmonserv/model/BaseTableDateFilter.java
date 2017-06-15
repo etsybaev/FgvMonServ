@@ -18,6 +18,7 @@ public class BaseTableDateFilter {
     private SearchByRangeTypeEnum searchByRangeTypeEnum;
     private User manager;
     private StatusOfDeal statusOfDeal;
+    private Boolean isUnderControl;
 
     public LocalDate getStartDate() {
         return startDate;
@@ -64,6 +65,15 @@ public class BaseTableDateFilter {
         return this;
     }
 
+    public Boolean getIsUnderControl() {
+        return isUnderControl;
+    }
+
+    public BaseTableDateFilter setIsUnderControl(Boolean isUnderControl) {
+        this.isUnderControl = isUnderControl;
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -75,7 +85,8 @@ public class BaseTableDateFilter {
         if (baseTableNamesEnum != that.baseTableNamesEnum) return false;
         if (searchByRangeTypeEnum != that.searchByRangeTypeEnum) return false;
         if (manager != null ? !manager.equals(that.manager) : that.manager != null) return false;
-        return statusOfDeal != null ? statusOfDeal.equals(that.statusOfDeal) : that.statusOfDeal == null;
+        if (statusOfDeal != null ? !statusOfDeal.equals(that.statusOfDeal) : that.statusOfDeal != null) return false;
+        return isUnderControl != null ? isUnderControl.equals(that.isUnderControl) : that.isUnderControl == null;
     }
 
     @Override
@@ -85,6 +96,7 @@ public class BaseTableDateFilter {
         result = 31 * result + (searchByRangeTypeEnum != null ? searchByRangeTypeEnum.hashCode() : 0);
         result = 31 * result + (manager != null ? manager.hashCode() : 0);
         result = 31 * result + (statusOfDeal != null ? statusOfDeal.hashCode() : 0);
+        result = 31 * result + (isUnderControl != null ? isUnderControl.hashCode() : 0);
         return result;
     }
 
@@ -96,6 +108,7 @@ public class BaseTableDateFilter {
                 ", searchByRangeTypeEnum=" + searchByRangeTypeEnum +
                 ", manager=" + manager +
                 ", statusOfDeal=" + statusOfDeal +
+                ", isOnControl='" + isUnderControl + '\'' +
                 '}';
     }
 }

@@ -83,9 +83,11 @@ public class BaseTableDaoImpl implements BaseTableDao {
         if(baseTableDateFilter.getManager() != null && baseTableDateFilter.getManager().getId() != null ){
             sb.append(" and " + BaseTableNamesEnum.MANAGER.getDbName() + "=:manager ");
         }
-
         if(baseTableDateFilter.getStatusOfDeal() != null && baseTableDateFilter.getStatusOfDeal().getId() != null ){
             sb.append(" and " + BaseTableNamesEnum.STATUS_OF_DEAL.getDbName() + "=:statusOfDeal ");
+        }
+        if(baseTableDateFilter.getIsUnderControl() != null){
+            sb.append(" and " + BaseTableNamesEnum.IS_UNDER_CONTROL.getDbName() + "=:isUnderControl ");
         }
 
         Query query = session.createQuery(sb.toString());
@@ -96,6 +98,9 @@ public class BaseTableDaoImpl implements BaseTableDao {
         }
         if(baseTableDateFilter.getStatusOfDeal() != null && baseTableDateFilter.getStatusOfDeal().getId() != null){
             query.setParameter("statusOfDeal", baseTableDateFilter.getStatusOfDeal());
+        }
+        if(baseTableDateFilter.getIsUnderControl() != null){
+            query.setParameter("isUnderControl", baseTableDateFilter.getIsUnderControl());
         }
         return query;
     }

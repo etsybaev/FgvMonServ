@@ -27,6 +27,7 @@
                 <th>Date filter</th>
                 <th>Manager filter</th>
                 <th>Status of deal filter</th>
+                <th>Is under control filter</th>
             </tr>
             <tr>
                 <td>
@@ -88,6 +89,13 @@
                         <c:forEach items="${statusOfDealList}" var="status">
                             <option value="${status.id}">${status.status}</option>
                         </c:forEach>
+                    </form:select>
+                </td>
+                <td>
+                    <form:select path="<%=BaseTableNamesEnum.IS_UNDER_CONTROL.getDbName()%>">
+                        <option selected value="">Show all records</option>
+                        <option value="true">Under control</option>
+                        <option value="false">Is NOT under control</option>
                     </form:select>
                 </td>
             </tr>
