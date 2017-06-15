@@ -18,5 +18,6 @@ public interface BaseTableService {
     public void removeBaseTableRecord(int id);
     public List<BaseTable> getAllRecordsList();
     public List<BaseTable> getAllRecordsList(BaseTableDateFilter baseTableDateFilter);
+    public List<String> getAllBanksList();
 
 }

@@ -73,6 +73,7 @@ public class RootDomainController {
         model.addAttribute("baseTableDateFilter", dateFilter);
         model.addAttribute("allUsersList", this.userService.listUsers());
         model.addAttribute("statusOfDealList", this.statusOfDealService.getAllStatusList());
+        model.addAttribute("allBanksList", this.baseTableService.getAllBanksList());
         return "index";
     }
 }

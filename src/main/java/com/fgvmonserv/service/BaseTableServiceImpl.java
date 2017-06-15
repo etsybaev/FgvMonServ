@@ -65,6 +65,12 @@ public class BaseTableServiceImpl implements BaseTableService {
 
     @Override
     @Transactional
+    public List<String> getAllBanksList() {
+        return this.baseTableDao.getAllBanksList();
+    }
+
+    @Override
+    @Transactional
     public void removeBaseTableRecord(int id) {
         this.baseTableDao.removeBaseTableRecord(id);
     }

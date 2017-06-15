@@ -19,6 +19,7 @@ public class BaseTableDateFilter {
     private User manager;
     private StatusOfDeal statusOfDeal;
     private Boolean isUnderControl;
+    private String bank;
 
     public LocalDate getStartDate() {
         return startDate;
@@ -74,6 +75,15 @@ public class BaseTableDateFilter {
         return this;
     }
 
+    public String getBank() {
+        return bank;
+    }
+
+    public BaseTableDateFilter setBank(String bank) {
+        this.bank = bank;
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -86,7 +96,9 @@ public class BaseTableDateFilter {
         if (searchByRangeTypeEnum != that.searchByRangeTypeEnum) return false;
         if (manager != null ? !manager.equals(that.manager) : that.manager != null) return false;
         if (statusOfDeal != null ? !statusOfDeal.equals(that.statusOfDeal) : that.statusOfDeal != null) return false;
-        return isUnderControl != null ? isUnderControl.equals(that.isUnderControl) : that.isUnderControl == null;
+        if (isUnderControl != null ? !isUnderControl.equals(that.isUnderControl) : that.isUnderControl != null)
+            return false;
+        return bank != null ? bank.equals(that.bank) : that.bank == null;
     }
 
     @Override
@@ -97,6 +109,7 @@ public class BaseTableDateFilter {
         result = 31 * result + (manager != null ? manager.hashCode() : 0);
         result = 31 * result + (statusOfDeal != null ? statusOfDeal.hashCode() : 0);
         result = 31 * result + (isUnderControl != null ? isUnderControl.hashCode() : 0);
+        result = 31 * result + (bank != null ? bank.hashCode() : 0);
         return result;
     }
 
@@ -108,7 +121,8 @@ public class BaseTableDateFilter {
                 ", searchByRangeTypeEnum=" + searchByRangeTypeEnum +
                 ", manager=" + manager +
                 ", statusOfDeal=" + statusOfDeal +
-                ", isOnControl='" + isUnderControl + '\'' +
+                ", isUnderControl=" + isUnderControl +
+                ", bank='" + bank + '\'' +
                 '}';
     }
 }

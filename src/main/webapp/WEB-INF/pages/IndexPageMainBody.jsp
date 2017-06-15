@@ -28,6 +28,7 @@
                 <th>Manager filter</th>
                 <th>Status of deal filter</th>
                 <th>Is under control filter</th>
+                <th>Bank filter</th>
             </tr>
             <tr>
                 <td>
@@ -96,6 +97,14 @@
                         <option selected value="">Show all records</option>
                         <option value="true">Under control</option>
                         <option value="false">Is NOT under control</option>
+                    </form:select>
+                </td>
+                <td>
+                    <form:select path="<%=BaseTableNamesEnum.BANK.getDbName()%>">
+                        <option selected value="">Show all records</option>
+                        <c:forEach items="${allBanksList}" var="bank">
+                            <option value="${bank}">${bank}</option>
+                        </c:forEach>
                     </form:select>
                 </td>
             </tr>

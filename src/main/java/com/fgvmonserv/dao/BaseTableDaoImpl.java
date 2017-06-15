@@ -72,6 +72,15 @@ public class BaseTableDaoImpl implements BaseTableDao {
         return list;
     }
 
+    @Override
+    public List<String> getAllBanksList() {
+        System.out.println("Getting all Banks list");
+        Session session = sessionFactory.getCurrentSession();
+        List<String> bankList = session.createQuery("select distinct bank FROM BaseTable order by bank").list();
+        System.out.println("Got bank list: " + bankList);
+        return bankList;
+    }
+
     //TODO to investigate options and rewrite!!!!!!!!!!!!!!!!!!!!!!!!
     private Query getQueryForFetchAllRecordsAccordingToFilter(BaseTableDateFilter baseTableDateFilter, Session session){
         StringBuffer sb = new StringBuffer();
@@ -89,6 +98,9 @@ public class BaseTableDaoImpl implements BaseTableDao {
         if(baseTableDateFilter.getIsUnderControl() != null){
             sb.append(" and " + BaseTableNamesEnum.IS_UNDER_CONTROL.getDbName() + "=:isUnderControl ");
         }
+        if(baseTableDateFilter.getBank() != null && !baseTableDateFilter.getBank().isEmpty()){
+            sb.append(" and " + BaseTableNamesEnum.BANK.getDbName() + "=:bank ");
+        }
 
         Query query = session.createQuery(sb.toString());
         query.setParameter("auctionDateStartFromFilter", baseTableDateFilter.getStartDate());
@@ -101,6 +113,9 @@ public class BaseTableDaoImpl implements BaseTableDao {
         }
         if(baseTableDateFilter.getIsUnderControl() != null){
             query.setParameter("isUnderControl", baseTableDateFilter.getIsUnderControl());
+        }
+        if(baseTableDateFilter.getBank() != null && !baseTableDateFilter.getBank().isEmpty()){
+            query.setParameter("bank", baseTableDateFilter.getBank());
         }
         return query;
     }
