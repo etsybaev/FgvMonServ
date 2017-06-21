@@ -128,6 +128,13 @@
 
 <div class="sortableTable">
 
+    <script>
+        function openEditPage(id) {
+            window.location = '/basetableconroller/basetablerecorddetails/' + id;
+        }
+    </script>
+
+
     <c:if test="${pageContext.request.isUserInRole('ROLE_ADMIN') == true}">
         <p>
             <form action="/basetableconroller/addnewbasetablerecordform">
@@ -168,7 +175,7 @@
 
             </tr>
             <c:forEach items="${allRecordsList}" var="allRecordsList">
-                <tr>
+                <tr ondblclick="openEditPage(${allRecordsList.id})">
                     <%--<td>${allRecordsList.id}</td>--%>
                     <td title="${allRecordsList.id}"><a href="/basetableconroller/basetablerecorddetails/${allRecordsList.id}" >${allRecordsList.id}</a></td>
                     <td title="${allRecordsList.bank}">${allRecordsList.bank}</td>
