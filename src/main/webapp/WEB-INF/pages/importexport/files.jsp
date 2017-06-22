@@ -42,7 +42,7 @@
         </c:if>
 
         <div>
-            <c:if test="${!empty jsonData}">
+            <c:if test="${!empty uid}">
                 <table class="sortable" id="sortableTable">
                     <tr>
                         <th width="80"><%=BaseTableNamesEnum.BANK.getViewName()%></th>
@@ -69,7 +69,7 @@
                 </table>
 
                 <form action="/importexport/doAddRecords" style="text-align: center;" method="post" modelAttribute="parsedData" enctype="application/x-www-form-urlencoded">
-                    <input type="hidden" value="${jsonData}" name="data">
+                    <input type="hidden" value="${uid}" name="uid">
                     <input type="submit" value="Confirm">
                 </form>
             </c:if>

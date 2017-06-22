@@ -5,11 +5,16 @@ import com.fgvmonserv.converter.JsonConverter;
 import com.fgvmonserv.converter.UrlEncoderDecoder;
 import com.fgvmonserv.model.BaseTable;
 import com.fgvmonserv.model.BaseTableListHolder;
+import com.fgvmonserv.model.FileStorage;
 import com.fgvmonserv.model.userauth.User;
 import com.fgvmonserv.service.BaseTableService;
+import com.fgvmonserv.service.FileStorageService;
+import com.fgvmonserv.service.userauth.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +32,8 @@ public class ImportExportController {
     private JsonConverter jsonConverter ;
     private UrlEncoderDecoder urlEncoderDecoder;
     private CsvConverter csvConverter;
+    private FileStorageService fileStorageService;
+    private UserService userService;
 
     @Autowired(required = true)
     @Qualifier(value = "baseTableService")
@@ -56,6 +63,20 @@ public class ImportExportController {
         return this;
     }
 
+    @Autowired(required = true)
+    @Qualifier(value = "fileStorageService")
+    public ImportExportController setFileStorageService(FileStorageService fileStorageService) {
+        this.fileStorageService = fileStorageService;
+        return this;
+    }
+
+    @Autowired(required = true)
+    @Qualifier(value = "userService")
+    public ImportExportController setUserService(UserService userService) {
+        this.userService = userService;
+        return this;
+    }
+
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/importexport", method = RequestMethod.GET)
     public String indexPage(Model model){
@@ -75,12 +96,17 @@ public class ImportExportController {
         if(shortBaseTableInfoFromCsvFile != null){
             BaseTableListHolder baseTableListHolder = new BaseTableListHolder();
             baseTableListHolder.getBaseTableList().addAll(shortBaseTableInfoFromCsvFile);
+            redirectAttributes.addFlashAttribute("parsedData", baseTableListHolder);
+
             redirectAttributes.addFlashAttribute("message", "Please check the records to be uploaded." +
                     " \n If it looks good please press on Confirm button below. Otherwise fix your CSV file and try again. \n");
 
-            redirectAttributes.addFlashAttribute("parsedData", baseTableListHolder);
-            redirectAttributes.addFlashAttribute("jsonData",
-                    urlEncoderDecoder.encodeToUrlUtf8((jsonConverter.convertToJson(baseTableListHolder))));
+            //getting user id that will be used as key to save and then fetch file from DB
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            //in our case name is PhoneNumber that is actually unique identifier
+            User user = userService.getUserByContactPhoneNumber(auth.getName());
+            fileStorageService.saveFileInStorage(user.getId(), file.getBytes());
+            redirectAttributes.addFlashAttribute("uid", user.getId() );
         }else {
             redirectAttributes.addFlashAttribute("message", "OOOPS! Unable to parse your CSV file. " +
                     "Supported delimited: semicolon, supported encoding formats: UTF-8 and UTF-16 \n");
@@ -98,12 +124,12 @@ public class ImportExportController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/importexport/doAddRecords", method=RequestMethod.POST)
-    public String addUser(@ModelAttribute("data") String baseTableHolder, RedirectAttributes redirectAttributes){
-        String s = urlEncoderDecoder.decodeFromUrlUtf8(baseTableHolder);
-        BaseTableListHolder baseTableListHolder = jsonConverter.convertJsonToObject(s,
-                BaseTableListHolder.class, false);
+    public String addUser(@ModelAttribute("uid") int uid, RedirectAttributes redirectAttributes){
+        FileStorage fileStorage = fileStorageService.getFileStorageByUserId(uid);
 
-        baseTableListHolder.getBaseTableList().forEach(record -> this.baseTableService.addBaseTableRecord(record));
+        List<BaseTable> shortBaseTableInfoFromCsvFile = csvConverter.getShortBaseTableInfoFromCsvFile(fileStorage.getFile());
+
+        shortBaseTableInfoFromCsvFile.forEach(record -> this.baseTableService.addBaseTableRecord(record));
         redirectAttributes.addFlashAttribute("message", "All records have been added to database");
         return "redirect:/importexport/fileupload";
     }
@@ -120,6 +146,45 @@ public class ImportExportController {
         csvConverter.writeBaseTableToCSVFileAndSendToClientInResponse(response, baseTableService.getAllRecordsList(),
                 csvConverter.getColumnNamesThatWillBeShownInexportedCsvFile(), csvConverter.getBaseTableVariablesNameToBeExported());
     }
+
+
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
+//    @RequestMapping(value="/importexport/fileupload", method=RequestMethod.POST)
+//    public String processUpload(@RequestParam CommonsMultipartFile file, RedirectAttributes redirectAttributes) {
+//        if (file.isEmpty()) {
+//            redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
+//            return "redirect:/importexport/fileupload";
+//        }
+//
+//        List<BaseTable> shortBaseTableInfoFromCsvFile = csvConverter.getShortBaseTableInfoFromCsvFile(file);
+//        if(shortBaseTableInfoFromCsvFile != null){
+//            BaseTableListHolder baseTableListHolder = new BaseTableListHolder();
+//            baseTableListHolder.getBaseTableList().addAll(shortBaseTableInfoFromCsvFile);
+//            redirectAttributes.addFlashAttribute("message", "Please check the records to be uploaded." +
+//                    " \n If it looks good please press on Confirm button below. Otherwise fix your CSV file and try again. \n");
+//
+//            redirectAttributes.addFlashAttribute("parsedData", baseTableListHolder);
+//            redirectAttributes.addFlashAttribute("jsonData",
+//                    urlEncoderDecoder.encodeToUrlUtf8((jsonConverter.convertToJson(baseTableListHolder))));
+//        }else {
+//            redirectAttributes.addFlashAttribute("message", "OOOPS! Unable to parse your CSV file. " +
+//                    "Supported delimited: semicolon, supported encoding formats: UTF-8 and UTF-16 \n");
+//        }
+//        return "redirect:/importexport/fileupload";
+//    }
+
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
+//    @RequestMapping(value = "/importexport/doAddRecords", method=RequestMethod.POST)
+//    public String addUser(@ModelAttribute("data") String baseTableHolder, RedirectAttributes redirectAttributes){
+//        String s = urlEncoderDecoder.decodeFromUrlUtf8(baseTableHolder);
+//        BaseTableListHolder baseTableListHolder = jsonConverter.convertJsonToObject(s,
+//                BaseTableListHolder.class, false);
+//
+//        baseTableListHolder.getBaseTableList().forEach(record -> this.baseTableService.addBaseTableRecord(record));
+//        redirectAttributes.addFlashAttribute("message", "All records have been added to database");
+//        return "redirect:/importexport/fileupload";
+//    }
+
 
 
 

@@ -47,6 +47,31 @@ public class CsvConverter {
         return null;
     }
 
+    public List<BaseTable> getShortBaseTableInfoFromCsvFile(byte[] file) {
+        List<String> knownEncodingList = Arrays.asList("UTF-8", "UTF-16");
+        List<BaseTable> resultList = new ArrayList<>();
+        for (String knownEncoding : knownEncodingList) {
+            try {
+                // Get the file and save it somewhere
+
+                //http://opencsv.sourceforge.net/
+                CSVReader reader = new CSVReader(new InputStreamReader(new ByteArrayInputStream(file), knownEncoding), ';');
+                List<String[]> csvLines = reader.readAll();
+                //As the first line of CSV document is column titles - need to start from second line, i.e. not from 0, but from 1
+                for (int i = 1; i < csvLines.size(); i++) {
+                    String[] csvLine = csvLines.get(i);
+                    BaseTable shortBaseTableFromCsvLine = BaseTable.getShortBaseTableFromCsvLine(csvLine);
+                    resultList.add(shortBaseTableFromCsvLine);
+                }
+                return resultList;
+            } catch (Exception e) {
+                //Do Nothing. This is just a loop. If we got any fail with one encoding, then will try with another
+            }
+        }
+        System.err.println("ERROR! Failed in parsing uploaded file. Probably didn't manage to find find right encoding to parse uploaded file!");
+        return null;
+    }
+
 //    public List<String[]> getPreparedListOfStringArrayToWriteToCsvFile(List<BaseTable> allRecordsList) {
 //        List<String[]> listOfStringArrayToWriteToCsvFile = new ArrayList<>();
 //        //Adding columns header names

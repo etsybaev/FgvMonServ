@@ -85,3 +85,16 @@ INSERT INTO `Monserv`.`CallStatus` (`id`, `status`) VALUES ('5', 'Interesting');
 ALTER TABLE `Monserv`.`BaseTable`
 CHANGE COLUMN `statusOfCall` `statusOfCall` INT(11) NULL DEFAULT 0 ;
 
+
+
+---------------------------------------------------------------------
+
+CREATE TABLE `Monserv`.`FileStorage` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `userId` INT NOT NULL,
+  `file` BLOB NOT NULL,
+  `createdTime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`))
+DEFAULT CHARACTER SET = utf8;
+
+-------------------------------------------------------------------------------
