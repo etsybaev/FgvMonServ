@@ -54,7 +54,7 @@
                         <th width="100"><%=BaseTableNamesEnum.URL.getViewName()%></th>
                         <th width="100"><%=BaseTableNamesEnum.PROPERTY_DETAILS.getViewName()%></th>
                     </tr>
-                    <c:forEach items="${parsedData.getBaseTableList()}" var="baseTable">
+                    <c:forEach items="${parsedData}" var="baseTable">
                         <tr>
                             <td title="${baseTable.bank}">${baseTable.bank}</td>
                             <td title="${baseTable.auctionDate}">${baseTable.auctionDate}</td>

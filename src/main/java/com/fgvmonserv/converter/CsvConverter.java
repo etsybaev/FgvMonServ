@@ -22,32 +22,7 @@ import java.util.List;
  */
 public class CsvConverter {
 
-    public List<BaseTable> getShortBaseTableInfoFromCsvFile(CommonsMultipartFile file) {
-        List<String> knownEncodingList = Arrays.asList("UTF-8", "UTF-16");
-        List<BaseTable> resultList = new ArrayList<>();
-        for (String knownEncoding : knownEncodingList) {
-            try {
-                // Get the file and save it somewhere
-                byte[] bytes = file.getBytes();
-                //http://opencsv.sourceforge.net/
-                CSVReader reader = new CSVReader(new InputStreamReader(new ByteArrayInputStream(bytes), knownEncoding), ';');
-                List<String[]> csvLines = reader.readAll();
-                //As the first line of CSV document is column titles - need to start from second line, i.e. not from 0, but from 1
-                for (int i = 1; i < csvLines.size(); i++) {
-                    String[] csvLine = csvLines.get(i);
-                    BaseTable shortBaseTableFromCsvLine = BaseTable.getShortBaseTableFromCsvLine(csvLine);
-                    resultList.add(shortBaseTableFromCsvLine);
-                }
-                return resultList;
-            } catch (Exception e) {
-                //Do Nothing. This is just a loop. If we got any fail with one encoding, then will try with another
-            }
-        }
-        System.err.println("ERROR! Failed in parsing uploaded file. Probably didn't manage to find find right encoding to parse uploaded file!");
-        return null;
-    }
-
-    public List<BaseTable> getShortBaseTableInfoFromCsvFile(byte[] file) {
+   public List<BaseTable> getShortBaseTableInfoFromCsvFile(byte[] file) {
         List<String> knownEncodingList = Arrays.asList("UTF-8", "UTF-16");
         List<BaseTable> resultList = new ArrayList<>();
         for (String knownEncoding : knownEncodingList) {
@@ -72,19 +47,8 @@ public class CsvConverter {
         return null;
     }
 
-//    public List<String[]> getPreparedListOfStringArrayToWriteToCsvFile(List<BaseTable> allRecordsList) {
-//        List<String[]> listOfStringArrayToWriteToCsvFile = new ArrayList<>();
-//        //Adding columns header names
-//        listOfStringArrayToWriteToCsvFile.add(getColumnNamesThatWillBeShownInexportedCsvFile());
-//        //Now need to prepare and add values
-//        allRecordsList.forEach(baseTable -> {
-//            listOfStringArrayToWriteToCsvFile.add(baseTable.getValuesAsStringArray());
-//        });
-//
-//        return listOfStringArrayToWriteToCsvFile;
-//    }
 
-    public void writeBaseTableToCSVFileAndSendToClientInResponse(HttpServletResponse response, List<BaseTable> allRecordsList,
+   public void writeBaseTableToCSVFileAndSendToClientInResponse(HttpServletResponse response, List<BaseTable> allRecordsList,
                                             String[] columnNamesThatWillBeShownInExportedCsvFile, String[] baseTableVariablesNameToBeExported){
         String csvFileName = "DataBase.csv";
         response.setContentType("text/csv");

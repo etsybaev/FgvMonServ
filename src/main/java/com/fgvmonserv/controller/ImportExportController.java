@@ -4,7 +4,6 @@ import com.fgvmonserv.converter.CsvConverter;
 import com.fgvmonserv.converter.JsonConverter;
 import com.fgvmonserv.converter.UrlEncoderDecoder;
 import com.fgvmonserv.model.BaseTable;
-import com.fgvmonserv.model.BaseTableListHolder;
 import com.fgvmonserv.model.FileStorage;
 import com.fgvmonserv.model.userauth.User;
 import com.fgvmonserv.service.BaseTableService;
@@ -92,11 +91,9 @@ public class ImportExportController {
             return "redirect:/importexport/fileupload";
         }
 
-        List<BaseTable> shortBaseTableInfoFromCsvFile = csvConverter.getShortBaseTableInfoFromCsvFile(file);
+        List<BaseTable> shortBaseTableInfoFromCsvFile = csvConverter.getShortBaseTableInfoFromCsvFile(file.getBytes());
         if(shortBaseTableInfoFromCsvFile != null){
-            BaseTableListHolder baseTableListHolder = new BaseTableListHolder();
-            baseTableListHolder.getBaseTableList().addAll(shortBaseTableInfoFromCsvFile);
-            redirectAttributes.addFlashAttribute("parsedData", baseTableListHolder);
+            redirectAttributes.addFlashAttribute("parsedData", shortBaseTableInfoFromCsvFile);
 
             redirectAttributes.addFlashAttribute("message", "Please check the records to be uploaded." +
                     " \n If it looks good please press on Confirm button below. Otherwise fix your CSV file and try again. \n");
@@ -117,7 +114,7 @@ public class ImportExportController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value="/importexport/fileupload", method=RequestMethod.GET)
-    public String processUploadGet(@ModelAttribute("parsedData") BaseTableListHolder baseTableHolder) {
+    public String processUploadGet() {
         return "/importexport/files";
     }
 
@@ -126,9 +123,7 @@ public class ImportExportController {
     @RequestMapping(value = "/importexport/doAddRecords", method=RequestMethod.POST)
     public String addUser(@ModelAttribute("uid") int uid, RedirectAttributes redirectAttributes){
         FileStorage fileStorage = fileStorageService.getFileStorageByUserId(uid);
-
         List<BaseTable> shortBaseTableInfoFromCsvFile = csvConverter.getShortBaseTableInfoFromCsvFile(fileStorage.getFile());
-
         shortBaseTableInfoFromCsvFile.forEach(record -> this.baseTableService.addBaseTableRecord(record));
         redirectAttributes.addFlashAttribute("message", "All records have been added to database");
         return "redirect:/importexport/fileupload";
