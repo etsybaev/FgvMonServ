@@ -8,6 +8,7 @@ import com.fgvmonserv.converter.DateTimeConverter;
 import com.fgvmonserv.converter.JsonDateDeserializer;
 import com.fgvmonserv.converter.JsonDateSerializer;
 import com.fgvmonserv.model.userauth.User;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -28,6 +29,7 @@ import java.time.LocalDate;
         "kdNumber",
         "aboutAuction",
         "startPrice",
+        "calculatorPageTable",
         "url",
         "propertyDetails",
         "loanDebtorFullName",
@@ -84,6 +86,12 @@ public class BaseTable {
     @JsonProperty("startPrice")
     @Column(name = "startPrice")
     private String startPrice;
+
+    @JsonProperty("calculatorPageTable")
+    @OneToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="calculatorPageTable")
+    @NotFound(action = NotFoundAction.IGNORE)
+    private CalculatorPageTable calculatorPageTable;
 
     @JsonProperty("url")
     @Column(name = "url")
@@ -167,6 +175,65 @@ public class BaseTable {
                 .setPropertyDetails(lineFromCsv[8]);
     }
 
+//    @JsonIgnore
+//    public static BaseTable getShortBaseTableFromCsvLineGoogleImport(String[] lineFromCsv){
+//        BaseTable baseTable = new BaseTable();
+//
+//        //Fill bank if no defined
+//        if(lineFromCsv[1] == null || lineFromCsv[1].isEmpty()){
+//            lineFromCsv[1] = "No Bank name defined";
+//        }
+//
+//        //prepare Auction Date to parse. Handle empty and Date with some text
+//        String regex = "(?!^)\\+|[^-.\\d]+";
+//        lineFromCsv[2] = lineFromCsv[2].replaceAll(regex, "").trim();
+//        if(lineFromCsv[2].isEmpty()){
+//            lineFromCsv[2] = LocalDate.now().minusYears(1).toString();
+//        }
+//        if(lineFromCsv[2].matches("[0-9]+")){
+//            lineFromCsv[2] = LocalDate.now().minusYears(1).toString();
+//        }
+//
+//        //Prepare Date of call
+////        lineFromCsv[13] = lineFromCsv[13].replaceAll(regex, "").trim();
+//        if(lineFromCsv[13].matches("[0-9]+")){
+//            System.out.println("DateOfCall: " + lineFromCsv[13]);
+//            lineFromCsv[13] = "";
+//
+//        }
+//
+//        //Prepare newAuctionDate
+////        lineFromCsv[15] = lineFromCsv[15].replaceAll(regex, "").trim();
+//        if(lineFromCsv[15].matches("[0-9]+")){
+//            System.out.println("newAuctionDate: " + lineFromCsv[15]);
+//            lineFromCsv[15] = "";
+//        }
+//
+//        baseTable
+//                .setBank(lineFromCsv[1])
+//                .setAuctionDate(DateTimeConverter.parseLocalDate(lineFromCsv[2]))
+//                .setLotNumber(lineFromCsv[3])
+//                .setKdNumber(lineFromCsv[4])
+//                .setAboutAuction(lineFromCsv[5])
+//                .setStartPrice(lineFromCsv[6])
+//                .setUrl(lineFromCsv[7])
+//                .setPropertyDetails(lineFromCsv[8])
+//                .setLoanDebtorFullName(lineFromCsv[9])
+//                .setLoanDebtorPhoneNumber(lineFromCsv[10])
+//                .setLoanDebtorIdentCode(lineFromCsv[11])
+//                .setDetails(lineFromCsv[12]);
+//        if(!lineFromCsv[13].isEmpty()){
+//            baseTable.setDateOfCall(DateTimeConverter.parseLocalDate(lineFromCsv[13]));
+//        }
+//        // TODO to add baseTable.setStatusOfCall(lineFromCsv[14])
+//        if (!lineFromCsv[15].isEmpty()){
+//            baseTable.setNewAuctionDate(DateTimeConverter.parseLocalDate(lineFromCsv[15]));
+//        }
+//
+//
+//        return baseTable;
+//    }
+
     @JsonProperty("id")
     public Integer getId() {
         return id;
@@ -241,6 +308,17 @@ public class BaseTable {
     @JsonProperty("startPrice")
     public BaseTable setStartPrice(String startPrice) {
         this.startPrice = startPrice;
+        return this;
+    }
+
+    @JsonProperty("calculatorPageTable")
+    public CalculatorPageTable getCalculatorPageTable() {
+        return calculatorPageTable;
+    }
+
+    @JsonProperty("calculatorPageTable")
+    public BaseTable setCalculatorPageTable(CalculatorPageTable calculatorPageTable) {
+        this.calculatorPageTable = calculatorPageTable;
         return this;
     }
 
@@ -415,6 +493,8 @@ public class BaseTable {
         if (aboutAuction != null ? !aboutAuction.equals(baseTable.aboutAuction) : baseTable.aboutAuction != null)
             return false;
         if (startPrice != null ? !startPrice.equals(baseTable.startPrice) : baseTable.startPrice != null) return false;
+        if (calculatorPageTable != null ? !calculatorPageTable.equals(baseTable.calculatorPageTable) : baseTable.calculatorPageTable != null)
+            return false;
         if (url != null ? !url.equals(baseTable.url) : baseTable.url != null) return false;
         if (propertyDetails != null ? !propertyDetails.equals(baseTable.propertyDetails) : baseTable.propertyDetails != null)
             return false;
@@ -446,6 +526,7 @@ public class BaseTable {
         result = 31 * result + (kdNumber != null ? kdNumber.hashCode() : 0);
         result = 31 * result + (aboutAuction != null ? aboutAuction.hashCode() : 0);
         result = 31 * result + (startPrice != null ? startPrice.hashCode() : 0);
+        result = 31 * result + (calculatorPageTable != null ? calculatorPageTable.hashCode() : 0);
         result = 31 * result + (url != null ? url.hashCode() : 0);
         result = 31 * result + (propertyDetails != null ? propertyDetails.hashCode() : 0);
         result = 31 * result + (loanDebtorFullName != null ? loanDebtorFullName.hashCode() : 0);
@@ -473,6 +554,7 @@ public class BaseTable {
                 ", kdNumber='" + kdNumber + '\'' +
                 ", aboutAuction='" + aboutAuction + '\'' +
                 ", startPrice='" + startPrice + '\'' +
+                ", calculatorPageTable=" + calculatorPageTable +
                 ", url='" + url + '\'' +
                 ", propertyDetails='" + propertyDetails + '\'' +
                 ", loanDebtorFullName='" + loanDebtorFullName + '\'' +
@@ -480,7 +562,7 @@ public class BaseTable {
                 ", loanDebtorIdentCode='" + loanDebtorIdentCode + '\'' +
                 ", details='" + details + '\'' +
                 ", dateOfCall=" + dateOfCall +
-                ", statusOfCall='" + statusOfCall + '\'' +
+                ", statusOfCall=" + statusOfCall +
                 ", newAuctionDate=" + newAuctionDate +
                 ", managersComment='" + managersComment + '\'' +
                 ", symptom='" + symptom + '\'' +

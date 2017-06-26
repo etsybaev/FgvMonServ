@@ -98,3 +98,14 @@ CREATE TABLE `Monserv`.`FileStorage` (
 DEFAULT CHARACTER SET = utf8;
 
 -------------------------------------------------------------------------------
+CREATE TABLE `Monserv`.`CalculatorPageTable` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `auctionStep` FLOAT NULL,
+  `stockExchangeCommission` FLOAT NULL,
+  `notaryCommission` FLOAT NULL,
+  `ourCommission` FLOAT NULL,
+  `finalPrice` FLOAT NULL,
+  PRIMARY KEY (`id`))
+DEFAULT CHARACTER SET = utf8;
+
+

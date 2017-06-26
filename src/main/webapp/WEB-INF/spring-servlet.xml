@@ -77,13 +77,20 @@
         <property name="statusOfCallDao" ref="statusOfCallDao"/>
     </bean>
 
-
     <bean id="fileStorageDao" class="com.fgvmonserv.dao.FileStorageDaoImpl">
         <property name="sessionFactory" ref="hibernate5AnnotatedSessionFactory"/>
     </bean>
     <bean id="fileStorageService" class="com.fgvmonserv.service.FileStorageServiceImpl">
         <property name="fileStorageDao" ref="fileStorageDao"/>
     </bean>
+
+    <bean id="calculatorPageTableDao" class="com.fgvmonserv.dao.CalculatorPageTableDaoImpl">
+        <property name="sessionFactory" ref="hibernate5AnnotatedSessionFactory"/>
+    </bean>
+    <bean id="calculatorPageTableService" class="com.fgvmonserv.service.CalculatorPageTableServiceImpl">
+        <property name="calculatorPageTableDao" ref="calculatorPageTableDao"/>
+    </bean>
+
 
     <bean id="jsonConverter" class="com.fgvmonserv.converter.JsonConverter" />
     <bean id="urlEncoderDecoder" class="com.fgvmonserv.converter.UrlEncoderDecoder" />
