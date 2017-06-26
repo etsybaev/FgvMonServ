@@ -51,5 +51,4 @@ public class CalculatorPageTableDaoImpl implements CalculatorPageTableDao {
         session.update(calculatorPageTable);
         System.out.println("Record " + calculatorPageTable + " has been updated");
     }
-
 }

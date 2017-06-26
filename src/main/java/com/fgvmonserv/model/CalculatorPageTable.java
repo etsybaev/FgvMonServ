@@ -109,6 +109,8 @@ public class CalculatorPageTable {
         return this;
     }
 
+
+    //This method is call during export to CSV, so we keep value only
     @Override
     public String toString() {
         return "CalculatorPageTable{" +

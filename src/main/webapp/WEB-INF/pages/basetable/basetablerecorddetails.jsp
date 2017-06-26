@@ -99,7 +99,8 @@
                     </form:label>
                 </td>
                 <td>
-                    <form:input path="<%=BaseTableNamesEnum.START_PRICE.getDbName()%>"/>
+                    <form:input path="<%=BaseTableNamesEnum.START_PRICE.getDbName()%>" type="text"
+                                pattern="[0-9]+?(\.[0-9]{0,2})?" title="This must be a number with up to 2 decimal places"/>
                 </td>
             </tr>
             <tr>

@@ -26,10 +26,28 @@
         </h3>
     </c:if>
 
+    <script type="text/javascript">
+        function findTotal(){
+            var startPrice = parseFloat(document.getElementById("startPrice").value);
+            var auctionStep = parseFloat(document.getElementById("auctionStep").value);
+            var stockExchangeCommission= parseFloat(document.getElementById("stockExchangeCommission").value);
+            var notaryCommission = parseFloat(document.getElementById("notaryCommission").value);
+            var ourCommission = parseFloat(document.getElementById("ourCommission").value);
+            var finalPrice = parseFloat(document.getElementById("finalPrice").value);
 
-    <c:url var="addAction" value="/calc/addeditcalcrecord"/>
+            auctionStep = startPrice * auctionStep;
+            stockExchangeCommission = auctionStep * stockExchangeCommission;
 
-    <form:form action="${addAction}" commandName="calcRecord" acceptCharset="UTF-8">
+            var totalPrice = startPrice + auctionStep + stockExchangeCommission + notaryCommission + ourCommission;
+
+            document.getElementById('finalPrice').value = totalPrice;
+        }
+    </script>
+
+
+    <c:url var="addAction" value="/calc/editcalcrecord"/>
+
+    <form:form action="${addAction}" commandName="calcRecord" acceptCharset="UTF-8" method="POST">
         <table>
 
             <tr>
@@ -39,18 +57,17 @@
                     </form:label>
                 </td>
                 <td>
-                    <form:input path="id" readonly="true" size="8" disabled="true"/>
+                    <form:input path="id" readonly="true" size="8"/>
                     <form:hidden path="id"/>
                 </td>
             </tr>
-
             <tr>
                 <td>
                     <%=BaseTableNamesEnum.START_PRICE.getViewName()%>
                 </td>
                 <td>
                     <%--${startPrice}--%>
-                    <input disabled="disabled" value="${startPrice}">
+                    <input id="startPrice" readonly="disabled" value="${startPrice}">
                 </td>
             </tr>
             <tr>
@@ -60,7 +77,12 @@
                     </form:label>
                 </td>
                 <td>
-                    <form:input path="auctionStep"/>
+                    <form:input id="auctionStep" onkeyup="findTotal()" path="auctionStep" type="text"
+                                pattern="[0-9]+?(\.[0-9]{0,2})?" title="This must be a number with up to 2 decimal places"/>
+                        <%--<form:input id="auctionStep" onkeyup="findTotal()" path="auctionStep"--%>
+                                    <%--type="text"--%>
+                                    <%--pattern="[0-9]+(\.[0-9]{0,2})?%?"--%>
+                                    <%--title="This must be a number with up to 2 decimal places and/or %"/>--%>
                 </td>
             </tr>
             <tr>
@@ -70,7 +92,8 @@
                     </form:label>
                 </td>
                 <td>
-                    <form:input path="stockExchangeCommission"/>
+                    <form:input id="stockExchangeCommission" onkeyup="findTotal()" path="stockExchangeCommission" type="text"
+                                pattern="[0-9]+?(\.[0-9]{0,2})?" title="This must be a number with up to 2 decimal places"/>
                 </td>
             </tr>
             <tr>
@@ -80,7 +103,8 @@
                     </form:label>
                 </td>
                 <td>
-                    <form:input path="notaryCommission"/>
+                    <form:input id="notaryCommission" onkeyup="findTotal()" path="notaryCommission" type="text"
+                                pattern="[0-9]+?(\.[0-9]{0,2})?" title="This must be a number with up to 2 decimal places"/>
                 </td>
             </tr>
 
@@ -91,7 +115,8 @@
                     </form:label>
                 </td>
                 <td>
-                    <form:input path="ourCommission"/>
+                    <form:input id="ourCommission" onkeyup="findTotal()" path="ourCommission" type="text"
+                                pattern="[0-9]+?(\.[0-9]{0,2})?" title="This must be a number with up to 2 decimal places"/>
                 </td>
             </tr>
             <tr>
@@ -101,10 +126,9 @@
                     </form:label>
                 </td>
                 <td>
-                    <form:input path="finalPrice" disabled="true"/>
+                    <form:input id="finalPrice" readonly="true" path="finalPrice"/>
                 </td>
             </tr>
-
 
             <tr>
                 <td>

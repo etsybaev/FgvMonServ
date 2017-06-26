@@ -85,7 +85,7 @@ public class BaseTable {
 
     @JsonProperty("startPrice")
     @Column(name = "startPrice")
-    private String startPrice;
+    private Double startPrice;
 
     @JsonProperty("calculatorPageTable")
     @OneToOne(fetch=FetchType.EAGER)
@@ -170,7 +170,7 @@ public class BaseTable {
                 .setLotNumber(lineFromCsv[3])
                 .setKdNumber(lineFromCsv[4])
                 .setAboutAuction(lineFromCsv[5])
-                .setStartPrice(lineFromCsv[6])
+                .setStartPrice(Double.parseDouble(lineFromCsv[6].replaceAll(",", "")))
                 .setUrl(lineFromCsv[7])
                 .setPropertyDetails(lineFromCsv[8]);
     }
@@ -301,12 +301,12 @@ public class BaseTable {
     }
 
     @JsonProperty("startPrice")
-    public String getStartPrice() {
+    public Double getStartPrice() {
         return startPrice;
     }
 
     @JsonProperty("startPrice")
-    public BaseTable setStartPrice(String startPrice) {
+    public BaseTable setStartPrice(Double startPrice) {
         this.startPrice = startPrice;
         return this;
     }
