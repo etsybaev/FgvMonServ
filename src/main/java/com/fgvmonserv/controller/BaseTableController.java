@@ -105,7 +105,8 @@ public class BaseTableController {
             //check if Start price was changed. If yes - then will remove total price as obsolete value.
             BaseTable baseTableFromDBBeforeUpdate = this.baseTableService.getRecordById(baseTable.getId());
             CalculatorPageTable calc = this.calculatorPageTableService.getCalculatorPageTableById(baseTable.getId());
-            if (!baseTableFromDBBeforeUpdate.getStartPrice().equals(baseTable.getStartPrice())){
+            if (baseTableFromDBBeforeUpdate.getStartPrice() != null &&
+                    !baseTableFromDBBeforeUpdate.getStartPrice().equals(baseTable.getStartPrice())){
                 this.calculatorPageTableService.updateRecord(calc.setFinalPrice(null));
             }else {
                 //If prise is the same that means that some other fields were updated. But final price is not sent from browser
