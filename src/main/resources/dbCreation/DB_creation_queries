@@ -66,6 +66,16 @@ BEGIN
         IF NEW.statusOfCall is null then SET New.statusOfCall =0; END IF;
 END
 
+-------------------------------------------------------------------------------------------------------
+
+CREATE DEFINER = CURRENT_USER TRIGGER `Monserv`.`BaseTable_BEFORE_UPDATE` BEFORE UPDATE ON `BaseTable` FOR EACH ROW
+BEGIN
+	IF NEW.manager is null then SET New.manager =0; END IF;
+    IF NEW.statusOfDeal is null then SET New.statusOfDeal =0; END IF;
+    IF NEW.statusOfCall is null then SET New.statusOfCall =0; END IF;
+END
+
+
 -------------------------------------------------------------------------------------------------
 CREATE TABLE `Monserv`.`StatusOfCall` (
   `id` INT NOT NULL,
