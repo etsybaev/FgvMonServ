@@ -3,6 +3,8 @@ package com.fgvmonserv.controller;
 import com.fgvmonserv.model.userauth.User;
 import com.fgvmonserv.service.userauth.UserRolesService;
 import com.fgvmonserv.service.userauth.UserService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class AdminUserController {
 
+    private final Logger LOGGER = LogManager.getLogger(this);
     private UserService userService;
     private UserRolesService userRolesService;
 
@@ -50,10 +53,10 @@ public class AdminUserController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String addUser(@ModelAttribute("user") User user){
         if(user.getId() == null){
-            System.out.println("Adding new user with params " + user.toString());
+            LOGGER.debug("Adding new user with params " + user.toString());
             this.userService.addUser(user);
         }else {
-            System.out.println("Updating user with params " + user.toString());
+            LOGGER.debug("Updating user with params " + user.toString());
             this.userService.updateUser(user);
         }
 

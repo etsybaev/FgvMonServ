@@ -8,6 +8,8 @@ import com.fgvmonserv.converter.DateTimeConverter;
 import com.fgvmonserv.converter.JsonDateDeserializer;
 import com.fgvmonserv.converter.JsonDateSerializer;
 import com.fgvmonserv.model.userauth.User;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
@@ -161,11 +163,14 @@ public class BaseTable {
     @NotFound(action = NotFoundAction.IGNORE)
     private StatusOfDeal statusOfDeal;
 
+    @JsonIgnore
+    private static final Logger LOGGER = LogManager.getLogger(BaseTable.class);
 
     @JsonIgnore
     public static BaseTable getShortBaseTableFromCsvLine(String[] lineFromCsv){
-        return new BaseTable()
-                .setBank(lineFromCsv[1])
+        LOGGER.debug("Getting short BaseTable object from lineFromCsv. Where line is:" + lineFromCsv);
+        BaseTable baseTable = new BaseTable();
+        baseTable.setBank(lineFromCsv[1])
                 .setAuctionDate(DateTimeConverter.parseLocalDate(lineFromCsv[2]))
                 .setLotNumber(lineFromCsv[3])
                 .setKdNumber(lineFromCsv[4])
@@ -173,6 +178,8 @@ public class BaseTable {
                 .setStartPrice(Double.parseDouble(lineFromCsv[6].replaceAll(",", "")))
                 .setUrl(lineFromCsv[7])
                 .setPropertyDetails(lineFromCsv[8]);
+        LOGGER.debug("Parsed short BaseTable object is:" + baseTable);
+        return baseTable;
     }
 
 //    @JsonIgnore

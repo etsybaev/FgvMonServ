@@ -1,6 +1,8 @@
 package com.fgvmonserv.dao;
 
 import com.fgvmonserv.model.FileStorage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Repository;
 public class FileStorageDaoImpl implements FileStorageDao {
 
     private SessionFactory sessionFactory;
+    private final Logger LOGGER = LogManager.getLogger(this);
 
     public FileStorageDaoImpl setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
@@ -24,6 +27,7 @@ public class FileStorageDaoImpl implements FileStorageDao {
 
     @Override
     public FileStorage getFileStorageByUserId(int userId) {
+        LOGGER.debug("Getting file storage with id=" + userId);
         Session session = sessionFactory.getCurrentSession();
         FileStorage fileStorage = (FileStorage) session.createQuery("from FileStorage where userId =:userId")
                 .setParameter("userId", userId)
@@ -34,6 +38,7 @@ public class FileStorageDaoImpl implements FileStorageDao {
 
     @Override
     public void saveFileInStorage(int userId, byte[] file) {
+        LOGGER.debug("Saving file to storage for user with id=" + userId);
         Session session = sessionFactory.getCurrentSession();
         FileStorage fileStorage = getFileStorageByUserId(userId);
 

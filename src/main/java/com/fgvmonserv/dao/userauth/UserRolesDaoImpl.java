@@ -2,6 +2,8 @@ package com.fgvmonserv.dao.userauth;
 
 import com.fgvmonserv.UserRolesEnum;
 import com.fgvmonserv.model.userauth.UserRoles;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -17,7 +19,8 @@ import java.util.List;
 public class UserRolesDaoImpl implements UserRolesDao {
 
     SessionFactory sessionFactory;
-
+    private final Logger LOGGER = LogManager.getLogger(this);
+    
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
@@ -33,7 +36,7 @@ public class UserRolesDaoImpl implements UserRolesDao {
         if(list != null && !list.isEmpty()){
             return list.get(0).getId();
         }else {
-            System.out.println("Can't find id for access point " + userRolesEnum.getRole());
+            LOGGER.debug("Can't find id for access point " + userRolesEnum.getRole());
             return -1;
         }
 
@@ -41,12 +44,12 @@ public class UserRolesDaoImpl implements UserRolesDao {
 
     @Override
     public List<UserRoles> getAllUserRoles() {
-        System.out.println("Getting UserRolesList");
+        LOGGER.debug("Getting UserRolesList");
         Session session = this.sessionFactory.getCurrentSession();
         List<UserRoles> UserRolesList = session.createQuery("from UserRoles ").list();
 
         for(UserRoles accessPoint : UserRolesList){
-            System.out.println("Got accessPoint " + accessPoint);
+            LOGGER.debug("Got accessPoint " + accessPoint);
         }
         return UserRolesList;
     }

@@ -4,6 +4,8 @@ import com.fgvmonserv.model.BaseTable;
 import com.fgvmonserv.model.CalculatorPageTable;
 import com.fgvmonserv.service.BaseTableService;
 import com.fgvmonserv.service.CalculatorPageTableService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,7 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/calc")
 public class CalcController {
-
+    private final Logger LOGGER = LogManager.getLogger(this);
     private CalculatorPageTableService calculatorPageTableService;
     private BaseTableService baseTableService;
 
@@ -43,7 +45,7 @@ public class CalcController {
     @RequestMapping(value = "/editcalcrecord", method = RequestMethod.POST)
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String addUser(@ModelAttribute("calcRecord") CalculatorPageTable calculatorPageTable, RedirectAttributes redirectAttributes){
-        System.out.println("Updating CalculatorPageTable record with id " + calculatorPageTable.getId());
+        LOGGER.debug("Updating CalculatorPageTable record with id " + calculatorPageTable.getId());
 
         //If at least one of field is not defined - browser cant calculate result and send it as "Nan" which cann't be written to DB, so wll set it yo null
         if(calculatorPageTable.getFinalPrice() != null && calculatorPageTable.getFinalPrice().isNaN()){
