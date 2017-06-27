@@ -12,7 +12,7 @@
 <head>
     <title>Calculator</title>
 </head>
-<body>
+<body onload="findTotal()">
 
 <div style="background-color: #f0f4ce">
 
@@ -132,7 +132,7 @@
 
             <tr>
                 <td>
-                    <input type="submit" value="<spring:message text="Save changes"/>"/>
+                    <input onclick="findTotal()" type="submit" value="<spring:message text="Save changes"/>"/>
                 </td>
             </tr>
         </table>
