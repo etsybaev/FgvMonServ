@@ -28,6 +28,11 @@
 		<intercept-url pattern="/basetableconroller/removebasetablerecord**" access="hasRole('ROLE_ADMIN')" />
 		<intercept-url pattern="/basetableconroller/removebasetablerecord/**" access="hasRole('ROLE_ADMIN')" />
 
+		<intercept-url pattern="/calc**" access="isAuthenticated()" />
+		<intercept-url pattern="/calc/**" access="isAuthenticated()" />
+		<intercept-url pattern="/calc/editcalcrecord**" access="isAuthenticated()" />
+		<intercept-url pattern="/calc/editcalcrecord/**" access="isAuthenticated()" />
+
 		<!--Adding remember me checkbox to login page, 2592000=30 days-->
 		<remember-me key="uniqueAndSecret" token-validity-seconds="2592000"/>
 
