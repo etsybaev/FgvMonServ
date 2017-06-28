@@ -109,13 +109,11 @@ DEFAULT CHARACTER SET = utf8;
 
 -------------------------------------------------------------------------------
 CREATE TABLE `Monserv`.`CalculatorPageTable` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `auctionStep` FLOAT NULL,
-  `stockExchangeCommission` FLOAT NULL,
-  `notaryCommission` FLOAT NULL,
-  `ourCommission` FLOAT NULL,
-  `finalPrice` FLOAT NULL,
-  PRIMARY KEY (`id`))
+  `id` INT(11) NULL,
+  `auctionStep` DOUBLE NULL,
+  `stockExchangeCommission` DOUBLE NULL,
+  `notaryCommission` DOUBLE NULL,
+  `ourCommission` DOUBLE NULL,
+  `finalPrice` DOUBLE NULL)
 DEFAULT CHARACTER SET = utf8;
-
 
