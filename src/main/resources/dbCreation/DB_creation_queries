@@ -100,8 +100,8 @@ CHANGE COLUMN `statusOfCall` `statusOfCall` INT(11) NULL DEFAULT 0 ;
 ---------------------------------------------------------------------
 
 CREATE TABLE `Monserv`.`FileStorage` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `userId` INT NOT NULL,
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `userId` INT(11) NOT NULL,
   `file` BLOB NOT NULL,
   `createdTime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`))
