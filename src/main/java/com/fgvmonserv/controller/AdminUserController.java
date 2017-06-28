@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -25,6 +26,7 @@ public class AdminUserController {
     private final Logger LOGGER = LogManager.getLogger(this);
     private UserService userService;
     private UserRolesService userRolesService;
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired(required = true)
     @Qualifier(value = "userService")
@@ -37,6 +39,13 @@ public class AdminUserController {
     @Qualifier(value = "userRolesService")
     public void setUserRolesService(UserRolesService userRolesService) {
         this.userRolesService = userRolesService;
+    }
+
+    @Autowired(required = true)
+    @Qualifier(value = "passwordEncoder")
+    public AdminUserController setPasswordEncoder(BCryptPasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+        return this;
     }
 
 
@@ -52,6 +61,14 @@ public class AdminUserController {
     @RequestMapping(value = "/admin/adduser", method = RequestMethod.POST)
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String addUser(@ModelAttribute("user") User user){
+
+        //add pass encryption
+        User tmpUserFromDb = this.userService.getUserById(user.getId());
+        //Check if pass it the same as in BD - i.e. already encripted
+        if(tmpUserFromDb.getPassword() != null && !tmpUserFromDb.getPassword().equals(user.getPassword())){
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+
         if(user.getId() == null){
             LOGGER.debug("Adding new user with params " + user.toString());
             this.userService.addUser(user);

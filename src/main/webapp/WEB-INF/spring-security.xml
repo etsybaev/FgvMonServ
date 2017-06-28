@@ -46,6 +46,11 @@
 		<csrf disabled="true" />
 	</http>
 
+     <!--Password Hashing Bean -->
+    <beans:bean id="passEnc" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" >
+        <beans:constructor-arg name="strength" value="12" />
+    </beans:bean>
+
 	<authentication-manager>
 		<authentication-provider>
 			<!--<user-service>-->
@@ -59,7 +64,8 @@
 									   "SELECT User.contactPhoneNumber as 'username', User.password, User.enabled FROM User where User.contactPhoneNumber=?"
 							   authorities-by-username-query=
 									   "SELECT User.contactPhoneNumber as 'username', UserRoles.role FROM User, UserRoles where User.role=UserRoles.id and User.contactPhoneNumber=?" />
-		</authentication-provider>
+            <password-encoder ref="passEnc" />
+        </authentication-provider>
 	</authentication-manager>
 
 </beans:beans>
