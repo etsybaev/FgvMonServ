@@ -61,19 +61,18 @@ public class AdminUserController {
     @RequestMapping(value = "/admin/adduser", method = RequestMethod.POST)
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String addUser(@ModelAttribute("user") User user){
-
-        //add pass encryption
-        User tmpUserFromDb = this.userService.getUserById(user.getId());
-        //Check if pass it the same as in BD - i.e. already encripted
-        if(tmpUserFromDb.getPassword() != null && !tmpUserFromDb.getPassword().equals(user.getPassword())){
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-        }
-
         if(user.getId() == null){
             LOGGER.debug("Adding new user with params " + user.toString());
+            //add pass encryption
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
             this.userService.addUser(user);
         }else {
             LOGGER.debug("Updating user with params " + user.toString());
+            //add pass encryption
+            //Check if pass it the same as in BD - i.e. already encrypted
+            if(!userService.getUserById(user.getId()).getPassword().equals(user.getPassword())){
+                user.setPassword(passwordEncoder.encode(user.getPassword()));
+            }
             this.userService.updateUser(user);
         }
 
