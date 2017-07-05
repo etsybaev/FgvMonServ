@@ -133,7 +133,9 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>6.0.5</version>
+            <!--Temporary use old version as CityHost uses old version of MysqlServer-->
+            <!--<version>6.0.5</version>-->
+            <version>5.1.42</version>
         </dependency>
 
 
