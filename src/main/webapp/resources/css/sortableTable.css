@@ -4,11 +4,17 @@ th{
 
 td{
     padding: 3px !important;
-    white-space:nowrap;
+    /*white-space:nowrap;*/
     overflow:hidden;
     text-overflow:ellipsis;
     max-width: 350px !important;
     /*max-height: 150px !important;*/
+}
+
+.table_div_trim div {
+    height: 4em !important;
+    overflow: hidden !important;
+
 }
 
 /* Sortable tables */

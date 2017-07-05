@@ -155,7 +155,7 @@
 
     <p>Records found by provided search criteria: ${allRecordsList.size()}</p>
     <c:if test="${!empty allRecordsList}">
-        <table class="sortable table" id="sortableTable">
+        <table class="sortable table table_div_trim" id="sortableTable">
             <tr>
                 <th><%=BaseTableNamesEnum.ID.getViewName()%></th>
                 <th><%=BaseTableNamesEnum.BANK.getViewName()%></th>
@@ -188,12 +188,12 @@
                     <td title="${allRecordsList.bank}">${allRecordsList.bank}</td>
                     <td title="${allRecordsList.auctionDate}">${allRecordsList.auctionDate}</td>
                     <td title="${allRecordsList.lotNumber}">${allRecordsList.lotNumber}</td>
-                    <td title="${allRecordsList.kdNumber}">${allRecordsList.kdNumber}</td>
+                    <td title="${allRecordsList.kdNumber}"><div>${allRecordsList.kdNumber}</div></td>
                     <td title="${allRecordsList.aboutAuction}">${allRecordsList.aboutAuction}</td>
                     <td title="${allRecordsList.startPrice}">${allRecordsList.startPrice}</td>
                     <td onclick="openCalcPage(${allRecordsList.id})" title="${allRecordsList.calculatorPageTable.finalPrice}">${allRecordsList.calculatorPageTable.finalPrice}</td>
                     <td title="${allRecordsList.url}"><a target="_blank" href="${allRecordsList.url}">${allRecordsList.url}</a></td>
-                    <td title="${allRecordsList.propertyDetails}">${allRecordsList.propertyDetails}</td>
+                    <td title="${allRecordsList.propertyDetails}"><div>${allRecordsList.propertyDetails}</div></td>
                     <td title="${allRecordsList.loanDebtorFullName}">${allRecordsList.loanDebtorFullName}</td>
                     <td title="${allRecordsList.loanDebtorPhoneNumber}">${allRecordsList.loanDebtorPhoneNumber}</td>
                     <td title="${allRecordsList.loanDebtorIdentCode}">${allRecordsList.loanDebtorIdentCode}</td>
