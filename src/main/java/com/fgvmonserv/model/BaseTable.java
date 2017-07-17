@@ -167,11 +167,12 @@ public class BaseTable {
                 .setLotNumber(lineFromCsv[3])
                 .setKdNumber(lineFromCsv[4])
                 .setAboutAuction(lineFromCsv[5])
-                .setStartPrice(Double.parseDouble(lineFromCsv[6].replaceAll(",", "")))
+                .setStartPrice(lineFromCsv[6].isEmpty() ? 0 : Double.parseDouble(
+                        lineFromCsv[6].replaceAll(",", ".").replaceAll("[^0-9.]+", "").replaceAll(".$", ""))) //remove all non dots and digits and them remove last dot if any
                 .setUrl(lineFromCsv[7])
                 .setPropertyDetails(lineFromCsv[8]);
     }
-
+//.replace(/\.$/, "")
 //    @JsonIgnore
 //    public static BaseTable getShortBaseTableFromCsvLineGoogleImport(String[] lineFromCsv){
 //        BaseTable baseTable = new BaseTable();

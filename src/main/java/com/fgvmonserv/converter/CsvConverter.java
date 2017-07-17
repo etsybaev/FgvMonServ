@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,8 +40,11 @@ public class CsvConverter {
                     resultList.add(shortBaseTableFromCsvLine);
                 }
                 return resultList;
-            } catch (Exception e) {
+            } catch (UnsupportedEncodingException e) {
                 //Do Nothing. This is just a loop. If we got any fail with one encoding, then will try with another
+            } catch (Exception ex){
+                System.err.println("ERROR! Partial error in parsing file");
+                ex.printStackTrace();
             }
         }
         System.err.println("ERROR! Failed in parsing uploaded file. Probably didn't manage to find find right encoding to parse uploaded file!");

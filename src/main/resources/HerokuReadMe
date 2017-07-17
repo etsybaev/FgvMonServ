@@ -1,0 +1,1 @@
+heroku war:deploy ~/Code/StudyProjects/FgvMonServ/target/FgvMonServ.war --app monserv

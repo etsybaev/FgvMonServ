@@ -92,7 +92,7 @@ public class ImportExportController {
         }
 
         List<BaseTable> shortBaseTableInfoFromCsvFile = csvConverter.getShortBaseTableInfoFromCsvFile(file.getBytes());
-        if(shortBaseTableInfoFromCsvFile != null){
+        if(shortBaseTableInfoFromCsvFile != null && shortBaseTableInfoFromCsvFile.size() != 0){
             redirectAttributes.addFlashAttribute("parsedData", shortBaseTableInfoFromCsvFile);
 
             redirectAttributes.addFlashAttribute("message", "Please check the records to be uploaded." +
