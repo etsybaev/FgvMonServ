@@ -162,6 +162,9 @@ public class BaseTable {
 
     @JsonIgnore
     public static BaseTable getShortBaseTableFromCsvLine(String[] lineFromCsv){
+        if(lineFromCsv[6].contains(",") && lineFromCsv[6].contains(".")){
+            lineFromCsv[6] = lineFromCsv[6].replaceAll(",", ""); //if number looks like 15,168.20 then remove comas
+        }
         return new BaseTable().setBank(lineFromCsv[1])
                 .setAuctionDate(DateTimeConverter.parseLocalDate(lineFromCsv[2]))
                 .setLotNumber(lineFromCsv[3])
