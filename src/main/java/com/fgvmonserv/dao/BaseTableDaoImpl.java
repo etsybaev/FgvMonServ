@@ -7,6 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import java.util.List;
@@ -33,6 +34,28 @@ public class BaseTableDaoImpl implements BaseTableDao {
         Session session = this.sessionFactory.getCurrentSession();
         session.persist(baseTable);
         LOGGER.debug("Record has been added");
+    }
+
+    @Override
+    public void addBaseTableRecord(List<BaseTable> baseTableList) {
+        LOGGER.debug("Adding BaseTable record " + baseTableList);
+        Session session = this.sessionFactory.getCurrentSession();
+//        Transaction tx = session.getTransaction();
+        baseTableList.forEach(baseTable -> session.save(baseTable));
+
+//        for ( int i=0; i<baseTableList.size(); i++ ) {
+//
+//            session.save(baseTableList.get(i));
+//            if ( i % 20 == 0 ) { //20, same as the JDBC batch size
+//                //flush a batch of inserts and release memory:
+//                session.flush();
+//                session.clear();
+//            }
+//        }
+
+//        tx.commit();
+//        session.close();
+        LOGGER.debug("Records have been added");
     }
 
     @Override

@@ -32,6 +32,13 @@ public class BaseTableServiceImpl implements BaseTableService {
 
     @Override
     @Transactional
+    public void addBaseTableRecord(List<BaseTable> baseTableList) {
+        this.baseTableDao.addBaseTableRecord(baseTableList);
+    }
+
+
+    @Override
+    @Transactional
     public void updateBaseTableRecord(BaseTable baseTablesList) {
         this.baseTableDao.updateBaseTableRecord(baseTablesList);
     }

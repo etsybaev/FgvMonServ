@@ -19,7 +19,7 @@ public class DateTimeConverter {
 
         for(DateTimeFormatter dateTimeFormatter : knownPatterns){
             try {
-                return LocalDate.parse(localDate, dateTimeFormatter);
+                return LocalDate.parse(localDate.replaceAll("[^0-9.]+", ""), dateTimeFormatter);
             } catch (DateTimeParseException e){
                 //doNothing. This is just a loop to find necessary pattern to parse.
             }

@@ -124,7 +124,8 @@ public class ImportExportController {
     public String addUser(@ModelAttribute("uid") int uid, RedirectAttributes redirectAttributes){
         FileStorage fileStorage = fileStorageService.getFileStorageByUserId(uid);
         List<BaseTable> shortBaseTableInfoFromCsvFile = csvConverter.getShortBaseTableInfoFromCsvFile(fileStorage.getFile());
-        shortBaseTableInfoFromCsvFile.forEach(record -> this.baseTableService.addBaseTableRecord(record));
+//        shortBaseTableInfoFromCsvFile.forEach(record -> this.baseTableService.addBaseTableRecord(record));
+        baseTableService.addBaseTableRecord(shortBaseTableInfoFromCsvFile);
         redirectAttributes.addFlashAttribute("message", "All records have been added to database");
         return "redirect:/importexport/fileupload";
     }

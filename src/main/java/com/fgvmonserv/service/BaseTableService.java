@@ -13,6 +13,7 @@ import java.util.List;
 public interface BaseTableService {
 
     public void addBaseTableRecord(BaseTable baseTable);
+    public void addBaseTableRecord(List<BaseTable> baseTableList);
     public void updateBaseTableRecord(BaseTable baseTablesList);
     public BaseTable getRecordById(int id);
     public void removeBaseTableRecord(int id);
