@@ -79,9 +79,9 @@ public class BaseTableDaoImpl implements BaseTableDao {
         LOGGER.debug("Getting all user list");
         Session session = this.sessionFactory.getCurrentSession();
         List<BaseTable> list = session.createQuery("from BaseTable").list();
-        for(BaseTable baseTable : list){
-            LOGGER.debug("Got user " + baseTable);
-        }
+//        for(BaseTable baseTable : list){
+//            LOGGER.debug("Got user " + baseTable);
+//        }
         return list;
     }
 
@@ -92,9 +92,9 @@ public class BaseTableDaoImpl implements BaseTableDao {
 
         List<BaseTable> list = getQueryForFetchAllRecordsAccordingToFilter(baseTableDateFilter, session).list();
 
-        for(BaseTable baseTable : list){
-            LOGGER.debug("Got user " + baseTable);
-        }
+//        for(BaseTable baseTable : list){
+//            LOGGER.debug("Got user " + baseTable);
+//        }
         return list;
     }
 
