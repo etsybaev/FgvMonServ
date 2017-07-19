@@ -1,15 +1,19 @@
 package com.fgvmonserv.dao;
 
 import com.fgvmonserv.BaseTableNamesEnum;
+import com.fgvmonserv.enums.SearchByRangeTypeEnum;
 import com.fgvmonserv.model.BaseTable;
 import com.fgvmonserv.model.BaseTableDateFilter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -90,12 +94,37 @@ public class BaseTableDaoImpl implements BaseTableDao {
         LOGGER.debug("Getting all user list according to filter:" + baseTableDateFilter);
         Session session = this.sessionFactory.getCurrentSession();
 
-        List<BaseTable> list = getQueryForFetchAllRecordsAccordingToFilter(baseTableDateFilter, session).list();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<BaseTable> criteria = builder.createQuery(BaseTable.class);
+        Root<BaseTable> root = criteria.from(BaseTable.class);
 
-//        for(BaseTable baseTable : list){
-//            LOGGER.debug("Got user " + baseTable);
-//        }
-        return list;
+        List<Predicate> predicateList = new ArrayList<>();
+
+        if(baseTableDateFilter.getSearchByRangeTypeEnum().equals(SearchByRangeTypeEnum.EQUALS_TO)){
+            predicateList.add(builder.equal(root.get(baseTableDateFilter.getBaseTableNamesEnum().getDbName()), baseTableDateFilter.getStartDate()));
+        }else if(baseTableDateFilter.getSearchByRangeTypeEnum().equals(SearchByRangeTypeEnum.START_FROM)){
+            predicateList.add(builder.greaterThanOrEqualTo(root.get(baseTableDateFilter.getBaseTableNamesEnum().getDbName()), baseTableDateFilter.getStartDate()));
+        }
+
+        if(baseTableDateFilter.getManager() != null && baseTableDateFilter.getManager().getId() != null ){
+            predicateList.add(builder.equal(root.get(BaseTableNamesEnum.MANAGER.getDbName()), baseTableDateFilter.getManager()));
+        }
+        if(baseTableDateFilter.getStatusOfDeal() != null && baseTableDateFilter.getStatusOfDeal().getId() != null ){
+            predicateList.add(builder.equal(root.get(BaseTableNamesEnum.STATUS_OF_DEAL.getDbName()), baseTableDateFilter.getStatusOfDeal()));
+        }
+        if(baseTableDateFilter.getIsUnderControl() != null){
+            predicateList.add(builder.equal(root.get(BaseTableNamesEnum.IS_UNDER_CONTROL.getDbName()), baseTableDateFilter.getIsUnderControl()));
+        }
+        if(baseTableDateFilter.getBank() != null && !baseTableDateFilter.getBank().isEmpty()){
+            predicateList.add(builder.equal(root.get(BaseTableNamesEnum.BANK.getDbName()), baseTableDateFilter.getBank()));
+        }
+        if(baseTableDateFilter.getStatusOfCall() != null && baseTableDateFilter.getStatusOfCall().getId() != null ){
+            predicateList.add(builder.equal(root.get(BaseTableNamesEnum.STATUS_OF_CALL.getDbName()), baseTableDateFilter.getStatusOfCall()));
+        }
+
+        criteria.select(root).where(predicateList.toArray(new Predicate[]{}));
+        List<BaseTable> baseTableList = session.createQuery( criteria ).getResultList();
+        return baseTableList;
     }
 
     @Override
@@ -107,50 +136,6 @@ public class BaseTableDaoImpl implements BaseTableDao {
         return bankList;
     }
 
-    //TODO to investigate options and rewrite!!!!!!!!!!!!!!!!!!!!!!!!
-    private Query getQueryForFetchAllRecordsAccordingToFilter(BaseTableDateFilter baseTableDateFilter, Session session){
-        StringBuffer sb = new StringBuffer();
-
-        sb.append("from BaseTable where " + baseTableDateFilter.getBaseTableNamesEnum().getDbName() +
-                baseTableDateFilter.getSearchByRangeTypeEnum().getSqlSymbol() + ":auctionDateStartFromFilter ");
-
-
-        if(baseTableDateFilter.getManager() != null && baseTableDateFilter.getManager().getId() != null ){
-            sb.append(" and " + BaseTableNamesEnum.MANAGER.getDbName() + "=:manager ");
-        }
-        if(baseTableDateFilter.getStatusOfDeal() != null && baseTableDateFilter.getStatusOfDeal().getId() != null ){
-            sb.append(" and " + BaseTableNamesEnum.STATUS_OF_DEAL.getDbName() + "=:statusOfDeal ");
-        }
-        if(baseTableDateFilter.getIsUnderControl() != null){
-            sb.append(" and " + BaseTableNamesEnum.IS_UNDER_CONTROL.getDbName() + "=:isUnderControl ");
-        }
-        if(baseTableDateFilter.getBank() != null && !baseTableDateFilter.getBank().isEmpty()){
-            sb.append(" and " + BaseTableNamesEnum.BANK.getDbName() + "=:bank ");
-        }
-        if(baseTableDateFilter.getStatusOfCall() != null && baseTableDateFilter.getStatusOfCall().getId() != null ){
-            sb.append(" and " + BaseTableNamesEnum.STATUS_OF_CALL.getDbName() + "=:statusOfCall ");
-        }
-
-        Query query = session.createQuery(sb.toString());
-        query.setParameter("auctionDateStartFromFilter", baseTableDateFilter.getStartDate());
-
-        if(baseTableDateFilter.getManager() != null && baseTableDateFilter.getManager().getId() != null ){
-            query.setParameter("manager", baseTableDateFilter.getManager());
-        }
-        if(baseTableDateFilter.getStatusOfDeal() != null && baseTableDateFilter.getStatusOfDeal().getId() != null){
-            query.setParameter("statusOfDeal", baseTableDateFilter.getStatusOfDeal());
-        }
-        if(baseTableDateFilter.getIsUnderControl() != null){
-            query.setParameter("isUnderControl", baseTableDateFilter.getIsUnderControl());
-        }
-        if(baseTableDateFilter.getBank() != null && !baseTableDateFilter.getBank().isEmpty()){
-            query.setParameter("bank", baseTableDateFilter.getBank());
-        }
-        if(baseTableDateFilter.getStatusOfCall() != null && baseTableDateFilter.getStatusOfCall().getId() != null){
-            query.setParameter("statusOfCall", baseTableDateFilter.getStatusOfCall());
-        }
-        return query;
-    }
 
     @Override
     public void removeBaseTableRecord(int id) {
