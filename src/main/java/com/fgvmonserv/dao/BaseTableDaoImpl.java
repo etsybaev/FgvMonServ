@@ -101,25 +101,43 @@ public class BaseTableDaoImpl implements BaseTableDao {
         List<Predicate> predicateList = new ArrayList<>();
 
         if(baseTableDateFilter.getSearchByRangeTypeEnum().equals(SearchByRangeTypeEnum.EQUALS_TO)){
-            predicateList.add(builder.equal(root.get(baseTableDateFilter.getBaseTableNamesEnum().getDbName()), baseTableDateFilter.getStartDate()));
+            predicateList.add(builder.equal(root.get(baseTableDateFilter.getBaseTableNamesEnum().getDbName()),
+                    baseTableDateFilter.getStartDate()));
         }else if(baseTableDateFilter.getSearchByRangeTypeEnum().equals(SearchByRangeTypeEnum.START_FROM)){
-            predicateList.add(builder.greaterThanOrEqualTo(root.get(baseTableDateFilter.getBaseTableNamesEnum().getDbName()), baseTableDateFilter.getStartDate()));
+            predicateList.add(builder.greaterThanOrEqualTo(root.get(baseTableDateFilter.getBaseTableNamesEnum().getDbName()),
+                    baseTableDateFilter.getStartDate()));
         }
 
-        if(baseTableDateFilter.getManager() != null && baseTableDateFilter.getManager().getId() != null ){
-            predicateList.add(builder.equal(root.get(BaseTableNamesEnum.MANAGER.getDbName()), baseTableDateFilter.getManager()));
+        if(baseTableDateFilter.getManager() != null){
+            if(baseTableDateFilter.getManager().getId() == null){
+                predicateList.add(builder.isNull(root.get(BaseTableNamesEnum.MANAGER.getDbName())));
+            }else if(baseTableDateFilter.getManager().getId() != 0) {
+                predicateList.add(builder.equal(root.get(BaseTableNamesEnum.MANAGER.getDbName()),
+                        baseTableDateFilter.getManager()));
+            }
         }
-        if(baseTableDateFilter.getStatusOfDeal() != null && baseTableDateFilter.getStatusOfDeal().getId() != null ){
-            predicateList.add(builder.equal(root.get(BaseTableNamesEnum.STATUS_OF_DEAL.getDbName()), baseTableDateFilter.getStatusOfDeal()));
+        if(baseTableDateFilter.getStatusOfDeal() != null){
+            if(baseTableDateFilter.getStatusOfDeal().getId() == null ){
+                predicateList.add(builder.isNull(root.get(BaseTableNamesEnum.STATUS_OF_DEAL.getDbName())));
+            } else if (baseTableDateFilter.getStatusOfDeal().getId() != 0 ){
+                predicateList.add(builder.equal(root.get(BaseTableNamesEnum.STATUS_OF_DEAL.getDbName()),
+                        baseTableDateFilter.getStatusOfDeal()));
+            }
         }
         if(baseTableDateFilter.getIsUnderControl() != null){
-            predicateList.add(builder.equal(root.get(BaseTableNamesEnum.IS_UNDER_CONTROL.getDbName()), baseTableDateFilter.getIsUnderControl()));
+            predicateList.add(builder.equal(root.get(BaseTableNamesEnum.IS_UNDER_CONTROL.getDbName()),
+                    baseTableDateFilter.getIsUnderControl()));
         }
         if(baseTableDateFilter.getBank() != null && !baseTableDateFilter.getBank().isEmpty()){
             predicateList.add(builder.equal(root.get(BaseTableNamesEnum.BANK.getDbName()), baseTableDateFilter.getBank()));
         }
-        if(baseTableDateFilter.getStatusOfCall() != null && baseTableDateFilter.getStatusOfCall().getId() != null ){
-            predicateList.add(builder.equal(root.get(BaseTableNamesEnum.STATUS_OF_CALL.getDbName()), baseTableDateFilter.getStatusOfCall()));
+        if(baseTableDateFilter.getStatusOfCall() != null){
+            if(baseTableDateFilter.getStatusOfCall().getId() == null){
+                predicateList.add(builder.isNull(root.get(BaseTableNamesEnum.STATUS_OF_CALL.getDbName())));
+            } else if(baseTableDateFilter.getStatusOfCall().getId() != 0 ){
+                predicateList.add(builder.equal(root.get(BaseTableNamesEnum.STATUS_OF_CALL.getDbName()),
+                        baseTableDateFilter.getStatusOfCall()));
+            }
         }
 
         criteria.select(root).where(predicateList.toArray(new Predicate[]{}));

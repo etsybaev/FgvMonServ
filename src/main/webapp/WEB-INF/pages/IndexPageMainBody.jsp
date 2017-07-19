@@ -77,8 +77,8 @@
                 </td>
                 <td>
                     <form:select path="<%=BaseTableNamesEnum.MANAGER.getJoinedIdDbName()%>">
-                        <option selected value="">Show all records</option>
-                        <option value="0">No manager assigned</option>
+                        <option selected value="0">Show all records</option>
+                        <option value="">No manager assigned</option>
                         <c:forEach items="${allUsersList}" var="manager">
                             <option value="${manager.id}">${manager.firstName}</option>
                         </c:forEach>
@@ -86,8 +86,8 @@
                 </td>
                 <td>
                     <form:select path="<%=BaseTableNamesEnum.STATUS_OF_DEAL.getJoinedIdDbName()%>">
-                        <option selected value="">Show all records</option>
-                        <option value="0">No status assigned</option>
+                        <option selected value="0">Show all records</option>
+                        <option value="">No status assigned</option>
                         <c:forEach items="${statusOfDealList}" var="status">
                             <option value="${status.id}">${status.status}</option>
                         </c:forEach>
@@ -111,8 +111,8 @@
                 <td>
                     <%--<form:select path="statusOfCall.id">--%>
                     <form:select path="<%=BaseTableNamesEnum.STATUS_OF_CALL.getJoinedIdDbName()%>">
-                        <option selected value="">Show all records</option>
-                        <option value="0">No status assigned</option>
+                        <option selected value="0">Show all records</option>
+                        <option value="">No status assigned</option>
                         <c:forEach items="${allCallStatusesList}" var="status">
                             <option value="${status.id}">${status.status}</option>
                         </c:forEach>
