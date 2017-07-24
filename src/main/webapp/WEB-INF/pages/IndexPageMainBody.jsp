@@ -205,6 +205,8 @@
             </tr>
         </table>
         <input type="submit" value="<spring:message text="Apply filter"/>"/>
+        <input type="reset" value="<spring:message text="Reset filter"/>"/>
+        <input type="button" onclick="location.href='/';" value="<spring:message text="Reset filter to default"/>"/>
     </form:form>
 </div>
 
