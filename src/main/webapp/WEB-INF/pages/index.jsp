@@ -34,7 +34,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-	<title>My home access controller</title>
+	<title>Monserv</title>
 </head>
 <body>
 

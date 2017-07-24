@@ -130,13 +130,13 @@
 
     <script>
         function openEditPage(id) {
-            window.location = '/basetableconroller/basetablerecorddetails/' + id;
+            window.open('/basetableconroller/basetablerecorddetails/' + id, '_blank');
         }
     </script>
 
     <script>
         function openCalcPage(id) {
-            window.location = '/calc/' + id;
+            window.open('/calc/' + id, '_blank');
         }
     </script>
 
@@ -184,7 +184,7 @@
             <c:forEach items="${allRecordsList}" var="allRecordsList">
                 <tr ondblclick="openEditPage(${allRecordsList.id})">
                     <%--<td>${allRecordsList.id}</td>--%>
-                    <td title="${allRecordsList.id}"><a href="/basetableconroller/basetablerecorddetails/${allRecordsList.id}" >${allRecordsList.id}</a></td>
+                    <td title="${allRecordsList.id}"><a target="_blank" href="/basetableconroller/basetablerecorddetails/${allRecordsList.id}" >${allRecordsList.id}</a></td>
                     <td title="${allRecordsList.bank}">${allRecordsList.bank}</td>
                     <td title="${allRecordsList.auctionDate}">${allRecordsList.auctionDate}</td>
                     <td title="${allRecordsList.lotNumber}">${allRecordsList.lotNumber}</td>
