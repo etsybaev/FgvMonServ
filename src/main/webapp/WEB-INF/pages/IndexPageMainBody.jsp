@@ -54,7 +54,14 @@
                             <td>
                                 <form:select required="required" path="baseTableNamesEnum">
                                     <c:forEach items="${byAuctionDate}" var="filterByCriteria">
-                                        <option value="${filterByCriteria}">${filterByCriteria.getViewName()}</option>
+                                        <c:choose>
+                                            <c:when test="${filterByCriteria == baseTableDateFilter.baseTableNamesEnum}">
+                                                <option selected value="${filterByCriteria}">${filterByCriteria.getViewName()}</option>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <option value="${filterByCriteria}">${filterByCriteria.getViewName()}</option>
+                                            </c:otherwise>
+                                        </c:choose>
                                     </c:forEach>
                                 </form:select>
                             </td>
@@ -68,7 +75,14 @@
                             <td>
                                 <form:select required="required" path="searchByRangeTypeEnum">
                                     <c:forEach items="${searchByRangeType}" var="rangeSearchCriteria">
-                                        <option value="${rangeSearchCriteria}">${rangeSearchCriteria.getViewName()}</option>
+                                        <c:choose>
+                                            <c:when test="${rangeSearchCriteria == baseTableDateFilter.searchByRangeTypeEnum}">
+                                                <option selected value="${rangeSearchCriteria}">${rangeSearchCriteria.getViewName()}</option>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <option value="${rangeSearchCriteria}">${rangeSearchCriteria.getViewName()}</option>
+                                            </c:otherwise>
+                                        </c:choose>
                                     </c:forEach>
                                 </form:select>
                             </td>
@@ -78,33 +92,89 @@
                 <td>
                     <form:select path="<%=BaseTableNamesEnum.MANAGER.getJoinedIdDbName()%>">
                         <option selected value="0">Show all records</option>
-                        <option value="">No manager assigned</option>
+                        <c:choose>
+                            <c:when test="${empty baseTableDateFilter.manager.id}">
+                                <option selected value="">No manager assigned</option>
+                            </c:when>
+                            <c:otherwise>
+                                <option value="">No manager assigned</option>
+                            </c:otherwise>
+                        </c:choose>
                         <c:forEach items="${allUsersList}" var="manager">
-                            <option value="${manager.id}">${manager.firstName}</option>
+                            <c:choose>
+                                <c:when test="${manager.id == baseTableDateFilter.manager.id}">
+                                    <option selected value="${manager.id}">${manager.firstName}</option>
+                                </c:when>
+                                <c:otherwise>
+                                    <option value="${manager.id}">${manager.firstName}</option>
+                                </c:otherwise>
+                            </c:choose>
                         </c:forEach>
                     </form:select>
                 </td>
                 <td>
                     <form:select path="<%=BaseTableNamesEnum.STATUS_OF_DEAL.getJoinedIdDbName()%>">
                         <option selected value="0">Show all records</option>
-                        <option value="">No status assigned</option>
+                        <c:choose>
+                            <c:when test="${empty baseTableDateFilter.statusOfDeal.id}">
+                                <option selected value="">No status assigned</option>
+                            </c:when>
+                            <c:otherwise>
+                                <option value="">No status assigned</option>
+                            </c:otherwise>
+                        </c:choose>
                         <c:forEach items="${statusOfDealList}" var="status">
-                            <option value="${status.id}">${status.status}</option>
+                            <c:choose>
+                                <c:when test="${status.id == baseTableDateFilter.statusOfDeal.id}">
+                                    <option selected value="${status.id}">${status.status}</option>
+                                </c:when>
+                                <c:otherwise>
+                                    <option value="${status.id}">${status.status}</option>
+                                </c:otherwise>
+                            </c:choose>
                         </c:forEach>
                     </form:select>
                 </td>
                 <td>
                     <form:select path="<%=BaseTableNamesEnum.IS_UNDER_CONTROL.getDbName()%>">
-                        <option selected value="">Show all records</option>
-                        <option value="true">Under control</option>
-                        <option value="false">Is NOT under control</option>
+                        <c:choose>
+                            <c:when test="${empty baseTableDateFilter.isUnderControl}">
+                                <option selected value="">Show all records</option>
+                            </c:when>
+                            <c:otherwise>
+                                <option value="">Show all records</option>
+                            </c:otherwise>
+                        </c:choose>
+                        <c:choose>
+                            <c:when test="${baseTableDateFilter.isUnderControl == true}">
+                                <option selected value="true">Under control</option>
+                            </c:when>
+                            <c:otherwise>
+                                <option value="true">Under control</option>
+                            </c:otherwise>
+                        </c:choose>
+                        <c:choose>
+                            <c:when test="${baseTableDateFilter.isUnderControl == false}">
+                                <option selected value="false">Is NOT under control</option>
+                            </c:when>
+                            <c:otherwise>
+                                <option value="false">Is NOT under control</option>
+                            </c:otherwise>
+                        </c:choose>
                     </form:select>
                 </td>
                 <td>
                     <form:select path="<%=BaseTableNamesEnum.BANK.getDbName()%>">
                         <option selected value="">Show all records</option>
                         <c:forEach items="${allBanksList}" var="bank">
-                            <option value="${bank}">${bank}</option>
+                            <c:choose>
+                                <c:when test="${bank == baseTableDateFilter.bank}">
+                                    <option selected value="${bank}">${bank}</option>
+                                </c:when>
+                                <c:otherwise>
+                                    <option value="${bank}">${bank}</option>
+                                </c:otherwise>
+                            </c:choose>
                         </c:forEach>
                     </form:select>
                 </td>
@@ -112,9 +182,23 @@
                     <%--<form:select path="statusOfCall.id">--%>
                     <form:select path="<%=BaseTableNamesEnum.STATUS_OF_CALL.getJoinedIdDbName()%>">
                         <option selected value="0">Show all records</option>
-                        <option value="">No status assigned</option>
+                        <c:choose>
+                            <c:when test="${empty baseTableDateFilter.statusOfCall.id}">
+                                <option selected value="">No status assigned</option>
+                            </c:when>
+                            <c:otherwise>
+                                <option value="">No status assigned</option>
+                            </c:otherwise>
+                        </c:choose>
                         <c:forEach items="${allCallStatusesList}" var="status">
-                            <option value="${status.id}">${status.status}</option>
+                            <c:choose>
+                                <c:when test="${status.id == baseTableDateFilter.statusOfCall.id}">
+                                    <option selected value="${status.id}">${status.status}</option>
+                                </c:when>
+                                <c:otherwise>
+                                    <option value="${status.id}">${status.status}</option>
+                                </c:otherwise>
+                            </c:choose>
                         </c:forEach>
                     </form:select>
                 </td>

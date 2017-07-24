@@ -49,74 +49,82 @@ public class User {
         return id;
     }
 
-    public void setId(Integer id) {
+    public User setId(Integer id) {
         this.id = id;
+        return this;
     }
 
     public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
+    public User setFirstName(String firstName) {
         this.firstName = firstName;
+        return this;
     }
 
     public String getLastName() {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
+    public User setLastName(String lastName) {
         this.lastName = lastName;
+        return this;
     }
 
     public String getContactPhoneNumber() {
         return contactPhoneNumber;
     }
 
-    public void setContactPhoneNumber(String contactPhoneNumber) {
+    public User setContactPhoneNumber(String contactPhoneNumber) {
         this.contactPhoneNumber = contactPhoneNumber;
+        return this;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
+    public User setPassword(String password) {
         this.password = password;
+        return this;
     }
 
     public boolean isEnabled() {
         return enabled;
     }
 
-    public void setEnabled(boolean enabled) {
+    public User setEnabled(boolean enabled) {
         this.enabled = enabled;
+        return this;
     }
 
     public UserRoles getUserRoles() {
         return userRoles;
     }
 
-    public void setUserRoles(UserRoles userRoles) {
+    public User setUserRoles(UserRoles userRoles) {
         this.userRoles = userRoles;
+        return this;
     }
 
     public Date getCreatedtime() {
         return createdtime;
     }
 
-    public void setCreatedtime(Date createdtime) {
+    public User setCreatedtime(Date createdtime) {
         this.createdtime = createdtime;
+        return this;
     }
 
     public Date getUpdatedtime() {
         return updatedtime;
     }
 
-    public void setUpdatedtime(Date updatedtime) {
+    public User setUpdatedtime(Date updatedtime) {
         this.updatedtime = updatedtime;
+        return this;
     }
-
 
     //This method is called during export to CSV. So need to be very carefully to do not export pass etc.
     @Override

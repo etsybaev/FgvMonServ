@@ -3,6 +3,8 @@ package com.fgvmonserv.controller;
 import com.fgvmonserv.BaseTableNamesEnum;
 import com.fgvmonserv.enums.SearchByRangeTypeEnum;
 import com.fgvmonserv.model.BaseTableDateFilter;
+import com.fgvmonserv.model.StatusOfCall;
+import com.fgvmonserv.model.StatusOfDeal;
 import com.fgvmonserv.model.userauth.User;
 import com.fgvmonserv.service.BaseTableService;
 import com.fgvmonserv.service.StatusOfCallService;
@@ -75,6 +77,15 @@ public class RootDomainController {
         }
         if(dateFilter.getSearchByRangeTypeEnum() == null){
             dateFilter.setSearchByRangeTypeEnum(SearchByRangeTypeEnum.START_FROM);
+        }
+        if(dateFilter.getManager() == null){
+            dateFilter.setManager(new User().setId(0));
+        }
+        if(dateFilter.getStatusOfDeal() == null){
+            dateFilter.setStatusOfDeal(new StatusOfDeal().setId(0));
+        }
+        if(dateFilter.getStatusOfCall() == null){
+            dateFilter.setStatusOfCall(new StatusOfCall().setId(0));
         }
 
         model.addAttribute("allRecordsList", this.baseTableService.getAllRecordsList(dateFilter));
