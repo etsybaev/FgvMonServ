@@ -1,12 +1,7 @@
 package com.fgvmonserv.model;
 
 
-import com.fasterxml.jackson.annotation.*;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fgvmonserv.converter.DateTimeConverter;
-import com.fgvmonserv.converter.JsonDateDeserializer;
-import com.fgvmonserv.converter.JsonDateSerializer;
 import com.fgvmonserv.model.userauth.User;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
@@ -19,42 +14,42 @@ import java.time.LocalDate;
  * Created by ievgenii.tsybaiev on 05.01.2017.
  */
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-        "id",
-        "bank",
-        "auctionDate",
-        "lotNumber",
-        "kdNumber",
-        "aboutAuction",
-        "startPrice",
-        "calculatorPageTable",
-        "url",
-        "propertyDetails",
-        "loanDebtorFullName",
-        "loanDebtorPhoneNumber",
-        "loanDebtorIdentCode",
-        "details",
-        "dateOfCall",
-        "statusOfCall",
-        "newAuctionDate",
-        "managersComment",
-        "symptom",
-        "isUnderControl",
-        "statusOfDeal"
-})
+//@JsonInclude(JsonInclude.Include.NON_NULL)
+//@JsonPropertyOrder({
+//        "id",
+//        "bank",
+//        "auctionDate",
+//        "lotNumber",
+//        "kdNumber",
+//        "aboutAuction",
+//        "startPrice",
+//        "calculatorPageTable",
+//        "url",
+//        "propertyDetails",
+//        "loanDebtorFullName",
+//        "loanDebtorPhoneNumber",
+//        "loanDebtorIdentCode",
+//        "details",
+//        "dateOfCall",
+//        "statusOfCall",
+//        "newAuctionDate",
+//        "managersComment",
+//        "symptom",
+//        "isUnderControl",
+//        "statusOfDeal"
+//})
 
 
 @Entity
 public class BaseTable {
 
-    @JsonProperty("id")
+    //@JsonProperty("id")
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @JsonProperty("bank")
+    //@JsonProperty("bank")
     @Column(name = "bank")
     private String bank;
 
@@ -63,104 +58,113 @@ public class BaseTable {
 //    @NotFound(action = NotFoundAction.IGNORE)
 //    private UserRoles userRoles;
 
-    @JsonProperty("auctionDate")
-    @JsonDeserialize(using = JsonDateDeserializer.class)
-    @JsonSerialize(using = JsonDateSerializer.class)
+    //@JsonProperty("auctionDate")
+    //@JsonDeserialize(using = JsonDateDeserializer.class)
+    //@JsonSerialize(using = JsonDateSerializer.class)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @Column(name = "auctionDate")
     private LocalDate auctionDate;
 
-    @JsonProperty("lotNumber")
+    //@JsonProperty("lotNumber")
     @Column(name = "lotNumber")
     private String lotNumber;
 
-    @JsonProperty("kdNumber")
+    //@JsonProperty("kdNumber")
     @Column(name = "kdNumber")
     private String kdNumber;
 
-    @JsonProperty("aboutAuction")
+    //@JsonProperty("aboutAuction")
     @Column(name = "aboutAuction")
     private String aboutAuction;
 
-    @JsonProperty("startPrice")
+    //@JsonProperty("startPrice")
     @Column(name = "startPrice")
     private Double startPrice;
 
-    @JsonProperty("calculatorPageTable")
-    @OneToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="calculatorPageTable")
-    @NotFound(action = NotFoundAction.IGNORE)
-    private CalculatorPageTable calculatorPageTable;
+    @Column(name = "auctionStep")
+    private Integer auctionStep;
 
-    @JsonProperty("url")
+    @Column(name = "stockExchangeCommission")
+    private Integer stockExchangeCommission;
+
+    @Column(name = "notaryCommission")
+    private Double notaryCommission;
+
+    @Column(name = "ourCommission")
+    private Double ourCommission;
+
+    @Column(name = "finalPrice")
+    private Integer finalPrice;
+
+   //@JsonProperty("url")
     @Column(name = "url")
     private String url;
 
-    @JsonProperty("propertyDetails")
+    //@JsonProperty("propertyDetails")
     @Column(name = "propertyDetails")
     private String propertyDetails;
 
-    @JsonProperty("loanDebtorFullName")
+    //@JsonProperty("loanDebtorFullName")
     @Column(name = "loanDebtorFullName")
     private String loanDebtorFullName;
 
-    @JsonProperty("loanDebtorPhoneNumber")
+    //@JsonProperty("loanDebtorPhoneNumber")
     @Column(name = "loanDebtorPhoneNumber")
     private String loanDebtorPhoneNumber;
 
-    @JsonProperty("loanDebtorIdentCode")
+    //@JsonProperty("loanDebtorIdentCode")
     @Column(name = "loanDebtorIdentCode")
     private String loanDebtorIdentCode;
 
-    @JsonProperty("details")
+    //@JsonProperty("details")
     @Column(name = "details")
     private String details;
 
-    @JsonProperty("dateOfCall")
-    @JsonDeserialize(using = JsonDateDeserializer.class)
-    @JsonSerialize(using = JsonDateSerializer.class)
+    //@JsonProperty("dateOfCall")
+    //@JsonDeserialize(using = JsonDateDeserializer.class)
+    //@JsonSerialize(using = JsonDateSerializer.class)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @Column(name = "dateOfCall")
     private LocalDate dateOfCall;
 
-    @JsonProperty("statusOfCall")
+    //@JsonProperty("statusOfCall")
     @OneToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="statusOfCall")
     @NotFound(action = NotFoundAction.IGNORE)
     private StatusOfCall statusOfCall;
 
-    @JsonProperty("newAuctionDate")
-    @JsonDeserialize(using = JsonDateDeserializer.class)
-    @JsonSerialize(using = JsonDateSerializer.class)
+    //@JsonProperty("newAuctionDate")
+    //@JsonDeserialize(using = JsonDateDeserializer.class)
+    //@JsonSerialize(using = JsonDateSerializer.class)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @Column(name = "newAuctionDate")
     private LocalDate newAuctionDate;
 
-    @JsonProperty("managersComment")
+    //@JsonProperty("managersComment")
     @Column(name = "managersComment")
     private String managersComment;
 
-    @JsonProperty("symptom")
+    //@JsonProperty("symptom")
     @Column(name = "symptom")
     private String symptom;
 
-    @JsonProperty("isUnderControl")
+    //@JsonProperty("isUnderControl")
     @Column(name = "isUnderControl")
     private boolean isUnderControl;
 
-    @JsonProperty("manager")
+    //@JsonProperty("manager")
     @OneToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="manager")
     @NotFound(action = NotFoundAction.IGNORE)
     private User manager;
 
-    @JsonProperty("statusOfDeal")
+    //@JsonProperty("statusOfDeal")
     @OneToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="statusOfDeal")
     @NotFound(action = NotFoundAction.IGNORE)
     private StatusOfDeal statusOfDeal;
 
-    @JsonIgnore
+    //@JsonIgnore
     public static BaseTable getShortBaseTableFromCsvLine(String[] lineFromCsv){
         if(lineFromCsv[6].contains(",") && lineFromCsv[6].contains(".")){
             lineFromCsv[6] = lineFromCsv[6].replaceAll(",", ""); //if number looks like 15,168.20 then remove comas
@@ -176,7 +180,7 @@ public class BaseTable {
                 .setPropertyDetails(lineFromCsv[8]);
     }
 //.replace(/\.$/, "")
-//    @JsonIgnore
+//    //@JsonIgnore
 //    public static BaseTable getShortBaseTableFromCsvLineGoogleImport(String[] lineFromCsv){
 //        BaseTable baseTable = new BaseTable();
 //
@@ -235,243 +239,277 @@ public class BaseTable {
 //        return baseTable;
 //    }
 
-    @JsonProperty("id")
+    //@JsonProperty("id")
     public Integer getId() {
         return id;
     }
 
-    @JsonProperty("id")
+    //@JsonProperty("id")
     public BaseTable setId(Integer id) {
         this.id = id;
         return this;
     }
 
-    @JsonProperty("bank")
+    //@JsonProperty("bank")
     public String getBank() {
         return bank;
     }
 
-    @JsonProperty("bank")
+    //@JsonProperty("bank")
     public BaseTable setBank(String bank) {
         this.bank = bank;
         return this;
     }
 
-    @JsonProperty("auctionDate")
+    //@JsonProperty("auctionDate")
     public LocalDate getAuctionDate() {
         return auctionDate;
     }
 
-    @JsonProperty("auctionDate")
+    //@JsonProperty("auctionDate")
     public BaseTable setAuctionDate(LocalDate auctionDate) {
         this.auctionDate = auctionDate;
         return this;
     }
 
-    @JsonProperty("lotNumber")
+    //@JsonProperty("lotNumber")
     public String getLotNumber() {
         return lotNumber;
     }
 
-    @JsonProperty("lotNumber")
+    //@JsonProperty("lotNumber")
     public BaseTable setLotNumber(String lotNumber) {
         this.lotNumber = lotNumber;
         return this;
     }
 
-    @JsonProperty("kdNumber")
+    //@JsonProperty("kdNumber")
     public String getKdNumber() {
         return kdNumber;
     }
 
-    @JsonProperty("kdNumber")
+    //@JsonProperty("kdNumber")
     public BaseTable setKdNumber(String kdNumber) {
         this.kdNumber = kdNumber;
         return this;
     }
 
-    @JsonProperty("aboutAuction")
+    //@JsonProperty("aboutAuction")
     public String getAboutAuction() {
         return aboutAuction;
     }
 
-    @JsonProperty("aboutAuction")
+    //@JsonProperty("aboutAuction")
     public BaseTable setAboutAuction(String aboutAuction) {
         this.aboutAuction = aboutAuction;
         return this;
     }
 
-    @JsonProperty("startPrice")
+    //@JsonProperty("startPrice")
     public Double getStartPrice() {
         return startPrice;
     }
 
-    @JsonProperty("startPrice")
+    //@JsonProperty("startPrice")
     public BaseTable setStartPrice(Double startPrice) {
         this.startPrice = startPrice;
         return this;
     }
 
-    @JsonProperty("calculatorPageTable")
-    public CalculatorPageTable getCalculatorPageTable() {
-        return calculatorPageTable;
+    public Integer getAuctionStep() {
+        return auctionStep;
     }
 
-    @JsonProperty("calculatorPageTable")
-    public BaseTable setCalculatorPageTable(CalculatorPageTable calculatorPageTable) {
-        this.calculatorPageTable = calculatorPageTable;
+    public BaseTable setAuctionStep(Integer auctionStep) {
+        this.auctionStep = auctionStep;
         return this;
     }
 
-    @JsonProperty("url")
+    public Integer getStockExchangeCommission() {
+        return stockExchangeCommission;
+    }
+
+    public BaseTable setStockExchangeCommission(Integer stockExchangeCommission) {
+        this.stockExchangeCommission = stockExchangeCommission;
+        return this;
+    }
+
+    public Double getNotaryCommission() {
+        return notaryCommission;
+    }
+
+    public BaseTable setNotaryCommission(Double notaryCommission) {
+        this.notaryCommission = notaryCommission;
+        return this;
+    }
+
+    public Double getOurCommission() {
+        return ourCommission;
+    }
+
+    public BaseTable setOurCommission(Double ourCommission) {
+        this.ourCommission = ourCommission;
+        return this;
+    }
+
+    public Integer getFinalPrice() {
+        return finalPrice;
+    }
+
+    public BaseTable setFinalPrice(Integer finalPrice) {
+        this.finalPrice = finalPrice;
+        return this;
+    }
+
+    //@JsonProperty("url")
     public String getUrl() {
         return url;
     }
 
-    @JsonProperty("url")
+    //@JsonProperty("url")
     public BaseTable setUrl(String url) {
         this.url = url;
         return this;
     }
 
-    @JsonProperty("propertyDetails")
+    //@JsonProperty("propertyDetails")
     public String getPropertyDetails() {
         return propertyDetails;
     }
 
-    @JsonProperty("propertyDetails")
+    //@JsonProperty("propertyDetails")
     public BaseTable setPropertyDetails(String propertyDetails) {
         this.propertyDetails = propertyDetails;
         return this;
     }
 
-    @JsonProperty("loanDebtorFullName")
+    //@JsonProperty("loanDebtorFullName")
     public String getLoanDebtorFullName() {
         return loanDebtorFullName;
     }
 
-    @JsonProperty("loanDebtorFullName")
+    //@JsonProperty("loanDebtorFullName")
     public BaseTable setLoanDebtorFullName(String loanDebtorFullName) {
         this.loanDebtorFullName = loanDebtorFullName;
         return this;
     }
 
-    @JsonProperty("loanDebtorPhoneNumber")
+    //@JsonProperty("loanDebtorPhoneNumber")
     public String getLoanDebtorPhoneNumber() {
         return loanDebtorPhoneNumber;
     }
 
-    @JsonProperty("loanDebtorPhoneNumber")
+    //@JsonProperty("loanDebtorPhoneNumber")
     public BaseTable setLoanDebtorPhoneNumber(String loanDebtorPhoneNumber) {
         this.loanDebtorPhoneNumber = loanDebtorPhoneNumber;
         return this;
     }
 
-    @JsonProperty("loanDebtorIdentCode")
+    //@JsonProperty("loanDebtorIdentCode")
     public String getLoanDebtorIdentCode() {
         return loanDebtorIdentCode;
     }
 
-    @JsonProperty("loanDebtorIdentCode")
+    //@JsonProperty("loanDebtorIdentCode")
     public BaseTable setLoanDebtorIdentCode(String loanDebtorIdentCode) {
         this.loanDebtorIdentCode = loanDebtorIdentCode;
         return this;
     }
 
-    @JsonProperty("details")
+    //@JsonProperty("details")
     public String getDetails() {
         return details;
     }
 
-    @JsonProperty("details")
+    //@JsonProperty("details")
     public BaseTable setDetails(String details) {
         this.details = details;
         return this;
     }
 
-    @JsonProperty("dateOfCall")
+    //@JsonProperty("dateOfCall")
     public LocalDate getDateOfCall() {
         return dateOfCall;
     }
 
-    @JsonProperty("dateOfCall")
+    //@JsonProperty("dateOfCall")
     public BaseTable setDateOfCall(LocalDate dateOfCall) {
         this.dateOfCall = dateOfCall;
         return this;
     }
 
-    @JsonProperty("statusOfCall")
+    //@JsonProperty("statusOfCall")
     public StatusOfCall getStatusOfCall() {
         return statusOfCall;
     }
 
-    @JsonProperty("statusOfCall")
+    //@JsonProperty("statusOfCall")
     public BaseTable setStatusOfCall(StatusOfCall statusOfCall) {
         this.statusOfCall = statusOfCall;
         return this;
     }
 
-    @JsonProperty("newAuctionDate")
+    //@JsonProperty("newAuctionDate")
     public LocalDate getNewAuctionDate() {
         return newAuctionDate;
     }
 
-    @JsonProperty("newAuctionDate")
+    //@JsonProperty("newAuctionDate")
     public BaseTable setNewAuctionDate(LocalDate newAuctionDate) {
         this.newAuctionDate = newAuctionDate;
         return this;
     }
 
-    @JsonProperty("managersComment")
+    //@JsonProperty("managersComment")
     public String getManagersComment() {
         return managersComment;
     }
 
-    @JsonProperty("managersComment")
+    //@JsonProperty("managersComment")
     public BaseTable setManagersComment(String managersComment) {
         this.managersComment = managersComment;
         return this;
     }
 
-    @JsonProperty("symptom")
+    //@JsonProperty("symptom")
     public String getSymptom() {
         return symptom;
     }
 
-    @JsonProperty("symptom")
+    //@JsonProperty("symptom")
     public BaseTable setSymptom(String symptom) {
         this.symptom = symptom;
         return this;
     }
 
-    @JsonProperty("isUnderControl")
+    //@JsonProperty("isUnderControl")
     public boolean getIsUnderControl() {
         return isUnderControl;
     }
 
-    @JsonProperty("isUnderControl")
+    //@JsonProperty("isUnderControl")
     public BaseTable setIsUnderControl(boolean isUnderControl) {
         this.isUnderControl = isUnderControl;
         return this;
     }
 
-    @JsonProperty("manager")
+    //@JsonProperty("manager")
     public User getManager() {
         return manager;
     }
 
-    @JsonProperty("manager")
+    //@JsonProperty("manager")
     public BaseTable setManager(User manager) {
         this.manager = manager;
         return this;
     }
 
-    @JsonProperty("statusOfDeal")
+    //@JsonProperty("statusOfDeal")
     public StatusOfDeal getStatusOfDeal() {
         return statusOfDeal;
     }
 
-    @JsonProperty("statusOfDeal")
+    //@JsonProperty("statusOfDeal")
     public BaseTable setStatusOfDeal(StatusOfDeal statusOfDeal) {
         this.statusOfDeal = statusOfDeal;
         return this;
@@ -494,8 +532,15 @@ public class BaseTable {
         if (aboutAuction != null ? !aboutAuction.equals(baseTable.aboutAuction) : baseTable.aboutAuction != null)
             return false;
         if (startPrice != null ? !startPrice.equals(baseTable.startPrice) : baseTable.startPrice != null) return false;
-        if (calculatorPageTable != null ? !calculatorPageTable.equals(baseTable.calculatorPageTable) : baseTable.calculatorPageTable != null)
+        if (auctionStep != null ? !auctionStep.equals(baseTable.auctionStep) : baseTable.auctionStep != null)
             return false;
+        if (stockExchangeCommission != null ? !stockExchangeCommission.equals(baseTable.stockExchangeCommission) : baseTable.stockExchangeCommission != null)
+            return false;
+        if (notaryCommission != null ? !notaryCommission.equals(baseTable.notaryCommission) : baseTable.notaryCommission != null)
+            return false;
+        if (ourCommission != null ? !ourCommission.equals(baseTable.ourCommission) : baseTable.ourCommission != null)
+            return false;
+        if (finalPrice != null ? !finalPrice.equals(baseTable.finalPrice) : baseTable.finalPrice != null) return false;
         if (url != null ? !url.equals(baseTable.url) : baseTable.url != null) return false;
         if (propertyDetails != null ? !propertyDetails.equals(baseTable.propertyDetails) : baseTable.propertyDetails != null)
             return false;
@@ -527,7 +572,11 @@ public class BaseTable {
         result = 31 * result + (kdNumber != null ? kdNumber.hashCode() : 0);
         result = 31 * result + (aboutAuction != null ? aboutAuction.hashCode() : 0);
         result = 31 * result + (startPrice != null ? startPrice.hashCode() : 0);
-        result = 31 * result + (calculatorPageTable != null ? calculatorPageTable.hashCode() : 0);
+        result = 31 * result + (auctionStep != null ? auctionStep.hashCode() : 0);
+        result = 31 * result + (stockExchangeCommission != null ? stockExchangeCommission.hashCode() : 0);
+        result = 31 * result + (notaryCommission != null ? notaryCommission.hashCode() : 0);
+        result = 31 * result + (ourCommission != null ? ourCommission.hashCode() : 0);
+        result = 31 * result + (finalPrice != null ? finalPrice.hashCode() : 0);
         result = 31 * result + (url != null ? url.hashCode() : 0);
         result = 31 * result + (propertyDetails != null ? propertyDetails.hashCode() : 0);
         result = 31 * result + (loanDebtorFullName != null ? loanDebtorFullName.hashCode() : 0);
@@ -545,32 +594,6 @@ public class BaseTable {
         return result;
     }
 
-    @Override
-    public String toString() {
-        return "BaseTable{" +
-                "id=" + id +
-                ", bank='" + bank + '\'' +
-                ", auctionDate=" + auctionDate +
-                ", lotNumber='" + lotNumber + '\'' +
-                ", kdNumber='" + kdNumber + '\'' +
-                ", aboutAuction='" + aboutAuction + '\'' +
-                ", startPrice='" + startPrice + '\'' +
-                ", calculatorPageTable=" + calculatorPageTable +
-                ", url='" + url + '\'' +
-                ", propertyDetails='" + propertyDetails + '\'' +
-                ", loanDebtorFullName='" + loanDebtorFullName + '\'' +
-                ", loanDebtorPhoneNumber='" + loanDebtorPhoneNumber + '\'' +
-                ", loanDebtorIdentCode='" + loanDebtorIdentCode + '\'' +
-                ", details='" + details + '\'' +
-                ", dateOfCall=" + dateOfCall +
-                ", statusOfCall=" + statusOfCall +
-                ", newAuctionDate=" + newAuctionDate +
-                ", managersComment='" + managersComment + '\'' +
-                ", symptom='" + symptom + '\'' +
-                ", isUnderControl=" + isUnderControl +
-                ", manager=" + manager +
-                ", statusOfDeal=" + statusOfDeal +
-                '}';
-    }
+
 }
 

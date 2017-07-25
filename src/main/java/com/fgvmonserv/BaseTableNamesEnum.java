@@ -13,7 +13,7 @@ public enum BaseTableNamesEnum {
     KD_NUMBER("kdNumber", "KD Number"),
     ABOUT_AUCTION("aboutAuction", "About auction"),
     START_PRICE("startPrice", "Start Price"),
-    CALCULATOR_PAGE_TABLE("calculatorPageTable", "Final price"),
+    FINAL_PRICE("finalPrice", "Final Price"),
     URL("url", "URL"),
     PROPERTY_DETAILS("propertyDetails", "Property details"),
     LOAN_DEBTOR_FULL_NAME("loanDebtorFullName", "Loan debtor full name"),

@@ -1,9 +1,7 @@
 package com.fgvmonserv.controller;
 
 import com.fgvmonserv.model.BaseTable;
-import com.fgvmonserv.model.CalculatorPageTable;
 import com.fgvmonserv.service.BaseTableService;
-import com.fgvmonserv.service.CalculatorPageTableService;
 import com.fgvmonserv.service.StatusOfCallService;
 import com.fgvmonserv.service.StatusOfDealService;
 import com.fgvmonserv.service.userauth.UserService;
@@ -30,7 +28,7 @@ public class BaseTableController {
     private UserService userService;
     private StatusOfDealService statusOfDealService;
     private StatusOfCallService statusOfCallService;
-    private CalculatorPageTableService calculatorPageTableService;
+//    private CalculatorPageTableService calculatorPageTableService;
 
     @Autowired(required = true)
     @Qualifier(value = "baseTableService")
@@ -59,12 +57,12 @@ public class BaseTableController {
         return this;
     }
 
-    @Autowired
-    @Qualifier("calculatorPageTableService")
-    public BaseTableController setCalculatorPageTableService(CalculatorPageTableService calculatorPageTableService) {
-        this.calculatorPageTableService = calculatorPageTableService;
-        return this;
-    }
+//    @Autowired
+//    @Qualifier("calculatorPageTableService")
+//    public BaseTableController setCalculatorPageTableService(CalculatorPageTableService calculatorPageTableService) {
+//        this.calculatorPageTableService = calculatorPageTableService;
+//        return this;
+//    }
 
 
     @RequestMapping(value = "/addnewbasetablerecordform")
@@ -102,17 +100,17 @@ public class BaseTableController {
             redirectAttributes.addFlashAttribute("message", "Record has been successfully created!");
             return "redirect:/";
         }else {
-            //check if Start price was changed. If yes - then will remove total price as obsolete value.
-            BaseTable baseTableFromDBBeforeUpdate = this.baseTableService.getRecordById(baseTable.getId());
-            CalculatorPageTable calc = this.calculatorPageTableService.getCalculatorPageTableById(baseTable.getId());
-            if (baseTableFromDBBeforeUpdate.getStartPrice() != null &&
-                    !baseTableFromDBBeforeUpdate.getStartPrice().equals(baseTable.getStartPrice())){
-                this.calculatorPageTableService.updateRecord(calc.setFinalPrice(null));
-            }else {
-                //If prise is the same that means that some other fields were updated. But final price is not sent from browser
-                //So we need to set it here to keep the same as before update other fields. Not good way, need to get back later and re-write
-                baseTable.setCalculatorPageTable(calc);
-            }
+//            //check if Start price was changed. If yes - then will remove total price as obsolete value.
+//            BaseTable baseTableFromDBBeforeUpdate = this.baseTableService.getRecordById(baseTable.getId());
+//            CalculatorPageTable calc = this.calculatorPageTableService.getCalculatorPageTableById(baseTable.getId());
+//            if (baseTableFromDBBeforeUpdate.getStartPrice() != null &&
+//                    !baseTableFromDBBeforeUpdate.getStartPrice().equals(baseTable.getStartPrice())){
+//                this.calculatorPageTableService.updateRecord(calc.setFinalPrice(null));
+//            }else {
+//                //If prise is the same that means that some other fields were updated. But final price is not sent from browser
+//                //So we need to set it here to keep the same as before update other fields. Not good way, need to get back later and re-write
+//                baseTable.setCalculatorPageTable(calc);
+//            }
             this.baseTableService.updateBaseTableRecord(baseTable);
             redirectAttributes.addFlashAttribute("message", "Record has been successfully updated!");
             return "redirect:/basetableconroller/basetablerecorddetails/" + baseTable.getId();

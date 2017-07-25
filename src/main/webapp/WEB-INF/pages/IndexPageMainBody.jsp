@@ -220,11 +220,11 @@
         }
     </script>
 
-    <script>
-        function openCalcPage(id) {
-            window.open('/calc/' + id, '_blank');
-        }
-    </script>
+    <%--<script>--%>
+        <%--function openCalcPage(id) {--%>
+            <%--window.open('/calc/' + id, '_blank');--%>
+        <%--}--%>
+    <%--</script>--%>
 
 
     <c:if test="${pageContext.request.isUserInRole('ROLE_ADMIN') == true}">
@@ -250,7 +250,7 @@
                 <th><%=BaseTableNamesEnum.KD_NUMBER.getViewName()%></th>
                 <th><%=BaseTableNamesEnum.ABOUT_AUCTION.getViewName()%></th>
                 <th><%=BaseTableNamesEnum.START_PRICE.getViewName()%></th>
-                <th><%=BaseTableNamesEnum.CALCULATOR_PAGE_TABLE.getViewName()%></th>
+                <th><%=BaseTableNamesEnum.FINAL_PRICE.getViewName()%></th>
                 <th><%=BaseTableNamesEnum.URL.getViewName()%></th>
                 <th><%=BaseTableNamesEnum.PROPERTY_DETAILS.getViewName()%></th>
                 <th><%=BaseTableNamesEnum.LOAN_DEBTOR_FULL_NAME.getViewName()%></th>
@@ -265,7 +265,6 @@
                 <th><%=BaseTableNamesEnum.IS_UNDER_CONTROL.getViewName()%></th>
                 <th><%=BaseTableNamesEnum.MANAGER.getViewName()%></th>
                 <th><%=BaseTableNamesEnum.STATUS_OF_DEAL.getViewName()%></th>
-
             </tr>
             <c:forEach items="${allRecordsList}" var="allRecordsList">
                 <tr ondblclick="openEditPage(${allRecordsList.id})">
@@ -277,7 +276,7 @@
                     <td title="${allRecordsList.kdNumber}"><div>${allRecordsList.kdNumber}</div></td>
                     <td title="${allRecordsList.aboutAuction}">${allRecordsList.aboutAuction}</td>
                     <td title="${allRecordsList.startPrice}">${allRecordsList.startPrice}</td>
-                    <td onclick="openCalcPage(${allRecordsList.id})" title="${allRecordsList.calculatorPageTable.finalPrice}">${allRecordsList.calculatorPageTable.finalPrice}</td>
+                    <td title="${allRecordsList.finalPrice}">${allRecordsList.finalPrice}</td>
                     <td title="${allRecordsList.url}"><a target="_blank" href="${allRecordsList.url}">${allRecordsList.url}</a></td>
                     <td title="${allRecordsList.propertyDetails}"><div>${allRecordsList.propertyDetails}</div></td>
                     <td title="${allRecordsList.loanDebtorFullName}">${allRecordsList.loanDebtorFullName}</td>

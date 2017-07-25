@@ -9,6 +9,5 @@
         <mapping class="com.fgvmonserv.model.StatusOfDeal"/>
         <mapping class="com.fgvmonserv.model.StatusOfCall"/>
         <mapping class="com.fgvmonserv.model.FileStorage"/>
-        <mapping class="com.fgvmonserv.model.CalculatorPageTable"/>
     </session-factory>
 </hibernate-configuration>

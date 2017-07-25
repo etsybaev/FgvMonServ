@@ -107,13 +107,13 @@ CREATE TABLE `Monserv`.`FileStorage` (
   PRIMARY KEY (`id`))
 DEFAULT CHARACTER SET = utf8;
 
--------------------------------------------------------------------------------
-CREATE TABLE `Monserv`.`CalculatorPageTable` (
-  `id` INT(11) NULL,
-  `auctionStep` DOUBLE NULL,
-  `stockExchangeCommission` DOUBLE NULL,
-  `notaryCommission` DOUBLE NULL,
-  `ourCommission` DOUBLE NULL,
-  `finalPrice` DOUBLE NULL)
-DEFAULT CHARACTER SET = utf8;
+-------------------------------------------------------------------------
+
+
+ALTER TABLE `Monserv`.`BaseTable`
+ADD COLUMN `auctionStep` DOUBLE NULL DEFAULT NULL AFTER `startPrice`,
+ADD COLUMN `stockExchangeCommission` DOUBLE NULL DEFAULT NULL AFTER `auctionStep`,
+ADD COLUMN `notaryCommission` DOUBLE NULL DEFAULT NULL AFTER `stockExchangeCommission`,
+ADD COLUMN `ourCommission` DOUBLE NULL DEFAULT NULL AFTER `notaryCommission`,
+ADD COLUMN `finalPrice` INT NULL DEFAULT NULL AFTER `ourCommission`;
 

@@ -34,6 +34,23 @@
         </h3>
     </c:if>
 
+    <script type="text/javascript">
+        function findTotal(){
+            var startPrice = parseFloat(document.getElementById("startPrice").value);
+            var auctionStep = parseInt(document.getElementById("auctionStep").value);
+            var stockExchangeCommission= parseInt(document.getElementById("stockExchangeCommission").value);
+            var notaryCommission = parseFloat(document.getElementById("notaryCommission").value);
+            var ourCommission = parseFloat(document.getElementById("ourCommission").value);
+
+            auctionStep = startPrice * (auctionStep /100);
+            stockExchangeCommission = auctionStep * (stockExchangeCommission/100);
+
+            var totalPrice = parseInt(Math.ceil(startPrice + auctionStep + stockExchangeCommission + notaryCommission + ourCommission));
+
+            document.getElementById('finalPrice').value = isNaN(totalPrice) ? "" : totalPrice;
+        }
+    </script>
+
 
     <c:url var="addAction" value="/basetableconroller/addeditbasetablerecord"/>
 
@@ -99,10 +116,89 @@
                     </form:label>
                 </td>
                 <td>
-                    <form:input path="<%=BaseTableNamesEnum.START_PRICE.getDbName()%>" type="text"
+                    <form:input id="startPrice" onkeyup="findTotal()" path="<%=BaseTableNamesEnum.START_PRICE.getDbName()%>" type="text"
                                 pattern="[0-9]+?(\.[0-9]{0,2})?" title="This must be a number with up to 2 decimal places"/>
                 </td>
             </tr>
+
+            <tr>
+                <td>
+                    Calculator
+                </td>
+                <td>
+                    <table>
+
+
+                        <tr>
+                            <td>
+                                <form:label path="auctionStep">
+                                    <spring:message text="Auction step(%)"/>
+                                </form:label>
+                            </td>
+                            <td>
+                                <form:input id="auctionStep" onkeyup="findTotal()" path="auctionStep" type="text"
+                                            pattern="[0-9]+" title="This must be a number of %"/>
+
+                                <%--<form:input id="auctionStep" onkeyup="findTotal()" path="auctionStep" type="text"--%>
+                                            <%--pattern="[0-9]+?(\.[0-9]{0,2})?" title="This must be a number with up to 2 decimal places"/>--%>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <form:label path="stockExchangeCommission">
+                                    <spring:message text="Stock Exchange Commission(%)"/>
+                                </form:label>
+                            </td>
+                            <td>
+                                <form:input id="stockExchangeCommission" onkeyup="findTotal()" path="stockExchangeCommission" type="text"
+                                            pattern="[0-9]+" title="This must be a number of %"/>
+                                <%--<form:input id="stockExchangeCommission" onkeyup="findTotal()" path="stockExchangeCommission" type="text"--%>
+                                            <%--pattern="[0-9]+?(\.[0-9]{0,2})?" title="This must be a number with up to 2 decimal places"/>--%>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <form:label path="notaryCommission">
+                                    <spring:message text="Notary Commission (UAH)"/>
+                                </form:label>
+                            </td>
+                            <td>
+                                <form:input id="notaryCommission" onkeyup="findTotal()" path="notaryCommission" type="text"
+                                            pattern="[0-9]+?(\.[0-9]{0,2})?" title="This must be a number with up to 2 decimal places"/>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <form:label path="ourCommission">
+                                    <spring:message text="Our Commission (UAH)"/>
+                                </form:label>
+                            </td>
+                            <td>
+                                <form:input id="ourCommission" onkeyup="findTotal()" path="ourCommission" type="text"
+                                            pattern="[0-9]+?(\.[0-9]{0,2})?" title="This must be a number with up to 2 decimal places"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <form:label path="finalPrice">
+                                    <spring:message text="Final price (UAH)"/>
+                                </form:label>
+                            </td>
+                            <td>
+                                <form:input id="finalPrice" readonly="true" path="finalPrice"/>
+                            </td>
+                        </tr>
+                        <%--<tr>--%>
+                            <%--<td>--%>
+                                <%--<input onclick="findTotal()" type="submit" value="<spring:message text="Save changes"/>"/>--%>
+                            <%--</td>--%>
+                        <%--</tr>--%>
+                    </table>
+                </td>
+            </tr>
+
             <tr>
                 <td>
                     <form:label path="<%=BaseTableNamesEnum.URL.getDbName()%>">
