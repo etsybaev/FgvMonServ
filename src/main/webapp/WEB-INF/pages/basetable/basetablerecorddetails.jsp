@@ -41,7 +41,6 @@
         });
     </script>
 
-
     <script type="text/javascript">
         function findTotal(){
             var startPrice = parseFloat(document.getElementById("startPrice").value);
@@ -55,29 +54,7 @@
             auctionStep = startPrice * (auctionStep /100);
             auctionStepUAH.value = isNaN(auctionStep) ? "" : parseFloat(auctionStep);
 
-            stockExchangeCommission = ((stockExchangeCommission/100) * startPrice) + auctionStep;
-            stockExchangeCommissionUAH.value = isNaN(stockExchangeCommission) ? "" : parseFloat(stockExchangeCommission);
-
-            var totalPrice = parseInt(Math.ceil(startPrice + auctionStep + stockExchangeCommission + notaryCommission + ourCommission));
-
-            document.getElementById('finalPrice').value = isNaN(totalPrice) ? "" : totalPrice;
-        }
-    </script>
-
-    <script type="text/javascript">
-        function findTotal(){
-            var startPrice = parseFloat(document.getElementById("startPrice").value);
-            var auctionStep = parseInt(document.getElementById("auctionStep").value);
-            var auctionStepUAH = document.getElementById("auctionStepUAH");
-            var stockExchangeCommission= parseInt(document.getElementById("stockExchangeCommission").value);
-            var stockExchangeCommissionUAH= document.getElementById("stockExchangeCommissionUAH");
-            var notaryCommission = parseFloat(document.getElementById("notaryCommission").value);
-            var ourCommission = parseFloat(document.getElementById("ourCommission").value);
-
-            auctionStep = startPrice * (auctionStep /100);
-            auctionStepUAH.value = isNaN(auctionStep) ? "" : parseFloat(auctionStep);
-
-            stockExchangeCommission = auctionStep * (stockExchangeCommission/100);
+            stockExchangeCommission = startPrice * (stockExchangeCommission /100) + auctionStep;
             stockExchangeCommissionUAH.value = isNaN(stockExchangeCommission) ? "" : parseFloat(stockExchangeCommission);
 
             var totalPrice = parseInt(Math.ceil(startPrice + auctionStep + stockExchangeCommission + notaryCommission + ourCommission));
