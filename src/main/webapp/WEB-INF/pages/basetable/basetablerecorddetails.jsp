@@ -34,16 +34,51 @@
         </h3>
     </c:if>
 
+
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function(event) {
+            findTotal()
+        });
+    </script>
+
+
     <script type="text/javascript">
         function findTotal(){
             var startPrice = parseFloat(document.getElementById("startPrice").value);
             var auctionStep = parseInt(document.getElementById("auctionStep").value);
+            var auctionStepUAH = document.getElementById("auctionStepUAH");
             var stockExchangeCommission= parseInt(document.getElementById("stockExchangeCommission").value);
+            var stockExchangeCommissionUAH= document.getElementById("stockExchangeCommissionUAH");
             var notaryCommission = parseFloat(document.getElementById("notaryCommission").value);
             var ourCommission = parseFloat(document.getElementById("ourCommission").value);
 
             auctionStep = startPrice * (auctionStep /100);
+            auctionStepUAH.value = isNaN(auctionStep) ? "" : parseFloat(auctionStep);
+
             stockExchangeCommission = auctionStep * (stockExchangeCommission/100);
+            stockExchangeCommissionUAH.value = isNaN(stockExchangeCommission) ? "" : parseFloat(stockExchangeCommission);
+
+            var totalPrice = parseInt(Math.ceil(startPrice + auctionStep + stockExchangeCommission + notaryCommission + ourCommission));
+
+            document.getElementById('finalPrice').value = isNaN(totalPrice) ? "" : totalPrice;
+        }
+    </script>
+
+    <script type="text/javascript">
+        function findTotal(){
+            var startPrice = parseFloat(document.getElementById("startPrice").value);
+            var auctionStep = parseInt(document.getElementById("auctionStep").value);
+            var auctionStepUAH = document.getElementById("auctionStepUAH");
+            var stockExchangeCommission= parseInt(document.getElementById("stockExchangeCommission").value);
+            var stockExchangeCommissionUAH= document.getElementById("stockExchangeCommissionUAH");
+            var notaryCommission = parseFloat(document.getElementById("notaryCommission").value);
+            var ourCommission = parseFloat(document.getElementById("ourCommission").value);
+
+            auctionStep = startPrice * (auctionStep /100);
+            auctionStepUAH.value = isNaN(auctionStep) ? "" : parseFloat(auctionStep);
+
+            stockExchangeCommission = auctionStep * (stockExchangeCommission/100);
+            stockExchangeCommissionUAH.value = isNaN(stockExchangeCommission) ? "" : parseFloat(stockExchangeCommission);
 
             var totalPrice = parseInt(Math.ceil(startPrice + auctionStep + stockExchangeCommission + notaryCommission + ourCommission));
 
@@ -142,6 +177,10 @@
                                 <%--<form:input id="auctionStep" onkeyup="findTotal()" path="auctionStep" type="text"--%>
                                             <%--pattern="[0-9]+?(\.[0-9]{0,2})?" title="This must be a number with up to 2 decimal places"/>--%>
 
+
+                                <td> , UAH= </td>
+                                <td> <input id="auctionStepUAH" type="text" disabled size="15"/> </td>
+
                             </td>
                         </tr>
                         <tr>
@@ -155,6 +194,9 @@
                                             pattern="[0-9]+" title="This must be a number of %"/>
                                 <%--<form:input id="stockExchangeCommission" onkeyup="findTotal()" path="stockExchangeCommission" type="text"--%>
                                             <%--pattern="[0-9]+?(\.[0-9]{0,2})?" title="This must be a number with up to 2 decimal places"/>--%>
+
+                                <td> , UAH= </td>
+                                <td> <input id="stockExchangeCommissionUAH" type="text" disabled size="15"/> </td>
                             </td>
                         </tr>
                         <tr>
