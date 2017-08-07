@@ -54,7 +54,7 @@
             auctionStep = startPrice * (auctionStep /100);
             auctionStepUAH.value = isNaN(auctionStep) ? "" : parseFloat(auctionStep);
 
-            stockExchangeCommission = startPrice * (stockExchangeCommission /100) + auctionStep;
+            stockExchangeCommission = (startPrice + auctionStep) * (stockExchangeCommission /100);
             stockExchangeCommissionUAH.value = isNaN(stockExchangeCommission) ? "" : parseFloat(stockExchangeCommission);
 
             var totalPrice = parseInt(Math.ceil(startPrice + auctionStep + stockExchangeCommission + notaryCommission + ourCommission));
