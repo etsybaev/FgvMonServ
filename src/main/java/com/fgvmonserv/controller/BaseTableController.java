@@ -95,22 +95,23 @@ public class BaseTableController {
     @RequestMapping(value = "/addeditbasetablerecord", method = RequestMethod.POST)
     @PreAuthorize("isFullyAuthenticated()")
     public String addOrEditBaseTableRecord(@ModelAttribute("baseTableRecord") BaseTable baseTable, RedirectAttributes redirectAttributes){
+
+        //This is hot fix for set null instead of null to db, when no value assigned
+        if(baseTable.getStatusOfCall() != null && baseTable.getStatusOfCall().getId()==0){
+            baseTable.setStatusOfCall(null);
+        }
+        if(baseTable.getManager() != null && baseTable.getManager().getId()==0){
+            baseTable.setManager(null);
+        }
+        if(baseTable.getStatusOfDeal() != null && baseTable.getStatusOfDeal().getId()==0){
+            baseTable.setStatusOfDeal(null);
+        }
+
         if(baseTable.getId() == null){
             this.baseTableService.addBaseTableRecord(baseTable);
             redirectAttributes.addFlashAttribute("message", "Record has been successfully created!");
             return "redirect:/";
         }else {
-//            //check if Start price was changed. If yes - then will remove total price as obsolete value.
-//            BaseTable baseTableFromDBBeforeUpdate = this.baseTableService.getRecordById(baseTable.getId());
-//            CalculatorPageTable calc = this.calculatorPageTableService.getCalculatorPageTableById(baseTable.getId());
-//            if (baseTableFromDBBeforeUpdate.getStartPrice() != null &&
-//                    !baseTableFromDBBeforeUpdate.getStartPrice().equals(baseTable.getStartPrice())){
-//                this.calculatorPageTableService.updateRecord(calc.setFinalPrice(null));
-//            }else {
-//                //If prise is the same that means that some other fields were updated. But final price is not sent from browser
-//                //So we need to set it here to keep the same as before update other fields. Not good way, need to get back later and re-write
-//                baseTable.setCalculatorPageTable(calc);
-//            }
             this.baseTableService.updateBaseTableRecord(baseTable);
             redirectAttributes.addFlashAttribute("message", "Record has been successfully updated!");
             return "redirect:/basetableconroller/basetablerecorddetails/" + baseTable.getId();
