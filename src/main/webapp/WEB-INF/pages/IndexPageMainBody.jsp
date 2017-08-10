@@ -220,12 +220,6 @@
         }
     </script>
 
-    <%--<script>--%>
-        <%--function openCalcPage(id) {--%>
-            <%--window.open('/calc/' + id, '_blank');--%>
-        <%--}--%>
-    <%--</script>--%>
-
 
     <c:if test="${pageContext.request.isUserInRole('ROLE_ADMIN') == true}">
         <p>
@@ -257,46 +251,56 @@
         });
     </script>
 
-
-    <div id="grpChkBox">
-        <p>Shown columns:</p>
-        <table>
-            <tr>
-                <th><input type="checkbox" name="<%=BaseTableNamesEnum.ID.getDbName()%>"/><%=BaseTableNamesEnum.ID.getViewName()%></th>
-                <th><input type="checkbox" name="<%=BaseTableNamesEnum.BANK.getDbName()%>"/><%=BaseTableNamesEnum.BANK.getViewName()%></th>
-                <th><input type="checkbox" name="<%=BaseTableNamesEnum.AUCTION_DATE.getDbName()%>"/><%=BaseTableNamesEnum.AUCTION_DATE.getViewName()%></th>
-                <th><input type="checkbox" name="<%=BaseTableNamesEnum.LOT_NUMBER.getDbName()%>"/><%=BaseTableNamesEnum.LOT_NUMBER.getViewName()%></th>
-                <th><input type="checkbox" name="<%=BaseTableNamesEnum.KD_NUMBER.getDbName()%>"/><%=BaseTableNamesEnum.KD_NUMBER.getViewName()%></th>
-                <th><input type="checkbox" name="<%=BaseTableNamesEnum.ABOUT_AUCTION.getDbName()%>"/><%=BaseTableNamesEnum.ABOUT_AUCTION.getViewName()%></th>
-            </tr>
-            <tr>
-                <th><input type="checkbox" name="<%=BaseTableNamesEnum.START_PRICE.getDbName()%>"/><%=BaseTableNamesEnum.START_PRICE.getViewName()%></th>
-                <th><input type="checkbox" name="<%=BaseTableNamesEnum.FINAL_PRICE.getDbName()%>"/><%=BaseTableNamesEnum.FINAL_PRICE.getViewName()%></th>
-                <th><input type="checkbox" name="<%=BaseTableNamesEnum.URL.getDbName()%>"/><%=BaseTableNamesEnum.URL.getViewName()%></th>
-                <th><input type="checkbox" name="<%=BaseTableNamesEnum.PROPERTY_DETAILS.getDbName()%>"/><%=BaseTableNamesEnum.PROPERTY_DETAILS.getViewName()%></th>
-                <th><input type="checkbox" name="<%=BaseTableNamesEnum.LOAN_DEBTOR_FULL_NAME.getDbName()%>"/><%=BaseTableNamesEnum.LOAN_DEBTOR_FULL_NAME.getViewName()%></th>
-                <th><input type="checkbox" name="<%=BaseTableNamesEnum.LOAN_DEBTOR_PHONE_NUMBER.getDbName()%>"/><%=BaseTableNamesEnum.LOAN_DEBTOR_PHONE_NUMBER.getViewName()%></th>
-            </tr>
-            <tr>
-                <th><input type="checkbox" name="<%=BaseTableNamesEnum.LOAN_DEBTOR_IDENT_CODE.getDbName()%>"/><%=BaseTableNamesEnum.LOAN_DEBTOR_IDENT_CODE.getViewName()%></th>
-                <th><input type="checkbox" name="<%=BaseTableNamesEnum.DETAILS.getDbName()%>"/><%=BaseTableNamesEnum.DETAILS.getViewName()%></th>
-                <th><input type="checkbox" name="<%=BaseTableNamesEnum.DATE_OF_CALL.getDbName()%>"/><%=BaseTableNamesEnum.DATE_OF_CALL.getViewName()%></th>
-                <th><input type="checkbox" name="<%=BaseTableNamesEnum.STATUS_OF_CALL.getDbName()%>"/><%=BaseTableNamesEnum.STATUS_OF_CALL.getViewName()%></th>
-                <th><input type="checkbox" name="<%=BaseTableNamesEnum.NEW_AUCTION_DATE.getDbName()%>"/><%=BaseTableNamesEnum.NEW_AUCTION_DATE.getViewName()%></th>
-                <th><input type="checkbox" name="<%=BaseTableNamesEnum.MANAGERS_COMMENT.getDbName()%>"/><%=BaseTableNamesEnum.MANAGERS_COMMENT.getViewName()%></th>
-            </tr>
-            <tr>
-                <th><input type="checkbox" name="<%=BaseTableNamesEnum.SYMPTOM.getDbName()%>"/><%=BaseTableNamesEnum.SYMPTOM.getViewName()%></th>
-                <th><input type="checkbox" name="<%=BaseTableNamesEnum.IS_UNDER_CONTROL.getDbName()%>"/><%=BaseTableNamesEnum.IS_UNDER_CONTROL.getViewName()%></th>
-                <th><input type="checkbox" name="<%=BaseTableNamesEnum.MANAGER.getDbName()%>"/><%=BaseTableNamesEnum.MANAGER.getViewName()%></th>
-                <th><input type="checkbox" name="<%=BaseTableNamesEnum.STATUS_OF_DEAL.getDbName()%>"/><%=BaseTableNamesEnum.STATUS_OF_DEAL.getViewName()%></th>
-            </tr>
-        </table>
-    </div>
-
+    <script>
+        $(document).ready(function(){
+            $("#hide").click(function(){
+                $("#grpChkBox").slideUp("slow");
+            });
+            $("#show").click(function(){
+                $("#grpChkBox").slideDown("slow");
+            });
+        });
+    </script>
 
     <p>Records found by provided search criteria: ${allRecordsList.size()}</p>
     <c:if test="${!empty allRecordsList}">
+        <button id="show">Add/Hide shown columns</button>
+        <div id="grpChkBox" style="display:none">
+            <table>
+                <tr>
+                    <th><input type="checkbox" name="<%=BaseTableNamesEnum.ID.getDbName()%>"/><%=BaseTableNamesEnum.ID.getViewName()%></th>
+                    <th><input type="checkbox" name="<%=BaseTableNamesEnum.BANK.getDbName()%>"/><%=BaseTableNamesEnum.BANK.getViewName()%></th>
+                    <th><input type="checkbox" name="<%=BaseTableNamesEnum.AUCTION_DATE.getDbName()%>"/><%=BaseTableNamesEnum.AUCTION_DATE.getViewName()%></th>
+                    <th><input type="checkbox" name="<%=BaseTableNamesEnum.LOT_NUMBER.getDbName()%>"/><%=BaseTableNamesEnum.LOT_NUMBER.getViewName()%></th>
+                    <th><input type="checkbox" name="<%=BaseTableNamesEnum.KD_NUMBER.getDbName()%>"/><%=BaseTableNamesEnum.KD_NUMBER.getViewName()%></th>
+                    <th><input type="checkbox" name="<%=BaseTableNamesEnum.ABOUT_AUCTION.getDbName()%>"/><%=BaseTableNamesEnum.ABOUT_AUCTION.getViewName()%></th>
+                </tr>
+                <tr>
+                    <th><input type="checkbox" name="<%=BaseTableNamesEnum.START_PRICE.getDbName()%>"/><%=BaseTableNamesEnum.START_PRICE.getViewName()%></th>
+                    <th><input type="checkbox" name="<%=BaseTableNamesEnum.FINAL_PRICE.getDbName()%>"/><%=BaseTableNamesEnum.FINAL_PRICE.getViewName()%></th>
+                    <th><input type="checkbox" name="<%=BaseTableNamesEnum.URL.getDbName()%>"/><%=BaseTableNamesEnum.URL.getViewName()%></th>
+                    <th><input type="checkbox" name="<%=BaseTableNamesEnum.PROPERTY_DETAILS.getDbName()%>"/><%=BaseTableNamesEnum.PROPERTY_DETAILS.getViewName()%></th>
+                    <th><input type="checkbox" name="<%=BaseTableNamesEnum.LOAN_DEBTOR_FULL_NAME.getDbName()%>"/><%=BaseTableNamesEnum.LOAN_DEBTOR_FULL_NAME.getViewName()%></th>
+                    <th><input type="checkbox" name="<%=BaseTableNamesEnum.LOAN_DEBTOR_PHONE_NUMBER.getDbName()%>"/><%=BaseTableNamesEnum.LOAN_DEBTOR_PHONE_NUMBER.getViewName()%></th>
+                </tr>
+                <tr>
+                    <th><input type="checkbox" name="<%=BaseTableNamesEnum.LOAN_DEBTOR_IDENT_CODE.getDbName()%>"/><%=BaseTableNamesEnum.LOAN_DEBTOR_IDENT_CODE.getViewName()%></th>
+                    <th><input type="checkbox" name="<%=BaseTableNamesEnum.DETAILS.getDbName()%>"/><%=BaseTableNamesEnum.DETAILS.getViewName()%></th>
+                    <th><input type="checkbox" name="<%=BaseTableNamesEnum.DATE_OF_CALL.getDbName()%>"/><%=BaseTableNamesEnum.DATE_OF_CALL.getViewName()%></th>
+                    <th><input type="checkbox" name="<%=BaseTableNamesEnum.STATUS_OF_CALL.getDbName()%>"/><%=BaseTableNamesEnum.STATUS_OF_CALL.getViewName()%></th>
+                    <th><input type="checkbox" name="<%=BaseTableNamesEnum.NEW_AUCTION_DATE.getDbName()%>"/><%=BaseTableNamesEnum.NEW_AUCTION_DATE.getViewName()%></th>
+                    <th><input type="checkbox" name="<%=BaseTableNamesEnum.MANAGERS_COMMENT.getDbName()%>"/><%=BaseTableNamesEnum.MANAGERS_COMMENT.getViewName()%></th>
+                </tr>
+                <tr>
+                    <th><input type="checkbox" name="<%=BaseTableNamesEnum.SYMPTOM.getDbName()%>"/><%=BaseTableNamesEnum.SYMPTOM.getViewName()%></th>
+                    <th><input type="checkbox" name="<%=BaseTableNamesEnum.IS_UNDER_CONTROL.getDbName()%>"/><%=BaseTableNamesEnum.IS_UNDER_CONTROL.getViewName()%></th>
+                    <th><input type="checkbox" name="<%=BaseTableNamesEnum.MANAGER.getDbName()%>"/><%=BaseTableNamesEnum.MANAGER.getViewName()%></th>
+                    <th><input type="checkbox" name="<%=BaseTableNamesEnum.STATUS_OF_DEAL.getDbName()%>"/><%=BaseTableNamesEnum.STATUS_OF_DEAL.getViewName()%></th>
+                </tr>
+            </table>
+            <button id="hide">Hide selector</button>
+        </div>
+
         <table class="sortable table table_div_trim" id="sortableTable">
             <thead>
                 <tr>
