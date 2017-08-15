@@ -63,6 +63,13 @@
         <property name="baseTableDao" ref="baseTableDao"/>
     </bean>
 
+    <bean id="baseTableHistoryDao" class="com.fgvmonserv.dao.BaseTableHistoryDaoImpl">
+        <property name="sessionFactory" ref="hibernate5AnnotatedSessionFactory"/>
+    </bean>
+    <bean id="baseTableHistoryService" class="com.fgvmonserv.service.BaseTableHistoryServiceImpl">
+        <property name="baseTableHistoryDao" ref="baseTableHistoryDao"/>
+    </bean>
+
     <bean id="statusOfDealDao" class="com.fgvmonserv.dao.StatusOfDealDaoImp">
         <property name="sessionFactory" ref="hibernate5AnnotatedSessionFactory"/>
     </bean>

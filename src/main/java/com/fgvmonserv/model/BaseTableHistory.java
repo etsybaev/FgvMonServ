@@ -1,24 +1,19 @@
 package com.fgvmonserv.model;
 
 
-import com.fgvmonserv.converter.DateTimeConverter;
 import com.fgvmonserv.model.userauth.User;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Arrays;
-
-
-/**
- * Created by ievgenii.tsybaiev on 05.01.2017.
- */
-
+import java.time.LocalDateTime;
 
 
 @Entity
-public class BaseTable {
+public class BaseTableHistory{
+
 
     //@JsonProperty("id")
     @Id
@@ -73,7 +68,7 @@ public class BaseTable {
     @Column(name = "finalPrice")
     private Integer finalPrice;
 
-   //@JsonProperty("url")
+    //@JsonProperty("url")
     @Column(name = "url")
     private String url;
 
@@ -141,174 +136,109 @@ public class BaseTable {
     @NotFound(action = NotFoundAction.IGNORE)
     private StatusOfDeal statusOfDeal;
 
-    //@JsonIgnore
-    public static BaseTable getShortBaseTableFromCsvLine(String[] lineFromCsv){
-        if(lineFromCsv[6].contains(",") && lineFromCsv[6].contains(".")){
-            lineFromCsv[6] = lineFromCsv[6].replaceAll(",", ""); //if number looks like 15,168.20 then remove comas
-        }
-        return new BaseTable().setBank(lineFromCsv[1])
-                .setAuctionDate(DateTimeConverter.parseLocalDate(lineFromCsv[2]))
-                .setLotNumber(lineFromCsv[3])
-                .setKdNumber(lineFromCsv[4])
-                .setAboutAuction(lineFromCsv[5])
-                .setStartPrice(lineFromCsv[6].isEmpty() ? 0 : Double.parseDouble(
-                        lineFromCsv[6].replaceAll(",", ".").replaceAll("[^0-9.]+", "").replaceAll(".$", ""))) //remove all non dots and digits and them remove last dot if any
-                .setUrl(lineFromCsv[7])
-                .setPropertyDetails(lineFromCsv[8]);
+    @Column(name = "baseTableRecordId")
+    private Integer baseTableRecordId;
+
+    @OneToOne(fetch= FetchType.EAGER)
+    @JoinColumn(name="managerUpdatedBy")
+    @NotFound(action = NotFoundAction.IGNORE)
+    private User managerUpdatedBy;
+
+    @Column(name = "updatedTime", updatable = false)
+    @GeneratedValue
+    private LocalDateTime updatedTime;
+
+
+    public BaseTableHistory(){}
+
+    public BaseTableHistory(BaseTable baseTable) {
+        this.baseTableRecordId = baseTable.getId();
+        this.bank = baseTable.getBank();
+        this.auctionDate = baseTable.getAuctionDate();
+        this.lotNumber = baseTable.getLotNumber();
+        this.kdNumber = baseTable.getKdNumber();
+        this.aboutAuction = baseTable.getAboutAuction();
+        this.startPrice = baseTable.getStartPrice();
+        this.auctionStep = baseTable.getAuctionStep();
+        this.stockExchangeCommission = baseTable.getStockExchangeCommission();
+        this.notaryCommission = baseTable.getNotaryCommission();
+        this.ourCommission = baseTable.getOurCommission();
+        this.finalPrice = baseTable.getFinalPrice();
+        this.url = baseTable.getUrl();
+        this.propertyDetails = baseTable.getPropertyDetails();
+        this.loanDebtorFullName = baseTable.getLoanDebtorFullName();
+        this.loanDebtorPhoneNumber = baseTable.getLoanDebtorPhoneNumber();
+        this.loanDebtorIdentCode = baseTable.getLoanDebtorIdentCode();
+        this.details = baseTable.getDetails();
+        this.dateOfCall = baseTable.getDateOfCall();
+        this.statusOfCall = baseTable.getStatusOfCall();
+        this.newAuctionDate = baseTable.getNewAuctionDate();
+        this.managersComment = baseTable.getManagersComment();
+        this.symptom = baseTable.getSymptom();
+        this.isUnderControl = baseTable.getIsUnderControl();
+        this.manager = baseTable.getManager();
+        this.statusOfDeal = baseTable.getStatusOfDeal();
     }
 
-
-//    //@JsonIgnore
-//    public static BaseTable getShortBaseTableFromCsvLine(String[] lineFromCsv){
-//        try{
-//            if(lineFromCsv[6].contains(",") && lineFromCsv[6].contains(".")){
-//                lineFromCsv[6] = lineFromCsv[6].replaceAll(",", ""); //if number looks like 15,168.20 then remove commas
-//            }
-//
-//            return new BaseTable().setBank(lineFromCsv[1])
-//                    .setAuctionDate(DateTimeConverter.parseLocalDate(lineFromCsv[2]))
-//                    .setLotNumber(lineFromCsv[3])
-//                    .setKdNumber(lineFromCsv[4])
-//                    .setAboutAuction(lineFromCsv[5])
-//                    .setStartPrice(lineFromCsv[6].isEmpty() ? 0 : Double.parseDouble(
-//                            lineFromCsv[6].replaceAll(",", ".").replaceAll("[^0-9.]+", "").replaceAll(".$", ""))) //remove all non dots and digits and them remove last dot if any
-//                    .setUrl(lineFromCsv[7])
-//                    .setPropertyDetails(lineFromCsv[8])
-//                    .setLoanDebtorFullName(lineFromCsv[9])
-//                    .setLoanDebtorPhoneNumber(lineFromCsv[10])
-//                    .setLoanDebtorIdentCode(lineFromCsv[11])
-//                    .setDetails(lineFromCsv[12])
-//                    .setDateOfCall(DateTimeConverter.parseLocalDate(lineFromCsv[13]))
-//                    .setStatusOfCall(getIdOfStatusCall(lineFromCsv[14]) == null ? null : new StatusOfCall().setId(getIdOfStatusCall(lineFromCsv[14])))
-//                    .setNewAuctionDate(DateTimeConverter.parseLocalDate(lineFromCsv[15]))
-//                    .setManagersComment(lineFromCsv[16])
-//                    .setSymptom(lineFromCsv[17])
-//                    .setIsUnderControl(lineFromCsv[18].toLowerCase().contains("control"))
-//                    .setManager(getManagerId(lineFromCsv[19]) == null ? null : new User().setId(getManagerId(lineFromCsv[19])));
-//
-//        } catch (ArrayIndexOutOfBoundsException e){
-//            System.err.println("Got ArrayIndexOutOfBoundsException on parse: " + Arrays.asList(lineFromCsv).toString());
-//            return null;
-//        } catch (Exception ex){
-//            System.err.println("Got exception " + ex.getMessage() + " on parse BaseTable: "  + Arrays.asList(lineFromCsv).toString());
-//            return null;
-//        }
-//    }
-//
-//    //TMP method for first import
-//    private static Integer getIdOfStatusCall(String statusFromInitDoc){
-//        switch (statusFromInitDoc){
-//            case "Перезвонить":
-//                return 1;
-//
-//            case "Номер не верный":
-//                return 2;
-//
-//            case "Нет связи":
-//                return 3;
-//
-//            case "Не интересно":
-//                return 4;
-//
-//            case "Интересно":
-//                return 5;
-//
-//            case "Нет контактов":
-//                return 6;
-//
-//            default: return null;
-//        }
-//    }
-//
-//    //TMP method for first import
-//    private static Integer getManagerId(String statusFromInitDoc){
-//        switch (statusFromInitDoc){
-//            case "Андрей":
-//                return 2;
-//
-//            case "Рома":
-//                return 3;
-//
-//            case "Артур":
-//                return 4;
-//
-//            default: return null;
-//        }
-//    }
-
-    //@JsonProperty("id")
     public Integer getId() {
         return id;
     }
 
-    //@JsonProperty("id")
-    public BaseTable setId(Integer id) {
+    public BaseTableHistory setId(Integer id) {
         this.id = id;
         return this;
     }
 
-    //@JsonProperty("bank")
     public String getBank() {
         return bank;
     }
 
-    //@JsonProperty("bank")
-    public BaseTable setBank(String bank) {
+    public BaseTableHistory setBank(String bank) {
         this.bank = bank;
         return this;
     }
 
-    //@JsonProperty("auctionDate")
     public LocalDate getAuctionDate() {
         return auctionDate;
     }
 
-    //@JsonProperty("auctionDate")
-    public BaseTable setAuctionDate(LocalDate auctionDate) {
+    public BaseTableHistory setAuctionDate(LocalDate auctionDate) {
         this.auctionDate = auctionDate;
         return this;
     }
 
-    //@JsonProperty("lotNumber")
     public String getLotNumber() {
         return lotNumber;
     }
 
-    //@JsonProperty("lotNumber")
-    public BaseTable setLotNumber(String lotNumber) {
+    public BaseTableHistory setLotNumber(String lotNumber) {
         this.lotNumber = lotNumber;
         return this;
     }
 
-    //@JsonProperty("kdNumber")
     public String getKdNumber() {
         return kdNumber;
     }
 
-    //@JsonProperty("kdNumber")
-    public BaseTable setKdNumber(String kdNumber) {
+    public BaseTableHistory setKdNumber(String kdNumber) {
         this.kdNumber = kdNumber;
         return this;
     }
 
-    //@JsonProperty("aboutAuction")
     public String getAboutAuction() {
         return aboutAuction;
     }
 
-    //@JsonProperty("aboutAuction")
-    public BaseTable setAboutAuction(String aboutAuction) {
+    public BaseTableHistory setAboutAuction(String aboutAuction) {
         this.aboutAuction = aboutAuction;
         return this;
     }
 
-    //@JsonProperty("startPrice")
     public Double getStartPrice() {
         return startPrice;
     }
 
-    //@JsonProperty("startPrice")
-    public BaseTable setStartPrice(Double startPrice) {
+    public BaseTableHistory setStartPrice(Double startPrice) {
         this.startPrice = startPrice;
         return this;
     }
@@ -317,7 +247,7 @@ public class BaseTable {
         return auctionStep;
     }
 
-    public BaseTable setAuctionStep(Integer auctionStep) {
+    public BaseTableHistory setAuctionStep(Integer auctionStep) {
         this.auctionStep = auctionStep;
         return this;
     }
@@ -326,7 +256,7 @@ public class BaseTable {
         return stockExchangeCommission;
     }
 
-    public BaseTable setStockExchangeCommission(Integer stockExchangeCommission) {
+    public BaseTableHistory setStockExchangeCommission(Integer stockExchangeCommission) {
         this.stockExchangeCommission = stockExchangeCommission;
         return this;
     }
@@ -335,7 +265,7 @@ public class BaseTable {
         return notaryCommission;
     }
 
-    public BaseTable setNotaryCommission(Double notaryCommission) {
+    public BaseTableHistory setNotaryCommission(Double notaryCommission) {
         this.notaryCommission = notaryCommission;
         return this;
     }
@@ -344,7 +274,7 @@ public class BaseTable {
         return ourCommission;
     }
 
-    public BaseTable setOurCommission(Double ourCommission) {
+    public BaseTableHistory setOurCommission(Double ourCommission) {
         this.ourCommission = ourCommission;
         return this;
     }
@@ -353,162 +283,161 @@ public class BaseTable {
         return finalPrice;
     }
 
-    public BaseTable setFinalPrice(Integer finalPrice) {
+    public BaseTableHistory setFinalPrice(Integer finalPrice) {
         this.finalPrice = finalPrice;
         return this;
     }
 
-    //@JsonProperty("url")
     public String getUrl() {
         return url;
     }
 
-    //@JsonProperty("url")
-    public BaseTable setUrl(String url) {
+    public BaseTableHistory setUrl(String url) {
         this.url = url;
         return this;
     }
 
-    //@JsonProperty("propertyDetails")
     public String getPropertyDetails() {
         return propertyDetails;
     }
 
-    //@JsonProperty("propertyDetails")
-    public BaseTable setPropertyDetails(String propertyDetails) {
+    public BaseTableHistory setPropertyDetails(String propertyDetails) {
         this.propertyDetails = propertyDetails;
         return this;
     }
 
-    //@JsonProperty("loanDebtorFullName")
     public String getLoanDebtorFullName() {
         return loanDebtorFullName;
     }
 
-    //@JsonProperty("loanDebtorFullName")
-    public BaseTable setLoanDebtorFullName(String loanDebtorFullName) {
+    public BaseTableHistory setLoanDebtorFullName(String loanDebtorFullName) {
         this.loanDebtorFullName = loanDebtorFullName;
         return this;
     }
 
-    //@JsonProperty("loanDebtorPhoneNumber")
     public String getLoanDebtorPhoneNumber() {
         return loanDebtorPhoneNumber;
     }
 
-    //@JsonProperty("loanDebtorPhoneNumber")
-    public BaseTable setLoanDebtorPhoneNumber(String loanDebtorPhoneNumber) {
+    public BaseTableHistory setLoanDebtorPhoneNumber(String loanDebtorPhoneNumber) {
         this.loanDebtorPhoneNumber = loanDebtorPhoneNumber;
         return this;
     }
 
-    //@JsonProperty("loanDebtorIdentCode")
     public String getLoanDebtorIdentCode() {
         return loanDebtorIdentCode;
     }
 
-    //@JsonProperty("loanDebtorIdentCode")
-    public BaseTable setLoanDebtorIdentCode(String loanDebtorIdentCode) {
+    public BaseTableHistory setLoanDebtorIdentCode(String loanDebtorIdentCode) {
         this.loanDebtorIdentCode = loanDebtorIdentCode;
         return this;
     }
 
-    //@JsonProperty("details")
     public String getDetails() {
         return details;
     }
 
-    //@JsonProperty("details")
-    public BaseTable setDetails(String details) {
+    public BaseTableHistory setDetails(String details) {
         this.details = details;
         return this;
     }
 
-    //@JsonProperty("dateOfCall")
     public LocalDate getDateOfCall() {
         return dateOfCall;
     }
 
-    //@JsonProperty("dateOfCall")
-    public BaseTable setDateOfCall(LocalDate dateOfCall) {
+    public BaseTableHistory setDateOfCall(LocalDate dateOfCall) {
         this.dateOfCall = dateOfCall;
         return this;
     }
 
-    //@JsonProperty("statusOfCall")
     public StatusOfCall getStatusOfCall() {
         return statusOfCall;
     }
 
-    //@JsonProperty("statusOfCall")
-    public BaseTable setStatusOfCall(StatusOfCall statusOfCall) {
+    public BaseTableHistory setStatusOfCall(StatusOfCall statusOfCall) {
         this.statusOfCall = statusOfCall;
         return this;
     }
 
-    //@JsonProperty("newAuctionDate")
     public LocalDate getNewAuctionDate() {
         return newAuctionDate;
     }
 
-    //@JsonProperty("newAuctionDate")
-    public BaseTable setNewAuctionDate(LocalDate newAuctionDate) {
+    public BaseTableHistory setNewAuctionDate(LocalDate newAuctionDate) {
         this.newAuctionDate = newAuctionDate;
         return this;
     }
 
-    //@JsonProperty("managersComment")
     public String getManagersComment() {
         return managersComment;
     }
 
-    //@JsonProperty("managersComment")
-    public BaseTable setManagersComment(String managersComment) {
+    public BaseTableHistory setManagersComment(String managersComment) {
         this.managersComment = managersComment;
         return this;
     }
 
-    //@JsonProperty("symptom")
     public String getSymptom() {
         return symptom;
     }
 
-    //@JsonProperty("symptom")
-    public BaseTable setSymptom(String symptom) {
+    public BaseTableHistory setSymptom(String symptom) {
         this.symptom = symptom;
         return this;
     }
 
-    //@JsonProperty("isUnderControl")
     public boolean getIsUnderControl() {
         return isUnderControl;
     }
 
-    //@JsonProperty("isUnderControl")
-    public BaseTable setIsUnderControl(boolean isUnderControl) {
-        this.isUnderControl = isUnderControl;
+    public BaseTableHistory setIsUnderControl(boolean isUnderControl) {
+        isUnderControl = isUnderControl;
         return this;
     }
 
-    //@JsonProperty("manager")
     public User getManager() {
         return manager;
     }
 
-    //@JsonProperty("manager")
-    public BaseTable setManager(User manager) {
+    public BaseTableHistory setManager(User manager) {
         this.manager = manager;
         return this;
     }
 
-    //@JsonProperty("statusOfDeal")
     public StatusOfDeal getStatusOfDeal() {
         return statusOfDeal;
     }
 
-    //@JsonProperty("statusOfDeal")
-    public BaseTable setStatusOfDeal(StatusOfDeal statusOfDeal) {
+    public BaseTableHistory setStatusOfDeal(StatusOfDeal statusOfDeal) {
         this.statusOfDeal = statusOfDeal;
+        return this;
+    }
+
+    public Integer getBaseTableRecordId() {
+        return baseTableRecordId;
+    }
+
+    public BaseTableHistory setBaseTableRecordId(Integer baseTableRecordId) {
+        this.baseTableRecordId = baseTableRecordId;
+        return this;
+    }
+
+    public User getManagerUpdatedBy() {
+        return managerUpdatedBy;
+    }
+
+    public BaseTableHistory setManagerUpdatedBy(User managerUpdatedBy) {
+        this.managerUpdatedBy = managerUpdatedBy;
+        return this;
+    }
+
+    public LocalDateTime getUpdatedTime() {
+        return updatedTime;
+    }
+
+    public BaseTableHistory setUpdatedTime(LocalDateTime updatedTime) {
+        this.updatedTime = updatedTime;
         return this;
     }
 
@@ -517,47 +446,48 @@ public class BaseTable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        BaseTable baseTable = (BaseTable) o;
+        BaseTableHistory that = (BaseTableHistory) o;
 
-        if (isUnderControl != baseTable.isUnderControl) return false;
-        if (id != null ? !id.equals(baseTable.id) : baseTable.id != null) return false;
-        if (bank != null ? !bank.equals(baseTable.bank) : baseTable.bank != null) return false;
-        if (auctionDate != null ? !auctionDate.equals(baseTable.auctionDate) : baseTable.auctionDate != null)
+        if (isUnderControl != that.isUnderControl) return false;
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (bank != null ? !bank.equals(that.bank) : that.bank != null) return false;
+        if (auctionDate != null ? !auctionDate.equals(that.auctionDate) : that.auctionDate != null) return false;
+        if (lotNumber != null ? !lotNumber.equals(that.lotNumber) : that.lotNumber != null) return false;
+        if (kdNumber != null ? !kdNumber.equals(that.kdNumber) : that.kdNumber != null) return false;
+        if (aboutAuction != null ? !aboutAuction.equals(that.aboutAuction) : that.aboutAuction != null) return false;
+        if (startPrice != null ? !startPrice.equals(that.startPrice) : that.startPrice != null) return false;
+        if (auctionStep != null ? !auctionStep.equals(that.auctionStep) : that.auctionStep != null) return false;
+        if (stockExchangeCommission != null ? !stockExchangeCommission.equals(that.stockExchangeCommission) : that.stockExchangeCommission != null)
             return false;
-        if (lotNumber != null ? !lotNumber.equals(baseTable.lotNumber) : baseTable.lotNumber != null) return false;
-        if (kdNumber != null ? !kdNumber.equals(baseTable.kdNumber) : baseTable.kdNumber != null) return false;
-        if (aboutAuction != null ? !aboutAuction.equals(baseTable.aboutAuction) : baseTable.aboutAuction != null)
+        if (notaryCommission != null ? !notaryCommission.equals(that.notaryCommission) : that.notaryCommission != null)
             return false;
-        if (startPrice != null ? !startPrice.equals(baseTable.startPrice) : baseTable.startPrice != null) return false;
-        if (auctionStep != null ? !auctionStep.equals(baseTable.auctionStep) : baseTable.auctionStep != null)
+        if (ourCommission != null ? !ourCommission.equals(that.ourCommission) : that.ourCommission != null)
             return false;
-        if (stockExchangeCommission != null ? !stockExchangeCommission.equals(baseTable.stockExchangeCommission) : baseTable.stockExchangeCommission != null)
+        if (finalPrice != null ? !finalPrice.equals(that.finalPrice) : that.finalPrice != null) return false;
+        if (url != null ? !url.equals(that.url) : that.url != null) return false;
+        if (propertyDetails != null ? !propertyDetails.equals(that.propertyDetails) : that.propertyDetails != null)
             return false;
-        if (notaryCommission != null ? !notaryCommission.equals(baseTable.notaryCommission) : baseTable.notaryCommission != null)
+        if (loanDebtorFullName != null ? !loanDebtorFullName.equals(that.loanDebtorFullName) : that.loanDebtorFullName != null)
             return false;
-        if (ourCommission != null ? !ourCommission.equals(baseTable.ourCommission) : baseTable.ourCommission != null)
+        if (loanDebtorPhoneNumber != null ? !loanDebtorPhoneNumber.equals(that.loanDebtorPhoneNumber) : that.loanDebtorPhoneNumber != null)
             return false;
-        if (finalPrice != null ? !finalPrice.equals(baseTable.finalPrice) : baseTable.finalPrice != null) return false;
-        if (url != null ? !url.equals(baseTable.url) : baseTable.url != null) return false;
-        if (propertyDetails != null ? !propertyDetails.equals(baseTable.propertyDetails) : baseTable.propertyDetails != null)
+        if (loanDebtorIdentCode != null ? !loanDebtorIdentCode.equals(that.loanDebtorIdentCode) : that.loanDebtorIdentCode != null)
             return false;
-        if (loanDebtorFullName != null ? !loanDebtorFullName.equals(baseTable.loanDebtorFullName) : baseTable.loanDebtorFullName != null)
+        if (details != null ? !details.equals(that.details) : that.details != null) return false;
+        if (dateOfCall != null ? !dateOfCall.equals(that.dateOfCall) : that.dateOfCall != null) return false;
+        if (statusOfCall != null ? !statusOfCall.equals(that.statusOfCall) : that.statusOfCall != null) return false;
+        if (newAuctionDate != null ? !newAuctionDate.equals(that.newAuctionDate) : that.newAuctionDate != null)
             return false;
-        if (loanDebtorPhoneNumber != null ? !loanDebtorPhoneNumber.equals(baseTable.loanDebtorPhoneNumber) : baseTable.loanDebtorPhoneNumber != null)
+        if (managersComment != null ? !managersComment.equals(that.managersComment) : that.managersComment != null)
             return false;
-        if (loanDebtorIdentCode != null ? !loanDebtorIdentCode.equals(baseTable.loanDebtorIdentCode) : baseTable.loanDebtorIdentCode != null)
+        if (symptom != null ? !symptom.equals(that.symptom) : that.symptom != null) return false;
+        if (manager != null ? !manager.equals(that.manager) : that.manager != null) return false;
+        if (statusOfDeal != null ? !statusOfDeal.equals(that.statusOfDeal) : that.statusOfDeal != null) return false;
+        if (baseTableRecordId != null ? !baseTableRecordId.equals(that.baseTableRecordId) : that.baseTableRecordId != null)
             return false;
-        if (details != null ? !details.equals(baseTable.details) : baseTable.details != null) return false;
-        if (dateOfCall != null ? !dateOfCall.equals(baseTable.dateOfCall) : baseTable.dateOfCall != null) return false;
-        if (statusOfCall != null ? !statusOfCall.equals(baseTable.statusOfCall) : baseTable.statusOfCall != null)
+        if (managerUpdatedBy != null ? !managerUpdatedBy.equals(that.managerUpdatedBy) : that.managerUpdatedBy != null)
             return false;
-        if (newAuctionDate != null ? !newAuctionDate.equals(baseTable.newAuctionDate) : baseTable.newAuctionDate != null)
-            return false;
-        if (managersComment != null ? !managersComment.equals(baseTable.managersComment) : baseTable.managersComment != null)
-            return false;
-        if (symptom != null ? !symptom.equals(baseTable.symptom) : baseTable.symptom != null) return false;
-        if (manager != null ? !manager.equals(baseTable.manager) : baseTable.manager != null) return false;
-        return statusOfDeal != null ? statusOfDeal.equals(baseTable.statusOfDeal) : baseTable.statusOfDeal == null;
+        return updatedTime != null ? updatedTime.equals(that.updatedTime) : that.updatedTime == null;
     }
 
     @Override
@@ -588,12 +518,16 @@ public class BaseTable {
         result = 31 * result + (isUnderControl ? 1 : 0);
         result = 31 * result + (manager != null ? manager.hashCode() : 0);
         result = 31 * result + (statusOfDeal != null ? statusOfDeal.hashCode() : 0);
+        result = 31 * result + (baseTableRecordId != null ? baseTableRecordId.hashCode() : 0);
+        result = 31 * result + (managerUpdatedBy != null ? managerUpdatedBy.hashCode() : 0);
+        result = 31 * result + (updatedTime != null ? updatedTime.hashCode() : 0);
         return result;
     }
 
+
     @Override
     public String toString() {
-        return "BaseTable{" +
+        return "BaseTableHistory{" +
                 "id=" + id +
                 ", bank='" + bank + '\'' +
                 ", auctionDate=" + auctionDate +
@@ -620,7 +554,9 @@ public class BaseTable {
                 ", isUnderControl=" + isUnderControl +
                 ", manager=" + manager +
                 ", statusOfDeal=" + statusOfDeal +
+                ", baseTableRecordId=" + baseTableRecordId +
+                ", managerUpdatedBy=" + managerUpdatedBy +
+                ", updatedTime=" + updatedTime +
                 '}';
     }
 }
-

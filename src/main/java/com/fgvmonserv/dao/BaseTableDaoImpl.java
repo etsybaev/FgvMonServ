@@ -33,16 +33,17 @@ public class BaseTableDaoImpl implements BaseTableDao {
 
 
     @Override
-    public void addBaseTableRecord(BaseTable baseTable) {
+    public BaseTable addBaseTableRecord(BaseTable baseTable) {
         LOGGER.debug("Adding BaseTable record " + baseTable);
         Session session = this.sessionFactory.getCurrentSession();
         session.persist(baseTable);
         LOGGER.debug("Record has been added");
+        return baseTable;
     }
 
     @Override
-    public void addBaseTableRecord(List<BaseTable> baseTableList) {
-        LOGGER.debug("Adding BaseTable record " + baseTableList);
+    public List<BaseTable> addBaseTableRecord(List<BaseTable> baseTableList) {
+        LOGGER.debug("Adding BaseTable records list " + baseTableList);
         Session session = this.sessionFactory.getCurrentSession();
 //        Transaction tx = session.getTransaction();
         baseTableList.forEach(baseTable -> session.save(baseTable));
@@ -60,6 +61,7 @@ public class BaseTableDaoImpl implements BaseTableDao {
 //        tx.commit();
 //        session.close();
         LOGGER.debug("Records have been added");
+        return baseTableList;
     }
 
     @Override
@@ -89,9 +91,36 @@ public class BaseTableDaoImpl implements BaseTableDao {
         return list;
     }
 
+//    @Override
+//    public List<BaseTable> getAllRecordsList(String searchForText) {
+//        LOGGER.debug("Searching all baseTable records list according to searchText:" + searchForText);
+//        Session session = this.sessionFactory.getCurrentSession();
+//
+//        CriteriaBuilder builder = session.getCriteriaBuilder();
+//        CriteriaQuery<BaseTable> criteria = builder.createQuery(BaseTable.class);
+//        Root<BaseTable> root = criteria.from(BaseTable.class);
+//
+//        criteria.select(root);
+//
+////        predicateList.add(builder.equal(root.get("bank"), searchForText));
+////        predicateList.add(builder.equal(root.get("kdNumber"), searchForText));
+////        criteria.where(builder.or(bank, kdNumber, startPrice ));
+//        List<Predicate> predicateList = new ArrayList<>();
+//
+//        for (BaseTableNamesEnum baseTableNamesEnum : BaseTableNamesEnum.values()) {
+//            predicateList.add(builder.equal(root.get(baseTableNamesEnum.getDbName()), searchForText));
+//        }
+//
+//        criteria.where(builder.or(predicateList.toArray(new Predicate[]{})));
+//
+//        List<BaseTable> baseTableList = session.createQuery( criteria ).getResultList();
+//        return baseTableList;
+//    }
+
+
     @Override
     public List<BaseTable> getAllRecordsList(BaseTableDateFilter baseTableDateFilter) {
-        LOGGER.debug("Getting all user list according to filter:" + baseTableDateFilter);
+        LOGGER.debug("Getting all baseTable records list according to filter:" + baseTableDateFilter);
         Session session = this.sessionFactory.getCurrentSession();
 
         CriteriaBuilder builder = session.getCriteriaBuilder();

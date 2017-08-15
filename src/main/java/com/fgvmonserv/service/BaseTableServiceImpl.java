@@ -25,15 +25,14 @@ public class BaseTableServiceImpl implements BaseTableService {
 
     @Override
     @Transactional
-    public void addBaseTableRecord(BaseTable baseTable) {
-        this.baseTableDao.addBaseTableRecord(baseTable);
-
+    public BaseTable addBaseTableRecord(BaseTable baseTable) {
+        return this.baseTableDao.addBaseTableRecord(baseTable);
     }
 
     @Override
     @Transactional
-    public void addBaseTableRecord(List<BaseTable> baseTableList) {
-        this.baseTableDao.addBaseTableRecord(baseTableList);
+    public List<BaseTable> addBaseTableRecord(List<BaseTable> baseTableList) {
+        return this.baseTableDao.addBaseTableRecord(baseTableList);
     }
 
 
@@ -54,6 +53,12 @@ public class BaseTableServiceImpl implements BaseTableService {
     public List<BaseTable> getAllRecordsList() {
         return this.baseTableDao.getAllRecordsList();
     }
+
+//    @Override
+//    @Transactional
+//    public List<BaseTable> getAllRecordsList(String searchForText) {
+//        return this.baseTableDao.getAllRecordsList(searchForText);
+//    }
 
     @Override
     @Transactional

@@ -11,7 +11,18 @@ import java.util.List;
  */
 public class DateTimeConverter {
 
+//    private String regex = "(?!^)\\+|[^-.\\d]+";
+
     public static LocalDate parseLocalDate(String localDate){
+
+        if(localDate == null || localDate.isEmpty()){
+            return null;
+        }
+
+        if(localDate.contains(",")){
+            localDate = localDate.replaceAll(",","."); //if data looks like 27,01,2017 then change commas to dots
+        }
+
         List<DateTimeFormatter> knownPatterns = Arrays.asList(DateTimeFormatter.ofPattern("dd.MM.yyyy"),
                 DateTimeFormatter.ISO_DATE,
                 DateTimeFormatter.BASIC_ISO_DATE,
@@ -24,7 +35,7 @@ public class DateTimeConverter {
                 //doNothing. This is just a loop to find necessary pattern to parse.
             }
         }
-        System.err.println("ERROR!!! Didn't manage to find right DateTimeFormatter pattern to parse " + localDate);
+        System.err.println("WARNING!!! Didn't manage to find right DateTimeFormatter pattern to parse " + localDate);
         return null;
     }
 }

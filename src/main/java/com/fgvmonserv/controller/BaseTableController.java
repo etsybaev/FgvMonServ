@@ -1,6 +1,8 @@
 package com.fgvmonserv.controller;
 
 import com.fgvmonserv.model.BaseTable;
+import com.fgvmonserv.model.BaseTableHistory;
+import com.fgvmonserv.service.BaseTableHistoryService;
 import com.fgvmonserv.service.BaseTableService;
 import com.fgvmonserv.service.StatusOfCallService;
 import com.fgvmonserv.service.StatusOfDealService;
@@ -8,6 +10,8 @@ import com.fgvmonserv.service.userauth.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -25,15 +29,23 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class BaseTableController {
 
     private BaseTableService baseTableService;
+    private BaseTableHistoryService baseTableHistoryService;
     private UserService userService;
     private StatusOfDealService statusOfDealService;
     private StatusOfCallService statusOfCallService;
-//    private CalculatorPageTableService calculatorPageTableService;
 
     @Autowired(required = true)
     @Qualifier(value = "baseTableService")
     public void setBaseTableService(BaseTableService baseTableService) {
         this.baseTableService = baseTableService;
+    }
+
+
+    @Autowired(required = true)
+    @Qualifier(value = "baseTableHistoryService")
+    public BaseTableController setBaseTableHistoryService(BaseTableHistoryService baseTableHistoryService) {
+        this.baseTableHistoryService = baseTableHistoryService;
+        return this;
     }
 
     @Autowired
@@ -57,14 +69,6 @@ public class BaseTableController {
         return this;
     }
 
-//    @Autowired
-//    @Qualifier("calculatorPageTableService")
-//    public BaseTableController setCalculatorPageTableService(CalculatorPageTableService calculatorPageTableService) {
-//        this.calculatorPageTableService = calculatorPageTableService;
-//        return this;
-//    }
-
-
     @RequestMapping(value = "/addnewbasetablerecordform")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String addBaseTableRecord(@ModelAttribute("baseTableRecord") BaseTable baseTable, Model model){
@@ -78,6 +82,7 @@ public class BaseTableController {
     @RequestMapping("/basetablerecorddetails/{id}")
     @PreAuthorize("isFullyAuthenticated()")
     public String baseTableRecordData(@PathVariable("id") int id, Model model){
+        model.addAttribute("recordId", id);
         model.addAttribute("baseTableRecord", this.baseTableService.getRecordById(id));
         model.addAttribute("allUsersList", this.userService.listUsers());
         model.addAttribute("statusOfDealList", this.statusOfDealService.getAllStatusList());
@@ -85,10 +90,20 @@ public class BaseTableController {
         return "basetable/basetablerecorddetails";
     }
 
+    @RequestMapping("/basetablerecorddetails/history/{id}")
+    @PreAuthorize("isFullyAuthenticated()")
+    public String baseTableHistory(@PathVariable("id") int id, Model model){
+        model.addAttribute("recordId", id);
+        model.addAttribute("baseTableRecordHistory", this.baseTableHistoryService.getBaseTableHistoryListByBaseTableId(id));
+        return "basetable/history";
+    }
+
     @RequestMapping("/removebasetablerecord/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String removeBaseTableRecord(@PathVariable("id") int id){
         this.baseTableService.removeBaseTableRecord(id);
+        //Now need to remove a history of editing for this record
+        this.baseTableHistoryService.deleteAllHistoryRecordsForBaseTableId(id);
         return "redirect:/";
     }
 
@@ -108,13 +123,24 @@ public class BaseTableController {
         }
 
         if(baseTable.getId() == null){
-            this.baseTableService.addBaseTableRecord(baseTable);
+            //After adding to DB we get updated record that contains auto-generated id
+            baseTable = this.baseTableService.addBaseTableRecord(baseTable);
+            //Now need to add initial record to BaseTable history
+            addRecordToBaseTableHistoryTable(baseTable, SecurityContextHolder.getContext().getAuthentication());
             redirectAttributes.addFlashAttribute("message", "Record has been successfully created!");
             return "redirect:/";
         }else {
             this.baseTableService.updateBaseTableRecord(baseTable);
+            //Prepare and add record to history table
+            addRecordToBaseTableHistoryTable(baseTable, SecurityContextHolder.getContext().getAuthentication());
             redirectAttributes.addFlashAttribute("message", "Record has been successfully updated!");
             return "redirect:/basetableconroller/basetablerecorddetails/" + baseTable.getId();
         }
+    }
+
+    private void addRecordToBaseTableHistoryTable(BaseTable baseTableRecordToAddToHistory, Authentication auth){
+        BaseTableHistory baseTableHistory = new BaseTableHistory(baseTableRecordToAddToHistory);
+        baseTableHistory.setManagerUpdatedBy(userService.getUserByContactPhoneNumber(auth.getName()));
+        baseTableHistoryService.addBaseTableHistoryRecord(baseTableHistory);
     }
 }

@@ -24,6 +24,11 @@
                 this record
             </button>
         </td>
+
+        <form action="/basetableconroller/basetablerecorddetails/history/${recordId}">
+            <input type="submit" value="See edit history">
+        </form>
+
     </c:if>
 
     <h1>Details:</h1>
@@ -143,13 +148,13 @@
 
                         <tr>
                             <td>
-                                <form:label path="auctionStep">
-                                    <spring:message text="Auction step(%)"/>
+                                <form:label path="<%=BaseTableNamesEnum.AUCTION_STEP.getDbName()%>">
+                                    <spring:message text="<%=BaseTableNamesEnum.AUCTION_STEP.getViewName()%>"/>
                                 </form:label>
                             </td>
                             <td>
-                                <form:input id="auctionStep" onkeyup="findTotal()" path="auctionStep" type="text"
-                                            pattern="[0-9]+" title="This must be a number of %"/>
+                                <form:input id="auctionStep" onkeyup="findTotal()" path="<%=BaseTableNamesEnum.AUCTION_STEP.getDbName()%>"
+                                            type="text" pattern="[0-9]+" title="This must be a number of %"/>
 
                                 <%--<form:input id="auctionStep" onkeyup="findTotal()" path="auctionStep" type="text"--%>
                                             <%--pattern="[0-9]+?(\.[0-9]{0,2})?" title="This must be a number with up to 2 decimal places"/>--%>
@@ -162,13 +167,14 @@
                         </tr>
                         <tr>
                             <td>
-                                <form:label path="stockExchangeCommission">
-                                    <spring:message text="Stock Exchange Commission(%)"/>
+                                <form:label path="<%=BaseTableNamesEnum.STOCK_EXCHANGE_COMMISSION.getDbName()%>">
+                                    <spring:message text="<%=BaseTableNamesEnum.STOCK_EXCHANGE_COMMISSION.getViewName()%>"/>
                                 </form:label>
                             </td>
                             <td>
-                                <form:input id="stockExchangeCommission" onkeyup="findTotal()" path="stockExchangeCommission" type="text"
-                                            pattern="[0-9]+" title="This must be a number of %"/>
+                                <form:input id="stockExchangeCommission" onkeyup="findTotal()"
+                                            path="<%=BaseTableNamesEnum.STOCK_EXCHANGE_COMMISSION.getDbName()%>"
+                                            type="text" pattern="[0-9]+" title="This must be a number of %"/>
                                 <%--<form:input id="stockExchangeCommission" onkeyup="findTotal()" path="stockExchangeCommission" type="text"--%>
                                             <%--pattern="[0-9]+?(\.[0-9]{0,2})?" title="This must be a number with up to 2 decimal places"/>--%>
 
@@ -178,35 +184,35 @@
                         </tr>
                         <tr>
                             <td>
-                                <form:label path="notaryCommission">
-                                    <spring:message text="Notary Commission (UAH)"/>
+                                <form:label path="<%=BaseTableNamesEnum.NOTARY_COMMISSION.getDbName()%>">
+                                    <spring:message text="<%=BaseTableNamesEnum.NOTARY_COMMISSION.getViewName()%>"/>
                                 </form:label>
                             </td>
                             <td>
-                                <form:input id="notaryCommission" onkeyup="findTotal()" path="notaryCommission" type="text"
-                                            pattern="[0-9]+?(\.[0-9]{0,2})?" title="This must be a number with up to 2 decimal places"/>
+                                <form:input id="notaryCommission" onkeyup="findTotal()" path="<%=BaseTableNamesEnum.NOTARY_COMMISSION.getDbName()%>"
+                                            type="text" pattern="[0-9]+?(\.[0-9]{0,2})?" title="This must be a number with up to 2 decimal places"/>
                             </td>
                         </tr>
 
                         <tr>
                             <td>
-                                <form:label path="ourCommission">
-                                    <spring:message text="Our Commission (UAH)"/>
+                                <form:label path="<%=BaseTableNamesEnum.OUR_COMMISSION.getDbName()%>">
+                                    <spring:message text="<%=BaseTableNamesEnum.OUR_COMMISSION.getViewName()%>"/>
                                 </form:label>
                             </td>
                             <td>
-                                <form:input id="ourCommission" onkeyup="findTotal()" path="ourCommission" type="text"
-                                            pattern="[0-9]+?(\.[0-9]{0,2})?" title="This must be a number with up to 2 decimal places"/>
+                                <form:input id="ourCommission" onkeyup="findTotal()" path="<%=BaseTableNamesEnum.OUR_COMMISSION.getDbName()%>"
+                                            type="text" pattern="[0-9]+?(\.[0-9]{0,2})?" title="This must be a number with up to 2 decimal places"/>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <form:label path="finalPrice">
-                                    <spring:message text="Final price (UAH)"/>
+                                <form:label path="<%=BaseTableNamesEnum.FINAL_PRICE.getDbName()%>">
+                                    <spring:message text="<%=BaseTableNamesEnum.FINAL_PRICE.getViewName()%>"/>
                                 </form:label>
                             </td>
                             <td>
-                                <form:input id="finalPrice" readonly="true" path="finalPrice"/>
+                                <form:input id="finalPrice" readonly="true" path="<%=BaseTableNamesEnum.FINAL_PRICE.getDbName()%>"/>
                             </td>
                         </tr>
                         <%--<tr>--%>

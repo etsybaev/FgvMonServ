@@ -12,12 +12,13 @@ import java.util.List;
 
 public interface BaseTableService {
 
-    public void addBaseTableRecord(BaseTable baseTable);
-    public void addBaseTableRecord(List<BaseTable> baseTableList);
+    public BaseTable addBaseTableRecord(BaseTable baseTable);
+    public List<BaseTable> addBaseTableRecord(List<BaseTable> baseTableList);
     public void updateBaseTableRecord(BaseTable baseTablesList);
     public BaseTable getRecordById(int id);
     public void removeBaseTableRecord(int id);
     public List<BaseTable> getAllRecordsList();
+//    public List<BaseTable> getAllRecordsList(String searchForText);
     public List<BaseTable> getAllRecordsList(BaseTableDateFilter baseTableDateFilter);
     public List<String> getAllBanksList();
 

@@ -4,8 +4,10 @@ import com.fgvmonserv.converter.CsvConverter;
 import com.fgvmonserv.converter.JsonConverter;
 import com.fgvmonserv.converter.UrlEncoderDecoder;
 import com.fgvmonserv.model.BaseTable;
+import com.fgvmonserv.model.BaseTableHistory;
 import com.fgvmonserv.model.FileStorage;
 import com.fgvmonserv.model.userauth.User;
+import com.fgvmonserv.service.BaseTableHistoryService;
 import com.fgvmonserv.service.BaseTableService;
 import com.fgvmonserv.service.FileStorageService;
 import com.fgvmonserv.service.userauth.UserService;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -28,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ImportExportController {
 
     private BaseTableService baseTableService;
+    private BaseTableHistoryService baseTableHistoryService;
     private JsonConverter jsonConverter ;
     private UrlEncoderDecoder urlEncoderDecoder;
     private CsvConverter csvConverter;
@@ -38,6 +42,13 @@ public class ImportExportController {
     @Qualifier(value = "baseTableService")
     public ImportExportController setBaseTableService(BaseTableService baseTableService) {
         this.baseTableService = baseTableService;
+        return this;
+    }
+
+    @Autowired(required = true)
+    @Qualifier(value = "baseTableHistoryService")
+    public ImportExportController setBaseTableHistoryService(BaseTableHistoryService baseTableHistoryService) {
+        this.baseTableHistoryService = baseTableHistoryService;
         return this;
     }
 
@@ -124,8 +135,20 @@ public class ImportExportController {
     public String addUser(@ModelAttribute("uid") int uid, RedirectAttributes redirectAttributes){
         FileStorage fileStorage = fileStorageService.getFileStorageByUserId(uid);
         List<BaseTable> shortBaseTableInfoFromCsvFile = csvConverter.getShortBaseTableInfoFromCsvFile(fileStorage.getFile());
-//        shortBaseTableInfoFromCsvFile.forEach(record -> this.baseTableService.addBaseTableRecord(record));
-        baseTableService.addBaseTableRecord(shortBaseTableInfoFromCsvFile);
+        //After adding these records we get updated list with records that contains auto-generated Id
+        List<BaseTable> baseTablesAddedRecordsWithIds = baseTableService.addBaseTableRecord(shortBaseTableInfoFromCsvFile);
+
+        //Now need to add these updated records to DB
+        String auth = SecurityContextHolder.getContext().getAuthentication().getName();
+        User currentSessionsUser = userService.getUserByContactPhoneNumber(auth);
+        List<BaseTableHistory> baseTableHistoryList = new ArrayList<>();
+        baseTablesAddedRecordsWithIds.forEach(baseTable -> {
+            BaseTableHistory baseTableHistory = new BaseTableHistory(baseTable);
+            baseTableHistory.setManagerUpdatedBy(currentSessionsUser);
+            baseTableHistoryList.add(baseTableHistory);
+        });
+        baseTableHistoryService.addBaseTableHistoryRecord(baseTableHistoryList);
+
         redirectAttributes.addFlashAttribute("message", "All records have been added to database");
         return "redirect:/importexport/fileupload";
     }
