@@ -9,6 +9,9 @@ import java.util.List;
  */
 public interface StatusOfCallService {
 
+    public void addStatusOfCall(StatusOfCall statusOfCall);
+    public void updateStatusOfCall(StatusOfCall statusOfCall);
+    public void deleteStatusOfCall(int id);
     public StatusOfCall getCallStatusById(int id);
     public List<StatusOfCall> getAllStatusesList();
 }

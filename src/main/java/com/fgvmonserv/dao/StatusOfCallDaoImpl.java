@@ -25,6 +25,32 @@ public class StatusOfCallDaoImpl implements StatusOfCallDao {
     }
 
     @Override
+    public void addStatusOfCall(StatusOfCall statusOfCall) {
+        LOGGER.debug("Adding status of Call: " + statusOfCall);
+        Session session = sessionFactory.getCurrentSession();
+        session.persist(statusOfCall);
+    }
+
+    @Override
+    public void updateStatusOfCall(StatusOfCall statusOfCall) {
+        LOGGER.debug("Updating status of call " + statusOfCall);
+        Session session = this.sessionFactory.getCurrentSession();
+        session.update(statusOfCall);
+        LOGGER.debug("Status of call " + statusOfCall + " has been updated");
+    }
+
+    @Override
+    public void deleteStatusOfCall(int id) {
+        LOGGER.debug("Removing Status Of Call with id = " + id);
+        Session session = this.sessionFactory.getCurrentSession();
+        StatusOfCall statusOfCall = (StatusOfCall) session.load(StatusOfCall.class, new Integer(id));
+        if(statusOfCall != null){
+            session.delete(statusOfCall);
+        }
+        LOGGER.debug("Status of call has been removed");
+    }
+
+    @Override
     public StatusOfCall getCallStatusById(int id) {
         LOGGER.debug("Getting call status with id=" + id);
         Session session = sessionFactory.getCurrentSession();

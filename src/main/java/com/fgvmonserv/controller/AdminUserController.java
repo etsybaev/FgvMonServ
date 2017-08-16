@@ -1,6 +1,10 @@
 package com.fgvmonserv.controller;
 
+import com.fgvmonserv.model.StatusOfCall;
+import com.fgvmonserv.model.StatusOfDeal;
 import com.fgvmonserv.model.userauth.User;
+import com.fgvmonserv.service.StatusOfCallService;
+import com.fgvmonserv.service.StatusOfDealService;
 import com.fgvmonserv.service.userauth.UserRolesService;
 import com.fgvmonserv.service.userauth.UserService;
 import org.apache.logging.log4j.LogManager;
@@ -21,12 +25,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 
 @Controller
+@RequestMapping("/admin")
 public class AdminUserController {
 
     private final Logger LOGGER = LogManager.getLogger(this);
     private UserService userService;
     private UserRolesService userRolesService;
     private BCryptPasswordEncoder passwordEncoder;
+    private StatusOfDealService statusOfDealService;
+    private StatusOfCallService statusOfCallService;
 
     @Autowired(required = true)
     @Qualifier(value = "userService")
@@ -48,17 +55,37 @@ public class AdminUserController {
         return this;
     }
 
+    @Autowired(required = true)
+    @Qualifier(value = "statusOfDealService")
+    public AdminUserController setStatusOfDealService(StatusOfDealService statusOfDealService) {
+        this.statusOfDealService = statusOfDealService;
+        return this;
+    }
 
-    @RequestMapping(value = "admin", method = RequestMethod.GET)
+    @Autowired(required = true)
+    @Qualifier(value = "statusOfCallService")
+    public AdminUserController setStatusOfCallService(StatusOfCallService statusOfCallService) {
+        this.statusOfCallService = statusOfCallService;
+        return this;
+    }
+
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String listUsers(Model model){
-        model.addAttribute("user", new User());
-        model.addAttribute("listUsers", this.userService.listUsers());
-        model.addAttribute("userRolesList", this.userRolesService.getAllUserRoles());
         return "adminpages/admin";
     }
 
-    @RequestMapping(value = "/admin/adduser", method = RequestMethod.POST)
+
+    @RequestMapping(value = "usermanagement", method = RequestMethod.GET)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String userManagement(Model model){
+        model.addAttribute("user", new User());
+        model.addAttribute("listUsers", this.userService.listUsers());
+        model.addAttribute("userRolesList", this.userRolesService.getAllUserRoles());
+        return "adminpages/usermanagement";
+    }
+
+    @RequestMapping(value = "usermanagement/adduser", method = RequestMethod.POST)
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String addUser(@ModelAttribute("user") User user){
         if(user.getId() == null){
@@ -75,30 +102,107 @@ public class AdminUserController {
             }
             this.userService.updateUser(user);
         }
-
-        return "redirect:/admin";
+        return "redirect:/admin/usermanagement";
     }
 
-    @RequestMapping("/admin/removeuser/{id}")
+    @RequestMapping("usermanagement/removeuser/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String removeUser(@PathVariable("id") int id){
         this.userService.removeUser(id);
-        return "redirect:/admin";
+        return "redirect:/admin/usermanagement";
     }
 
-    @RequestMapping("/admin/edituser/{id}")
+    @RequestMapping("usermanagement/edituser/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String editUser(@PathVariable("id") int id, Model model){
         model.addAttribute("user", this.userService.getUserById(id));
         model.addAttribute("listUsers", this.userService.listUsers());
         model.addAttribute("userRolesList", this.userRolesService.getAllUserRoles());
-        return "adminpages/admin";
+        return "adminpages/usermanagement";
     }
 
-    @RequestMapping("/admin/userdata/{id}")
+    @RequestMapping("usermanagement/userdata/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String userData(@PathVariable("id") int id, Model model){
         model.addAttribute("user", this.userService.getUserById(id));
         return "adminpages/userdata";
+    }
+
+
+
+
+    @RequestMapping(value = "statusofdealmanagement", method = RequestMethod.GET)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String statusOfDealManagement(Model model){
+        model.addAttribute("statusOfDeal", new StatusOfDeal());
+        model.addAttribute("statusOfDealList", this.statusOfDealService.getAllStatusList());
+        return "adminpages/statusofdealmanagement";
+    }
+
+    @RequestMapping("statusofdealmanagement/editstatusofdeal/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String editStatusOfDeal(@PathVariable("id") int id, Model model){
+        model.addAttribute("statusOfDeal", this.statusOfDealService.getStatusById(id));
+        model.addAttribute("statusOfDealList", this.statusOfDealService.getAllStatusList());
+        return "adminpages/statusofdealmanagement";
+    }
+
+    @RequestMapping(value = "statusofdealmanagement/addstatusofdeal", method = RequestMethod.POST)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String addStatusOfDeal(@ModelAttribute("statusOfDeal") StatusOfDeal statusOfDeal){
+        if(statusOfDeal.getId() == null){
+            LOGGER.debug("Adding new Status Of Deal with params " + statusOfDeal.toString());
+            this.statusOfDealService.addStatusOfDeal(statusOfDeal);
+        }else {
+            LOGGER.debug("Updating Status Of Deal with params " + statusOfDeal.toString());
+            this.statusOfDealService.updateStatusOfDeal(statusOfDeal);
+        }
+        return "redirect:/admin/statusofdealmanagement";
+    }
+
+    @RequestMapping("statusofdealmanagement/removestatusofdeal/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String removeStatusOfDeal(@PathVariable("id") int id){
+        this.statusOfDealService.deleteStatusOfDeal(id);
+        return "redirect:/admin/statusofdealmanagement";
+    }
+
+
+
+
+    @RequestMapping(value = "statusofcallmanagement", method = RequestMethod.GET)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String statusOfCallManagement(Model model){
+        model.addAttribute("statusOfCall", new StatusOfCall());
+        model.addAttribute("statusOfCallList", this.statusOfCallService.getAllStatusesList());
+        return "adminpages/statusofcallmanagement";
+    }
+
+    @RequestMapping("statusofcallmanagement/editstatusofcall/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String editStatusOfCall(@PathVariable("id") int id, Model model){
+        model.addAttribute("statusOfCall", this.statusOfCallService.getCallStatusById(id));
+        model.addAttribute("statusOfCallList", this.statusOfCallService.getAllStatusesList());
+        return "adminpages/statusofcallmanagement";
+    }
+
+    @RequestMapping(value = "statusofcallmanagement/addstatusofcall", method = RequestMethod.POST)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String addStatusOfCall(@ModelAttribute("statusOfCall") StatusOfCall statusOfCall){
+        if(statusOfCall.getId() == null){
+            LOGGER.debug("Adding new Status Of Call with params " + statusOfCall.toString());
+            this.statusOfCallService.addStatusOfCall(statusOfCall);
+        }else {
+            LOGGER.debug("Updating Status Of Call with params " + statusOfCall.toString());
+            this.statusOfCallService.updateStatusOfCall(statusOfCall);
+        }
+        return "redirect:/admin/statusofcallmanagement";
+    }
+
+    @RequestMapping("statusofcallmanagement/removestatusofcall/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String removeStatusOfCall(@PathVariable("id") int id){
+        this.statusOfCallService.deleteStatusOfCall(id);
+        return "redirect:/admin/statusofcallmanagement";
     }
 }

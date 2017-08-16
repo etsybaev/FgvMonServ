@@ -24,6 +24,24 @@ public class StatusOfCallServiceImpl implements StatusOfCallService {
 
     @Override
     @Transactional
+    public void addStatusOfCall(StatusOfCall statusOfCall) {
+        statusOfCallDao.addStatusOfCall(statusOfCall);
+    }
+
+    @Override
+    @Transactional
+    public void updateStatusOfCall(StatusOfCall statusOfCall) {
+        statusOfCallDao.updateStatusOfCall(statusOfCall);
+    }
+
+    @Override
+    @Transactional
+    public void deleteStatusOfCall(int id) {
+        statusOfCallDao.deleteStatusOfCall(id);
+    }
+
+    @Override
+    @Transactional
     public StatusOfCall getCallStatusById(int id) {
         return this.statusOfCallDao.getCallStatusById(id);
     }

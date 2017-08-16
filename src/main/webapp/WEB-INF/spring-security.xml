@@ -16,8 +16,33 @@
 
 		<intercept-url pattern="/admin**" access="hasRole('ROLE_ADMIN')" />
 		<intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
-		<intercept-url pattern="/userpages**" access="isAuthenticated()" />
-		<intercept-url pattern="/userpages/**" access="isAuthenticated()" />
+		<intercept-url pattern="/admin/usermanagement**" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/admin/usermanagement/**" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/admin/usermanagement/adduser**" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/admin/usermanagement/adduser/**" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/admin/usermanagement/removeuser**" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/admin/usermanagement/removeuser/**" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/admin/usermanagement/edituser**" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/admin/usermanagement/edituser/**" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/admin/usermanagement/userdata**" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/admin/usermanagement/userdata/**" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/admin/statusofdealmanagement**" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/admin/statusofdealmanagement/**" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/admin/statusofdealmanagement/editstatusofdeal**" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/admin/statusofdealmanagement/editstatusofdeal/**" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/admin/statusofdealmanagement/addstatusofdeal**" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/admin/statusofdealmanagement/addstatusofdeal/**" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/admin/statusofdealmanagement/removestatusofdeal**" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/admin/statusofdealmanagement/removestatusofdeal/**" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/admin/statusofcallmanagement/editstatusofcall**" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/admin/statusofcallmanagement/editstatusofcall/**" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/admin/statusofcallmanagement/addstatusofcall**" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/admin/statusofcallmanagement/addstatusofcall/**" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/admin/statusofcallmanagement/removestatusofcall**" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/admin/statusofcallmanagement/removestatusofcall/**" access="hasRole('ROLE_ADMIN')" />
+
+		<!--<intercept-url pattern="/userpages**" access="isAuthenticated()" />-->
+		<!--<intercept-url pattern="/userpages/**" access="isAuthenticated()" />-->
 
 		<intercept-url pattern="/controller**" access="isAuthenticated()" />
 		<intercept-url pattern="/controller/**" access="isAuthenticated()" />
@@ -31,6 +56,9 @@
 		<intercept-url pattern="/basetableconroller/**" access="isAuthenticated()" />
 		<intercept-url pattern="/basetableconroller/basetablerecorddetails**" access="isAuthenticated()" />
 		<intercept-url pattern="/basetableconroller/basetablerecorddetails/**" access="isAuthenticated()" />
+		<intercept-url pattern="/basetableconroller/basetablerecorddetails/history**" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/basetableconroller/basetablerecorddetails/history/**" access="hasRole('ROLE_ADMIN')" />
+
 		<intercept-url pattern="/basetableconroller/removebasetablerecord**" access="hasRole('ROLE_ADMIN')" />
 		<intercept-url pattern="/basetableconroller/removebasetablerecord/**" access="hasRole('ROLE_ADMIN')" />
 

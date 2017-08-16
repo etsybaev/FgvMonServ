@@ -23,12 +23,39 @@ public class StatusOfDealDaoImp implements StatusOfDealDao {
     }
 
     @Override
-    public String getStatusById(int id) {
+    public void addStatusOfDeal(StatusOfDeal statusOfDeal) {
+        LOGGER.debug("Adding status of deal: " + statusOfDeal);
+        Session session = sessionFactory.getCurrentSession();
+        session.persist(statusOfDeal);
+        LOGGER.debug("Status Of deal " + statusOfDeal + " has been added");
+    }
+
+    @Override
+    public void updateStatusOfDeal(StatusOfDeal statusOfDeal) {
+        LOGGER.debug("Updating status of deal " + statusOfDeal);
+        Session session = this.sessionFactory.getCurrentSession();
+        session.update(statusOfDeal);
+        LOGGER.debug("Status of deal " + statusOfDeal + " has been updated");
+    }
+
+    @Override
+    public void deleteStatusOfDeal(int id) {
+        LOGGER.debug("Removing Status Of deal with id = " + id);
+        Session session = this.sessionFactory.getCurrentSession();
+        StatusOfDeal statusOfDeal = (StatusOfDeal) session.load(StatusOfDeal.class, new Integer(id));
+        if(statusOfDeal != null){
+            session.delete(statusOfDeal);
+        }
+        LOGGER.debug("Status of call has been removed");
+    }
+
+    @Override
+    public StatusOfDeal getStatusById(int id) {
         LOGGER.debug("Getting statusOfDeal with id=" + id);
         Session session = sessionFactory.getCurrentSession();
         StatusOfDeal statusOfDeal = session.load(StatusOfDeal.class, id);
         LOGGER.debug("Found status of Deal is:" + statusOfDeal);
-        return statusOfDeal.getStatus();
+        return statusOfDeal;
     }
 
     @Override

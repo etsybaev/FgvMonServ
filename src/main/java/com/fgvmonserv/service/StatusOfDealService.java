@@ -9,7 +9,10 @@ import java.util.List;
  */
 public interface StatusOfDealService {
 
-    public String getStatusById(int id);
+    public void addStatusOfDeal(StatusOfDeal statusOfDeal);
+    public void updateStatusOfDeal(StatusOfDeal statusOfDeal);
+    public void deleteStatusOfDeal(int id);
+    public StatusOfDeal getStatusById(int id);
     public List<StatusOfDeal> getAllStatusList();
 
 

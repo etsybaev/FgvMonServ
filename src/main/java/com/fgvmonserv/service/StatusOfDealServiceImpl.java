@@ -23,7 +23,25 @@ public class StatusOfDealServiceImpl implements StatusOfDealService {
 
     @Override
     @Transactional
-    public String getStatusById(int id) {
+    public void addStatusOfDeal(StatusOfDeal statusOfDeal) {
+        statusOfDealDao.addStatusOfDeal(statusOfDeal);
+    }
+
+    @Override
+    @Transactional
+    public void updateStatusOfDeal(StatusOfDeal statusOfDeal) {
+        statusOfDealDao.updateStatusOfDeal(statusOfDeal);
+    }
+
+    @Override
+    @Transactional
+    public void deleteStatusOfDeal(int id) {
+        statusOfDealDao.deleteStatusOfDeal(id);
+    }
+
+    @Override
+    @Transactional
+    public StatusOfDeal getStatusById(int id) {
         return this.statusOfDealDao.getStatusById(id);
     }
 

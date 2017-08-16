@@ -19,7 +19,7 @@
 
 <%--<script type="text/javascript" src="sorttable.js"></script>--%>
 
-<div id="timePickers" style="border: double">
+<div id="timePickers">
     <h1>Filter result options</h1>
     <form:form action="/" commandName="baseTableDateFilter" acceptCharset="UTF-8" method="get">
         <table>
@@ -208,6 +208,7 @@
         <input type="reset" value="<spring:message text="Reset filter"/>"/>
         <input type="button" onclick="location.href='/';" value="<spring:message text="Reset filter to default"/>"/>
     </form:form>
+    <p style="border: double"></p>
 </div>
 
 

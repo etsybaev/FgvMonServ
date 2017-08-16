@@ -7,42 +7,18 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 
-<%--<style type="text/css">--%>
-
-	<%--.intro-header {--%>
-		<%--padding-top: 50px; /* If you're making other pages, make sure there is 50px of padding to make sure the navbar doesn't overlap content! */--%>
-		<%--padding-bottom: 50px;--%>
-		<%--text-align: center;--%>
-		<%--color: #f8f8f8;--%>
-		<%--background: url(/resources/img/intro-bg.jpg) no-repeat center center;--%>
-		<%--background-size: cover;--%>
-	<%--}--%>
-
-	<%--div, p {margin:0px; padding:0px;}--%>
-
-	<%--#container {--%>
-		<%--width:100%;--%>
-		<%--height:75%;--%>
-		<%--position:fixed;--%>
-	<%--}--%>
-	<%--#top {height:5%;}--%>
-	<%--#middle {height:95%;}--%>
-
-	<%--button {width:100%;height:25%;}--%>
-<%--</style>--%>
-
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<title>Monserv</title>
 </head>
-<body>
+<body style="background-color: #f0f4ce">
 
-	<div id="container"  style="overflow-scrolling:auto; border: double; background-color: #f0f4ce">
+	<div id="container"  style="overflow-scrolling:auto">
 		<div id="top">
 			<%--If Admin user -  show admin panel link--%>
 			<c:if test="${pageContext.request.isUserInRole('ROLE_ADMIN') == true}">
-				<form action="/admin">
+				<form action="/admin/">
 					<input type="submit" value="Admin panel">
 				</form>
 			</c:if>
@@ -67,6 +43,7 @@
 				</form>
 
 				<h3>Welcome : ${pageContext.request.userPrincipal.name} | <a href="<c:url value="/logout" />" > Logout</a></h3>
+                <p style="border: double"></p>
 				<%--This is the page to control all the access points--%>
 				<jsp:include page="IndexPageMainBody.jsp"/>
 			</c:if>

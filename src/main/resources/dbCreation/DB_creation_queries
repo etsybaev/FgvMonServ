@@ -117,3 +117,37 @@ ADD COLUMN `notaryCommission` DOUBLE NULL DEFAULT NULL AFTER `stockExchangeCommi
 ADD COLUMN `ourCommission` DOUBLE NULL DEFAULT NULL AFTER `notaryCommission`,
 ADD COLUMN `finalPrice` INT NULL DEFAULT NULL AFTER `ourCommission`;
 
+-------------------------------------------------------------
+
+CREATE TABLE `BaseTableHistory` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `baseTableRecordId` int(11) DEFAULT NULL,
+  `managerUpdatedBy` int(11) DEFAULT NULL,
+  `bank` varchar(45) DEFAULT NULL,
+  `auctionDate` date DEFAULT NULL,
+  `lotNumber` varchar(45) DEFAULT NULL,
+  `kdNumber` text,
+  `aboutAuction` text,
+  `startPrice` double DEFAULT NULL,
+  `auctionStep` int(11) DEFAULT NULL,
+  `stockExchangeCommission` int(11) DEFAULT NULL,
+  `notaryCommission` double DEFAULT NULL,
+  `ourCommission` double DEFAULT NULL,
+  `finalPrice` int(11) DEFAULT NULL,
+  `url` text,
+  `propertyDetails` mediumtext,
+  `loanDebtorFullName` varchar(300) DEFAULT NULL,
+  `loanDebtorPhoneNumber` varchar(150) DEFAULT NULL,
+  `loanDebtorIdentCode` varchar(100) DEFAULT NULL,
+  `details` mediumtext,
+  `dateOfCall` date DEFAULT NULL,
+  `statusOfCall` int(11) DEFAULT NULL,
+  `newAuctionDate` date DEFAULT NULL,
+  `managersComment` text,
+  `symptom` varchar(45) DEFAULT NULL,
+  `isUnderControl` tinyint(1) DEFAULT '0',
+  `manager` int(11) DEFAULT NULL,
+  `statusOfDeal` int(11) DEFAULT NULL,
+  `updatedTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
