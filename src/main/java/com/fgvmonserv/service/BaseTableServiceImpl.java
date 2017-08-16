@@ -54,11 +54,11 @@ public class BaseTableServiceImpl implements BaseTableService {
         return this.baseTableDao.getAllRecordsList();
     }
 
-//    @Override
-//    @Transactional
-//    public List<BaseTable> getAllRecordsList(String searchForText) {
-//        return this.baseTableDao.getAllRecordsList(searchForText);
-//    }
+    @Override
+    @Transactional
+    public List<BaseTable> getAllRecordsList(String searchForText) {
+        return this.baseTableDao.getAllRecordsList(searchForText);
+    }
 
     @Override
     @Transactional

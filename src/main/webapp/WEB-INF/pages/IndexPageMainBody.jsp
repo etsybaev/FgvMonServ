@@ -17,7 +17,15 @@
 </style>
 
 
-<%--<script type="text/javascript" src="sorttable.js"></script>--%>
+
+<div id="globalSerach">
+    <form action="/">
+        Search through all database:<br>
+        <input type="text" name="searchForText">
+        <input type="submit" value="Search">
+    </form>
+</div>
+
 
 <div id="timePickers">
     <h1>Filter result options</h1>

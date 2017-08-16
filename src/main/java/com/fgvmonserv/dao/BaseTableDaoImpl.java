@@ -91,31 +91,38 @@ public class BaseTableDaoImpl implements BaseTableDao {
         return list;
     }
 
-//    @Override
-//    public List<BaseTable> getAllRecordsList(String searchForText) {
-//        LOGGER.debug("Searching all baseTable records list according to searchText:" + searchForText);
-//        Session session = this.sessionFactory.getCurrentSession();
-//
-//        CriteriaBuilder builder = session.getCriteriaBuilder();
-//        CriteriaQuery<BaseTable> criteria = builder.createQuery(BaseTable.class);
-//        Root<BaseTable> root = criteria.from(BaseTable.class);
-//
-//        criteria.select(root);
-//
-////        predicateList.add(builder.equal(root.get("bank"), searchForText));
-////        predicateList.add(builder.equal(root.get("kdNumber"), searchForText));
-////        criteria.where(builder.or(bank, kdNumber, startPrice ));
-//        List<Predicate> predicateList = new ArrayList<>();
-//
-//        for (BaseTableNamesEnum baseTableNamesEnum : BaseTableNamesEnum.values()) {
-//            predicateList.add(builder.equal(root.get(baseTableNamesEnum.getDbName()), searchForText));
-//        }
-//
-//        criteria.where(builder.or(predicateList.toArray(new Predicate[]{})));
-//
-//        List<BaseTable> baseTableList = session.createQuery( criteria ).getResultList();
-//        return baseTableList;
-//    }
+    @Override
+    public List<BaseTable> getAllRecordsList(String searchForText) {
+        LOGGER.debug("Getting all user list");
+        Session session = this.sessionFactory.getCurrentSession();
+        String hql = "from BaseTable where concat(\n" +
+                "COALESCE(id,''),\n" +
+                "COALESCE(bank,''),\n" +
+                "COALESCE(auctionDate,''),\n" +
+                "COALESCE(lotNumber,''),\n" +
+                "COALESCE(kdNumber,''),\n" +
+                "COALESCE(aboutAuction,''),\n" +
+                "COALESCE(startPrice,''),\n" +
+                "COALESCE(auctionStep,''),\n" +
+                "COALESCE(stockExchangeCommission,''),\n" +
+                "COALESCE(notaryCommission,''),\n" +
+                "COALESCE(ourCommission,''),\n" +
+                "COALESCE(finalPrice,''),\n" +
+                "COALESCE(url,''),\n" +
+                "COALESCE(propertyDetails,''),\n" +
+                "COALESCE(loanDebtorFullName,''),\n" +
+                "COALESCE(loanDebtorPhoneNumber,''),\n" +
+                "COALESCE(loanDebtorIdentCode,''),\n" +
+                "COALESCE(details,''),\n" +
+                "COALESCE(dateOfCall,''),\n" +
+                "COALESCE(newAuctionDate,''),\n" +
+                "COALESCE(managersComment,''),\n" +
+                "COALESCE(symptom,'')) like :searchForText";
+
+        return  (List<BaseTable>) session.createQuery(hql)
+                .setParameter("searchForText", "%" + searchForText + "%")
+                .list();
+    }
 
 
     @Override

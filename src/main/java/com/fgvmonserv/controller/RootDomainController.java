@@ -64,10 +64,8 @@ public class RootDomainController {
 
     @PreAuthorize("isFullyAuthenticated()")
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String indexPage(Model model, @ModelAttribute("baseTableDateFilter") BaseTableDateFilter dateFilter){
-        model.addAttribute("user", new User());
-        model.addAttribute("byAuctionDate",  Arrays.asList(BaseTableNamesEnum.AUCTION_DATE, BaseTableNamesEnum.NEW_AUCTION_DATE));
-        model.addAttribute("searchByRangeType",  Arrays.asList(SearchByRangeTypeEnum.values()));
+    public String indexPage(Model model, @ModelAttribute("baseTableDateFilter") BaseTableDateFilter dateFilter,
+                            @ModelAttribute("searchForText") String searchForText){
 
         if(dateFilter.getStartDate() == null){
             dateFilter.setStartDate(LocalDate.now().minusMonths(1));
@@ -87,9 +85,17 @@ public class RootDomainController {
         if(dateFilter.getStatusOfCall() == null){
             dateFilter.setStatusOfCall(new StatusOfCall().setId(0));
         }
+        //if searchForText is not empty - then we are looking for all records through whole DB ignoring other filters
+        if(searchForText.isEmpty()){
+            model.addAttribute("allRecordsList", this.baseTableService.getAllRecordsList(dateFilter));
+        }else {
+            model.addAttribute("allRecordsList", this.baseTableService.getAllRecordsList(searchForText));
+        }
 
-        model.addAttribute("allRecordsList", this.baseTableService.getAllRecordsList(dateFilter));
         model.addAttribute("baseTableDateFilter", dateFilter);
+        model.addAttribute("user", new User());
+        model.addAttribute("byAuctionDate",  Arrays.asList(BaseTableNamesEnum.AUCTION_DATE, BaseTableNamesEnum.NEW_AUCTION_DATE));
+        model.addAttribute("searchByRangeType",  Arrays.asList(SearchByRangeTypeEnum.values()));
         model.addAttribute("allUsersList", this.userService.listUsers());
         model.addAttribute("statusOfDealList", this.statusOfDealService.getAllStatusList());
         model.addAttribute("allBanksList", this.baseTableService.getAllBanksList());
