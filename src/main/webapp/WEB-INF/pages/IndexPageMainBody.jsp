@@ -271,6 +271,10 @@
         });
     </script>
 
+    <c:if test="${!empty searchKey}">
+        <p>Search results for key: ${searchKey}</p>
+    </c:if>
+
     <p>Records found by provided search criteria: ${allRecordsList.size()}</p>
     <c:if test="${!empty allRecordsList}">
         <button id="show">Add/Hide shown columns</button>

@@ -92,6 +92,7 @@ public class RootDomainController {
             model.addAttribute("allRecordsList", this.baseTableService.getAllRecordsList(searchForText));
         }
 
+        model.addAttribute("searchKey", searchForText);
         model.addAttribute("baseTableDateFilter", dateFilter);
         model.addAttribute("user", new User());
         model.addAttribute("byAuctionDate",  Arrays.asList(BaseTableNamesEnum.AUCTION_DATE, BaseTableNamesEnum.NEW_AUCTION_DATE));
