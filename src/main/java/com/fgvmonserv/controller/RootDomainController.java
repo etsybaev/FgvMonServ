@@ -70,6 +70,9 @@ public class RootDomainController {
         if(dateFilter.getStartDate() == null){
             dateFilter.setStartDate(LocalDate.now().minusMonths(1));
         }
+        if(dateFilter.getEndDate() == null){
+            dateFilter.setEndDate(LocalDate.now());
+        }
         if(dateFilter.getBaseTableNamesEnum() == null){
             dateFilter.setBaseTableNamesEnum(BaseTableNamesEnum.AUCTION_DATE);
         }

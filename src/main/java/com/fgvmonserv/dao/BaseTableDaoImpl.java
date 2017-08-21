@@ -144,6 +144,11 @@ public class BaseTableDaoImpl implements BaseTableDao {
                     baseTableDateFilter.getStartDate()));
         }
 
+        if(baseTableDateFilter.getEndDate() != null){
+            predicateList.add(builder.lessThanOrEqualTo(root.get(baseTableDateFilter.getBaseTableNamesEnum().getDbName()),
+                    baseTableDateFilter.getEndDate()));
+        }
+
         if(baseTableDateFilter.getManager() != null){
             if(baseTableDateFilter.getManager().getId() == null){
                 predicateList.add(builder.isNull(root.get(BaseTableNamesEnum.MANAGER.getDbName())));

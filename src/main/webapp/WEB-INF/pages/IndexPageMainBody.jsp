@@ -95,6 +95,17 @@
                                 </form:select>
                             </td>
                         </tr>
+
+                        <tr>
+                            <td>
+                                <form:label path="startDate">
+                                    <spring:message text="End Date"/>
+                                </form:label>
+                            </td>
+                            <td>
+                                <form:input type="date" path="endDate"/>
+                            </td>
+                        </tr>
                     </table>
                 </td>
                 <td>

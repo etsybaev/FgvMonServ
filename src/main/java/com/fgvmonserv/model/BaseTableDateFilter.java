@@ -14,6 +14,8 @@ public class BaseTableDateFilter {
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate startDate;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private LocalDate endDate;
     private BaseTableNamesEnum baseTableNamesEnum;
     private SearchByRangeTypeEnum searchByRangeTypeEnum;
     private User manager;
@@ -28,6 +30,15 @@ public class BaseTableDateFilter {
 
     public BaseTableDateFilter setStartDate(LocalDate startDate) {
         this.startDate = startDate;
+        return this;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public BaseTableDateFilter setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
         return this;
     }
 
@@ -94,6 +105,7 @@ public class BaseTableDateFilter {
         return this;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -102,6 +114,7 @@ public class BaseTableDateFilter {
         BaseTableDateFilter that = (BaseTableDateFilter) o;
 
         if (startDate != null ? !startDate.equals(that.startDate) : that.startDate != null) return false;
+        if (endDate != null ? !endDate.equals(that.endDate) : that.endDate != null) return false;
         if (baseTableNamesEnum != that.baseTableNamesEnum) return false;
         if (searchByRangeTypeEnum != that.searchByRangeTypeEnum) return false;
         if (manager != null ? !manager.equals(that.manager) : that.manager != null) return false;
@@ -115,6 +128,7 @@ public class BaseTableDateFilter {
     @Override
     public int hashCode() {
         int result = startDate != null ? startDate.hashCode() : 0;
+        result = 31 * result + (endDate != null ? endDate.hashCode() : 0);
         result = 31 * result + (baseTableNamesEnum != null ? baseTableNamesEnum.hashCode() : 0);
         result = 31 * result + (searchByRangeTypeEnum != null ? searchByRangeTypeEnum.hashCode() : 0);
         result = 31 * result + (manager != null ? manager.hashCode() : 0);
@@ -129,6 +143,7 @@ public class BaseTableDateFilter {
     public String toString() {
         return "BaseTableDateFilter{" +
                 "startDate=" + startDate +
+                ", endDate=" + endDate +
                 ", baseTableNamesEnum=" + baseTableNamesEnum +
                 ", searchByRangeTypeEnum=" + searchByRangeTypeEnum +
                 ", manager=" + manager +
