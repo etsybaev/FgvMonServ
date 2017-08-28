@@ -143,22 +143,23 @@ public class BaseTable {
 
     //@JsonIgnore
     public static BaseTable getShortBaseTableFromCsvLine(String[] lineFromCsv){
-        if(lineFromCsv[6].contains(",") && lineFromCsv[6].contains(".")){
-            lineFromCsv[6] = lineFromCsv[6].replaceAll(",", ""); //if number looks like 15,168.20 then remove comas
+        if(lineFromCsv[5].contains(",") && lineFromCsv[5].contains(".")){
+            lineFromCsv[5] = lineFromCsv[5].replaceAll(",", ""); //if number looks like 15,168.20 then remove comas
         }
-        return new BaseTable().setBank(lineFromCsv[1])
-                .setAuctionDate(DateTimeConverter.parseLocalDate(lineFromCsv[2]))
-                .setLotNumber(lineFromCsv[3])
-                .setKdNumber(lineFromCsv[4])
-                .setAboutAuction(lineFromCsv[5])
-                .setStartPrice(lineFromCsv[6].isEmpty() ? 0 : Double.parseDouble(
-                        lineFromCsv[6].replaceAll(",", ".").replaceAll("[^0-9.]+", "").replaceAll(".$", ""))) //remove all non dots and digits and them remove last dot if any
-                .setUrl(lineFromCsv[7])
-                .setPropertyDetails(lineFromCsv[8]);
+        return new BaseTable().setBank(lineFromCsv[0])
+                .setAuctionDate(DateTimeConverter.parseLocalDate(lineFromCsv[1]))
+                .setLotNumber(lineFromCsv[2])
+                .setKdNumber(lineFromCsv[3])
+                .setAboutAuction(lineFromCsv[4])
+                .setStartPrice(lineFromCsv[5].isEmpty() ? 0 : Double.parseDouble(
+                        lineFromCsv[5].replaceAll(",", ".").replaceAll("[^0-9.]+", "").replaceAll(".$", ""))) //remove all non dots and digits and them remove last dot if any
+                .setUrl(lineFromCsv[6])
+                .setPropertyDetails(lineFromCsv[7]);
     }
 
 
 //    //@JsonIgnore
+    //We removed ID fild from initial do, we if we want to use these method, need to pay attention
 //    public static BaseTable getShortBaseTableFromCsvLine(String[] lineFromCsv){
 //        try{
 //            if(lineFromCsv[6].contains(",") && lineFromCsv[6].contains(".")){
