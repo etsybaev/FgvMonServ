@@ -98,7 +98,8 @@ public class RootDomainController {
         model.addAttribute("searchKey", searchForText);
         model.addAttribute("baseTableDateFilter", dateFilter);
         model.addAttribute("user", new User());
-        model.addAttribute("byAuctionDate",  Arrays.asList(BaseTableNamesEnum.AUCTION_DATE, BaseTableNamesEnum.NEW_AUCTION_DATE));
+        model.addAttribute("byAuctionDate",  Arrays.asList(BaseTableNamesEnum.AUCTION_DATE,
+                BaseTableNamesEnum.NEW_AUCTION_DATE, BaseTableNamesEnum.CREATED_TIME));
         model.addAttribute("searchByRangeType",  Arrays.asList(SearchByRangeTypeEnum.values()));
         model.addAttribute("allUsersList", this.userService.listUsers());
         model.addAttribute("statusOfDealList", this.statusOfDealService.getAllStatusList());

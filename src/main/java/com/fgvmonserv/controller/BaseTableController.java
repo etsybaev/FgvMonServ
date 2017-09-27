@@ -122,20 +122,32 @@ public class BaseTableController {
             baseTable.setStatusOfDeal(null);
         }
 
+//        if(baseTable.getId() == null){
+//            //After adding to DB we get updated record that contains auto-generated id
+//            baseTable = this.baseTableService.addBaseTableRecord(baseTable);
+//            //Now need to add initial record to BaseTable history
+//            addRecordToBaseTableHistoryTable(baseTable, SecurityContextHolder.getContext().getAuthentication());
+//            redirectAttributes.addFlashAttribute("message", "Record has been successfully created!");
+//            return "redirect:/";
+//        }else {
+//            this.baseTableService.updateBaseTableRecord(baseTable);
+//            //Prepare and add record to history table
+//            addRecordToBaseTableHistoryTable(baseTable, SecurityContextHolder.getContext().getAuthentication());
+//            redirectAttributes.addFlashAttribute("message", "Record has been successfully updated!");
+//            return "redirect:/basetableconroller/basetablerecorddetails/" + baseTable.getId();
+//        }
+
         if(baseTable.getId() == null){
             //After adding to DB we get updated record that contains auto-generated id
             baseTable = this.baseTableService.addBaseTableRecord(baseTable);
-            //Now need to add initial record to BaseTable history
-            addRecordToBaseTableHistoryTable(baseTable, SecurityContextHolder.getContext().getAuthentication());
             redirectAttributes.addFlashAttribute("message", "Record has been successfully created!");
-            return "redirect:/";
         }else {
             this.baseTableService.updateBaseTableRecord(baseTable);
-            //Prepare and add record to history table
-            addRecordToBaseTableHistoryTable(baseTable, SecurityContextHolder.getContext().getAuthentication());
             redirectAttributes.addFlashAttribute("message", "Record has been successfully updated!");
-            return "redirect:/basetableconroller/basetablerecorddetails/" + baseTable.getId();
         }
+        addRecordToBaseTableHistoryTable(baseTable, SecurityContextHolder.getContext().getAuthentication());
+        return "redirect:/basetableconroller/basetablerecorddetails/" + baseTable.getId();
+
     }
 
     private void addRecordToBaseTableHistoryTable(BaseTable baseTableRecordToAddToHistory, Authentication auth){

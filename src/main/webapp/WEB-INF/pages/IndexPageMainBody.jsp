@@ -7,6 +7,8 @@
 <script src="<c:url value="/resources/script/sorttable.js" />"></script>
 <%--<link href="<c:url value="/resources/css/sortableTable.css" />" rel="tableStyle">--%>
 
+<script src="<c:url value="/resources/script/delConfirm.js" />"></script>
+
 <style type="text/css">
     @import "/resources/css/sortableTable.css";
 
@@ -293,33 +295,35 @@
             <table>
                 <tr>
                     <th><input type="checkbox" name="<%=BaseTableNamesEnum.ID.getDbName()%>"/><%=BaseTableNamesEnum.ID.getViewName()%></th>
+                    <th><input type="checkbox" name="<%=BaseTableNamesEnum.CREATED_TIME.getDbName()%>"/><%=BaseTableNamesEnum.CREATED_TIME.getViewName()%></th>
                     <th><input type="checkbox" name="<%=BaseTableNamesEnum.BANK.getDbName()%>"/><%=BaseTableNamesEnum.BANK.getViewName()%></th>
                     <th><input type="checkbox" name="<%=BaseTableNamesEnum.AUCTION_DATE.getDbName()%>"/><%=BaseTableNamesEnum.AUCTION_DATE.getViewName()%></th>
                     <th><input type="checkbox" name="<%=BaseTableNamesEnum.LOT_NUMBER.getDbName()%>"/><%=BaseTableNamesEnum.LOT_NUMBER.getViewName()%></th>
                     <th><input type="checkbox" name="<%=BaseTableNamesEnum.KD_NUMBER.getDbName()%>"/><%=BaseTableNamesEnum.KD_NUMBER.getViewName()%></th>
-                    <th><input type="checkbox" name="<%=BaseTableNamesEnum.ABOUT_AUCTION.getDbName()%>"/><%=BaseTableNamesEnum.ABOUT_AUCTION.getViewName()%></th>
                 </tr>
                 <tr>
+                    <th><input type="checkbox" name="<%=BaseTableNamesEnum.ABOUT_AUCTION.getDbName()%>"/><%=BaseTableNamesEnum.ABOUT_AUCTION.getViewName()%></th>
                     <th><input type="checkbox" name="<%=BaseTableNamesEnum.START_PRICE.getDbName()%>"/><%=BaseTableNamesEnum.START_PRICE.getViewName()%></th>
                     <th><input type="checkbox" name="<%=BaseTableNamesEnum.FINAL_PRICE.getDbName()%>"/><%=BaseTableNamesEnum.FINAL_PRICE.getViewName()%></th>
                     <th><input type="checkbox" name="<%=BaseTableNamesEnum.URL.getDbName()%>"/><%=BaseTableNamesEnum.URL.getViewName()%></th>
                     <th><input type="checkbox" name="<%=BaseTableNamesEnum.PROPERTY_DETAILS.getDbName()%>"/><%=BaseTableNamesEnum.PROPERTY_DETAILS.getViewName()%></th>
                     <th><input type="checkbox" name="<%=BaseTableNamesEnum.LOAN_DEBTOR_FULL_NAME.getDbName()%>"/><%=BaseTableNamesEnum.LOAN_DEBTOR_FULL_NAME.getViewName()%></th>
-                    <th><input type="checkbox" name="<%=BaseTableNamesEnum.LOAN_DEBTOR_PHONE_NUMBER.getDbName()%>"/><%=BaseTableNamesEnum.LOAN_DEBTOR_PHONE_NUMBER.getViewName()%></th>
                 </tr>
                 <tr>
+                    <th><input type="checkbox" name="<%=BaseTableNamesEnum.LOAN_DEBTOR_PHONE_NUMBER.getDbName()%>"/><%=BaseTableNamesEnum.LOAN_DEBTOR_PHONE_NUMBER.getViewName()%></th>
                     <th><input type="checkbox" name="<%=BaseTableNamesEnum.LOAN_DEBTOR_IDENT_CODE.getDbName()%>"/><%=BaseTableNamesEnum.LOAN_DEBTOR_IDENT_CODE.getViewName()%></th>
                     <th><input type="checkbox" name="<%=BaseTableNamesEnum.DETAILS.getDbName()%>"/><%=BaseTableNamesEnum.DETAILS.getViewName()%></th>
                     <th><input type="checkbox" name="<%=BaseTableNamesEnum.DATE_OF_CALL.getDbName()%>"/><%=BaseTableNamesEnum.DATE_OF_CALL.getViewName()%></th>
                     <th><input type="checkbox" name="<%=BaseTableNamesEnum.STATUS_OF_CALL.getDbName()%>"/><%=BaseTableNamesEnum.STATUS_OF_CALL.getViewName()%></th>
                     <th><input type="checkbox" name="<%=BaseTableNamesEnum.NEW_AUCTION_DATE.getDbName()%>"/><%=BaseTableNamesEnum.NEW_AUCTION_DATE.getViewName()%></th>
-                    <th><input type="checkbox" name="<%=BaseTableNamesEnum.MANAGERS_COMMENT.getDbName()%>"/><%=BaseTableNamesEnum.MANAGERS_COMMENT.getViewName()%></th>
                 </tr>
                 <tr>
+                    <th><input type="checkbox" name="<%=BaseTableNamesEnum.MANAGERS_COMMENT.getDbName()%>"/><%=BaseTableNamesEnum.MANAGERS_COMMENT.getViewName()%></th>
                     <th><input type="checkbox" name="<%=BaseTableNamesEnum.SYMPTOM.getDbName()%>"/><%=BaseTableNamesEnum.SYMPTOM.getViewName()%></th>
                     <th><input type="checkbox" name="<%=BaseTableNamesEnum.IS_UNDER_CONTROL.getDbName()%>"/><%=BaseTableNamesEnum.IS_UNDER_CONTROL.getViewName()%></th>
                     <th><input type="checkbox" name="<%=BaseTableNamesEnum.MANAGER.getDbName()%>"/><%=BaseTableNamesEnum.MANAGER.getViewName()%></th>
                     <th><input type="checkbox" name="<%=BaseTableNamesEnum.STATUS_OF_DEAL.getDbName()%>"/><%=BaseTableNamesEnum.STATUS_OF_DEAL.getViewName()%></th>
+                    <th><input type="checkbox" name="Delete"/>Delete</th>
                 </tr>
             </table>
             <button id="hide">Hide selector</button>
@@ -329,6 +333,7 @@
             <thead>
                 <tr>
                     <th class="<%=BaseTableNamesEnum.ID.getDbName()%>"><%=BaseTableNamesEnum.ID.getViewName()%></th>
+                    <th class="<%=BaseTableNamesEnum.CREATED_TIME.getDbName()%>"><%=BaseTableNamesEnum.CREATED_TIME.getViewName()%></th>
                     <th class="<%=BaseTableNamesEnum.BANK.getDbName()%>"><%=BaseTableNamesEnum.BANK.getViewName()%></th>
                     <th class="<%=BaseTableNamesEnum.AUCTION_DATE.getDbName()%>"><%=BaseTableNamesEnum.AUCTION_DATE.getViewName()%></th>
                     <th class="<%=BaseTableNamesEnum.LOT_NUMBER.getDbName()%>"><%=BaseTableNamesEnum.LOT_NUMBER.getViewName()%></th>
@@ -350,6 +355,7 @@
                     <th class="<%=BaseTableNamesEnum.IS_UNDER_CONTROL.getDbName()%>"><%=BaseTableNamesEnum.IS_UNDER_CONTROL.getViewName()%></th>
                     <th class="<%=BaseTableNamesEnum.MANAGER.getDbName()%>"><%=BaseTableNamesEnum.MANAGER.getViewName()%></th>
                     <th class="<%=BaseTableNamesEnum.STATUS_OF_DEAL.getDbName()%>"><%=BaseTableNamesEnum.STATUS_OF_DEAL.getViewName()%></th>
+                    <th class="Delete">Delete</th>
                 </tr>
             </thead>
             <tbody>
@@ -357,6 +363,7 @@
                 <tr ondblclick="openEditPage(${allRecordsList.id})">
                     <%--<td>${allRecordsList.id}</td>--%>
                     <td title="${allRecordsList.id}"><a target="_blank" href="/basetableconroller/basetablerecorddetails/${allRecordsList.id}" >${allRecordsList.id}</a></td>
+                    <td title="${allRecordsList.createdTime}">${allRecordsList.createdTime}</td>
                     <td title="${allRecordsList.bank}">${allRecordsList.bank}</td>
                     <td title="${allRecordsList.auctionDate}">${allRecordsList.auctionDate}</td>
                     <td title="${allRecordsList.lotNumber}">${allRecordsList.lotNumber}</td>
@@ -378,6 +385,8 @@
                     <td title="${allRecordsList.isUnderControl}">${allRecordsList.isUnderControl}</td>
                     <td title="${allRecordsList.manager.firstName}">${allRecordsList.manager.firstName}</td>
                     <td title="${allRecordsList.statusOfDeal.status}">${allRecordsList.statusOfDeal.status}</td>
+                    <%--<td title="Delete" onclick="javascript:deleteScript.deleteBaseTableRecord(${allRecordsList.id})">Delete</td>--%>
+                    <td title="Delete"><a href="javascript:deleteScript.deleteBaseTableRecord(${allRecordsList.id})">Delete</a></td>
                 </tr>
             </c:forEach>
             </tbody>

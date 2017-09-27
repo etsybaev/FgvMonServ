@@ -7,6 +7,7 @@ package com.fgvmonserv;
 public enum BaseTableNamesEnum {
 
     ID("id", "Id"),
+    CREATED_TIME("createdTime", "Created On"),
     BANK("bank", "Bank"),
     AUCTION_DATE("auctionDate", "Auction Date"),
     LOT_NUMBER("lotNumber", "Lot Number"),

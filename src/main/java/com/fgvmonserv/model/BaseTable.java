@@ -141,6 +141,11 @@ public class BaseTable {
     @NotFound(action = NotFoundAction.IGNORE)
     private StatusOfDeal statusOfDeal;
 
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @Column(name = "createdTime", updatable = false)
+    @GeneratedValue
+    private LocalDate createdTime;
+
     //@JsonIgnore
     public static BaseTable getShortBaseTableFromCsvLine(String[] lineFromCsv){
         if(lineFromCsv[5].contains(",") && lineFromCsv[5].contains(".")){
@@ -513,6 +518,15 @@ public class BaseTable {
         return this;
     }
 
+    public LocalDate getCreatedTime() {
+        return createdTime;
+    }
+
+    public BaseTable setCreatedTime(LocalDate createdTime) {
+        this.createdTime = createdTime;
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -558,7 +572,9 @@ public class BaseTable {
             return false;
         if (symptom != null ? !symptom.equals(baseTable.symptom) : baseTable.symptom != null) return false;
         if (manager != null ? !manager.equals(baseTable.manager) : baseTable.manager != null) return false;
-        return statusOfDeal != null ? statusOfDeal.equals(baseTable.statusOfDeal) : baseTable.statusOfDeal == null;
+        if (statusOfDeal != null ? !statusOfDeal.equals(baseTable.statusOfDeal) : baseTable.statusOfDeal != null)
+            return false;
+        return createdTime != null ? createdTime.equals(baseTable.createdTime) : baseTable.createdTime == null;
     }
 
     @Override
@@ -589,6 +605,7 @@ public class BaseTable {
         result = 31 * result + (isUnderControl ? 1 : 0);
         result = 31 * result + (manager != null ? manager.hashCode() : 0);
         result = 31 * result + (statusOfDeal != null ? statusOfDeal.hashCode() : 0);
+        result = 31 * result + (createdTime != null ? createdTime.hashCode() : 0);
         return result;
     }
 
@@ -621,6 +638,7 @@ public class BaseTable {
                 ", isUnderControl=" + isUnderControl +
                 ", manager=" + manager +
                 ", statusOfDeal=" + statusOfDeal +
+                ", createdTime=" + createdTime +
                 '}';
     }
 }
