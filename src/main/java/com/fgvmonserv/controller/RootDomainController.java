@@ -12,6 +12,7 @@ import com.fgvmonserv.service.StatusOfDealService;
 import com.fgvmonserv.service.userauth.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,13 +27,14 @@ import java.util.Arrays;
  */
 
 @Controller
+@Scope("session")
 public class RootDomainController {
 
     private BaseTableService baseTableService;
     private UserService userService;
     private StatusOfDealService statusOfDealService;
     private StatusOfCallService statusOfCallService;
-
+    private BaseTableDateFilter dateFilter = new BaseTableDateFilter();
 
     @Autowired
     @Qualifier("baseTableService")
@@ -67,36 +69,36 @@ public class RootDomainController {
     public String indexPage(Model model, @ModelAttribute("baseTableDateFilter") BaseTableDateFilter dateFilter,
                             @ModelAttribute("searchForText") String searchForText){
 
-        if(dateFilter.getStartDate() == null){
-            dateFilter.setStartDate(LocalDate.now().minusMonths(1));
+        //for the first run when both dateFilters are empty
+        if(this.dateFilter.getStartDate() == null && this.dateFilter.getStartDate() == null){
+            this.dateFilter.setStartDate(LocalDate.now().minusMonths(1));
+            this.dateFilter.setEndDate(LocalDate.now());
+            this.dateFilter.setBaseTableNamesEnum(BaseTableNamesEnum.AUCTION_DATE);
+            this.dateFilter.setSearchByRangeTypeEnum(SearchByRangeTypeEnum.START_FROM);
+            this.dateFilter.setManager(new User().setId(0));
+            this.dateFilter.setStatusOfDeal(new StatusOfDeal().setId(0));
+            this.dateFilter.setStatusOfCall(new StatusOfCall().setId(0));
+        }else if(dateFilter.getStartDate() != null) {
+            this.dateFilter.setStartDate(dateFilter.getStartDate());
+            this.dateFilter.setEndDate(dateFilter.getEndDate());
+            this.dateFilter.setBaseTableNamesEnum(dateFilter.getBaseTableNamesEnum());
+            this.dateFilter.setSearchByRangeTypeEnum(dateFilter.getSearchByRangeTypeEnum());
+            this.dateFilter.setManager(dateFilter.getManager());
+            this.dateFilter.setStatusOfDeal(dateFilter.getStatusOfDeal());
+            this.dateFilter.setIsUnderControl(dateFilter.getIsUnderControl());
+            this.dateFilter.setBank(dateFilter.getBank());
+            this.dateFilter.setStatusOfCall(dateFilter.getStatusOfCall());
         }
-        if(dateFilter.getEndDate() == null){
-            dateFilter.setEndDate(LocalDate.now());
-        }
-        if(dateFilter.getBaseTableNamesEnum() == null){
-            dateFilter.setBaseTableNamesEnum(BaseTableNamesEnum.AUCTION_DATE);
-        }
-        if(dateFilter.getSearchByRangeTypeEnum() == null){
-            dateFilter.setSearchByRangeTypeEnum(SearchByRangeTypeEnum.START_FROM);
-        }
-        if(dateFilter.getManager() == null){
-            dateFilter.setManager(new User().setId(0));
-        }
-        if(dateFilter.getStatusOfDeal() == null){
-            dateFilter.setStatusOfDeal(new StatusOfDeal().setId(0));
-        }
-        if(dateFilter.getStatusOfCall() == null){
-            dateFilter.setStatusOfCall(new StatusOfCall().setId(0));
-        }
+
         //if searchForText is not empty - then we are looking for all records through whole DB ignoring other filters
         if(searchForText.isEmpty()){
-            model.addAttribute("allRecordsList", this.baseTableService.getAllRecordsList(dateFilter));
+            model.addAttribute("allRecordsList", this.baseTableService.getAllRecordsList(this.dateFilter));
         }else {
             model.addAttribute("allRecordsList", this.baseTableService.getAllRecordsList(searchForText));
         }
 
         model.addAttribute("searchKey", searchForText);
-        model.addAttribute("baseTableDateFilter", dateFilter);
+        model.addAttribute("baseTableDateFilter", this.dateFilter);
         model.addAttribute("user", new User());
         model.addAttribute("byAuctionDate",  Arrays.asList(BaseTableNamesEnum.AUCTION_DATE,
                 BaseTableNamesEnum.NEW_AUCTION_DATE, BaseTableNamesEnum.CREATED_TIME));
