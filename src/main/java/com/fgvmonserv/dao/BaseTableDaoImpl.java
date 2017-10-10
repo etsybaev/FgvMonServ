@@ -200,7 +200,7 @@ public class BaseTableDaoImpl implements BaseTableDao {
     public void removeBaseTableRecord(int id) {
         LOGGER.debug("Removing BaseTable record with id = " + id);
         Session session = this.sessionFactory.getCurrentSession();
-        BaseTable baseTable = session.load(BaseTable.class, id);
+        BaseTable baseTable = session.get(BaseTable.class, id);
         if(baseTable != null){
             session.delete(baseTable);
             LOGGER.debug("Record has been removed");
