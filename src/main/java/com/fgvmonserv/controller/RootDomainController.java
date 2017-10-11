@@ -109,4 +109,11 @@ public class RootDomainController {
         model.addAttribute("allCallStatusesList", this.statusOfCallService.getAllStatusesList());
         return "index";
     }
+
+    @PreAuthorize("isFullyAuthenticated()")
+    @RequestMapping(value = "resetFilerToDefault", method = RequestMethod.GET)
+    public String resetFilterToDefault(){
+        this.dateFilter = new BaseTableDateFilter();
+        return "redirect:/";
+    }
 }
