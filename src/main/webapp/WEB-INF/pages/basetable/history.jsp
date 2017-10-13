@@ -24,7 +24,6 @@
     <p><a href="/basetableconroller/basetablerecorddetails/${recordId}">Back to details page</a></p>
 
     <div class="sortableTable">
-
         <%--This script is for hiding columns--%>
         <script src="/resources/script/jquery-1.11.1.min.js"></script>
         <script>
