@@ -16,9 +16,9 @@
 <head>
     <title>Details</title>
 </head>
-<body>
+<body style="background-color: #f0f4ce">
 
-<div style="background-color: #f0f4ce">
+<div>
 
     <p><a href="/">Back to main menu</a></p>
     <p><a href="/basetableconroller/basetablerecorddetails/${recordId}">Back to details page</a></p>
