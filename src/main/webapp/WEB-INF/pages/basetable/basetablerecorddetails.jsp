@@ -7,6 +7,7 @@
 <%@ page session="false" %>
 
 <script src="<c:url value="/resources/script/delConfirm.js" />"></script>
+<script src="<c:url value="/resources/script/jquery-1.11.1.js" />"></script>
 
 <html>
 <head>
@@ -16,6 +17,7 @@
 
 <div style="background-color: #f0f4ce">
 
+    <a href="javascript: if(window.print) window.print()">Print</a>
     <p><a href="/">Back to main menu</a></p>
 
     <c:if test="${(pageContext.request.isUserInRole('ROLE_ADMIN') == true) and (action != 'ADD_USER')}">
@@ -40,34 +42,67 @@
     </c:if>
 
 
-    <script type="text/javascript">
-        document.addEventListener("DOMContentLoaded", function(event) {
-            findTotal()
-        });
-    </script>
-
-    <script type="text/javascript">
-        function findTotal(){
-            var startPrice = parseFloat(document.getElementById("startPrice").value);
-            var auctionStep = parseInt(document.getElementById("auctionStep").value);
-            var auctionStepUAH = document.getElementById("auctionStepUAH");
-            var stockExchangeCommission= parseInt(document.getElementById("stockExchangeCommission").value);
-            var stockExchangeCommissionUAH= document.getElementById("stockExchangeCommissionUAH");
-            var notaryCommission = parseFloat(document.getElementById("notaryCommission").value);
-            var ourCommission = parseFloat(document.getElementById("ourCommission").value);
-
-            auctionStep = startPrice * (auctionStep /100);
-            auctionStepUAH.value = isNaN(auctionStep) ? "" : parseFloat(auctionStep);
-
-            stockExchangeCommission = (startPrice + auctionStep) * (stockExchangeCommission /100);
-            stockExchangeCommissionUAH.value = isNaN(stockExchangeCommission) ? "" : parseFloat(stockExchangeCommission);
-
-            var totalPrice = parseInt(Math.ceil(startPrice + auctionStep + stockExchangeCommission + notaryCommission + ourCommission));
-
-            document.getElementById('finalPrice').value = isNaN(totalPrice) ? "" : totalPrice;
+    <%--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>--%>
+    <script>
+        function isValidValue(regexp, value, valueName) {
+            if(regexp.test(value) && value!=null && value!=""){
+                return true;
+            }else {
+                alert(valueName + " value is in unacceptable format");
+                return false;
+            }
         }
-    </script>
 
+        window.onload = function () {
+            document.getElementById("btnCalc").onclick = function () {
+                var startPrice = document.getElementById("startPrice").value;
+                var auctionStep = document.getElementById("auctionStep").value;
+                var stockExchangeCommission= document.getElementById("stockExchangeCommission").value;
+                var notaryCommission = document.getElementById("notaryCommission").value;
+                var ourCommission = document.getElementById("ourCommission").value;
+
+                var isStartPriceValid = isValidValue(/^\d{0,15}(\.\d{0,2})?$/, startPrice, "StartPrice");
+                var isAuctionStepValid = isValidValue(/^\d{0,15}?$/, auctionStep, "Auction Step");
+                var isStockExchangeCommissionValid = isValidValue(/^\d{0,15}?$/, stockExchangeCommission, "Stock Exchange Commission");
+                var isNotaryCommissionValid = isValidValue(/^\d{0,15}(\.\d{0,2})?$/, notaryCommission, "Notary commission");
+                var isOurCommissionValid = isValidValue(/^\d{0,15}(\.\d{0,2})?$/, ourCommission, "Our commission");
+
+                if(isStartPriceValid && isAuctionStepValid && isStockExchangeCommissionValid &&
+                    isNotaryCommissionValid && isOurCommissionValid){
+                    $.ajax({
+                        type: "POST",
+                        url: "/basetableconroller/calc",
+                        // The key needs to match your method's input parameter (case-sensitive).
+                        data: JSON.stringify({"startPrice": startPrice, "auctionStep": auctionStep,
+                            "stockExchangeCommission": stockExchangeCommission, "notaryCommission": notaryCommission,
+                            "ourCommission": ourCommission}),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function(data){
+                            document.getElementById('finalPrice').value = data.finalPrice;
+                            document.getElementById('auctionStepUAH').value = data.auctionStepUAH;
+                            document.getElementById('stockExchangeCommissionUAH').value = data.stockExchangeCommissionUAH;
+                        },
+                        failure: function(errMsg) {alert(errMsg);
+                        }
+                    });
+                }
+            }
+        }
+
+//        <input id="amount" maxlength="20" type="text" />
+//        $("#amount").on("keyup", function(){
+//            var valid = /^\d{0,15}(\.\d{0,2})?$/.test(this.value),
+//                val = this.value;
+//
+//            if(!valid){
+//                console.log("Invalid input!");
+//                this.value = val.substring(0, val.length - 1);
+//            }
+//        });
+
+
+    </script>
 
     <c:url var="addAction" value="/basetableconroller/addeditbasetablerecord"/>
 
@@ -133,7 +168,8 @@
                     </form:label>
                 </td>
                 <td>
-                    <form:input id="startPrice" onkeyup="findTotal()" path="<%=BaseTableNamesEnum.START_PRICE.getDbName()%>" type="text"
+                    <%--<form:input id="startPrice" onkeyup="findTotal()" path="<%=BaseTableNamesEnum.START_PRICE.getDbName()%>" type="text"--%>
+                    <form:input id="startPrice" path="<%=BaseTableNamesEnum.START_PRICE.getDbName()%>" type="text"
                                 pattern="[0-9]+?(\.[0-9]{0,2})?" title="This must be a number with up to 2 decimal places"/>
                 </td>
             </tr>
@@ -153,7 +189,8 @@
                                 </form:label>
                             </td>
                             <td>
-                                <form:input id="auctionStep" onkeyup="findTotal()" path="<%=BaseTableNamesEnum.AUCTION_STEP.getDbName()%>"
+                                <%--<form:input id="auctionStep" onkeyup="findTotal()" path="<%=BaseTableNamesEnum.AUCTION_STEP.getDbName()%>"--%>
+                                <form:input id="auctionStep" path="<%=BaseTableNamesEnum.AUCTION_STEP.getDbName()%>"
                                             type="text" pattern="[0-9]+" title="This must be a number of %"/>
 
                                 <%--<form:input id="auctionStep" onkeyup="findTotal()" path="auctionStep" type="text"--%>
@@ -172,7 +209,8 @@
                                 </form:label>
                             </td>
                             <td>
-                                <form:input id="stockExchangeCommission" onkeyup="findTotal()"
+                                <%--<form:input id="stockExchangeCommission" onkeyup="findTotal()"--%>
+                                <form:input id="stockExchangeCommission"
                                             path="<%=BaseTableNamesEnum.STOCK_EXCHANGE_COMMISSION.getDbName()%>"
                                             type="text" pattern="[0-9]+" title="This must be a number of %"/>
                                 <%--<form:input id="stockExchangeCommission" onkeyup="findTotal()" path="stockExchangeCommission" type="text"--%>
@@ -189,7 +227,8 @@
                                 </form:label>
                             </td>
                             <td>
-                                <form:input id="notaryCommission" onkeyup="findTotal()" path="<%=BaseTableNamesEnum.NOTARY_COMMISSION.getDbName()%>"
+                                <%--<form:input id="notaryCommission" onkeyup="findTotal()" path="<%=BaseTableNamesEnum.NOTARY_COMMISSION.getDbName()%>"--%>
+                                <form:input id="notaryCommission" path="<%=BaseTableNamesEnum.NOTARY_COMMISSION.getDbName()%>"
                                             type="text" pattern="[0-9]+?(\.[0-9]{0,2})?" title="This must be a number with up to 2 decimal places"/>
                             </td>
                         </tr>
@@ -201,7 +240,8 @@
                                 </form:label>
                             </td>
                             <td>
-                                <form:input id="ourCommission" onkeyup="findTotal()" path="<%=BaseTableNamesEnum.OUR_COMMISSION.getDbName()%>"
+                                <%--<form:input id="ourCommission" onkeyup="findTotal()" path="<%=BaseTableNamesEnum.OUR_COMMISSION.getDbName()%>"--%>
+                                <form:input id="ourCommission" path="<%=BaseTableNamesEnum.OUR_COMMISSION.getDbName()%>"
                                             type="text" pattern="[0-9]+?(\.[0-9]{0,2})?" title="This must be a number with up to 2 decimal places"/>
                             </td>
                         </tr>
@@ -221,6 +261,7 @@
                             <%--</td>--%>
                         <%--</tr>--%>
                     </table>
+                    <input id="btnCalc" type="button" value="Calculate" />
                 </td>
             </tr>
 
