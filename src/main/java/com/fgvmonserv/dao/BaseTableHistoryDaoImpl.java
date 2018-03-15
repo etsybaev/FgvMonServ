@@ -30,7 +30,7 @@ public class BaseTableHistoryDaoImpl implements BaseTableHistoryDao {
     }
 
     @Override
-    public void addBaseTableHistoryRecord(List<BaseTableHistory> baseTableHistoryList) {
+    public List<BaseTableHistory> addBaseTableHistoryRecord(List<BaseTableHistory> baseTableHistoryList) {
         LOGGER.debug("Adding BaseTable History records list " + baseTableHistoryList);
         Session session = this.sessionFactory.getCurrentSession();
 //        Transaction tx = session.getTransaction();
@@ -49,6 +49,7 @@ public class BaseTableHistoryDaoImpl implements BaseTableHistoryDao {
 //        tx.commit();
 //        session.close();
         LOGGER.debug("Records have been added");
+        return baseTableHistoryList; // after adding records to db we get the same list but with added id's
     }
 
 

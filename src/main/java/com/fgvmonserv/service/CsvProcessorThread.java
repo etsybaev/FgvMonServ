@@ -34,8 +34,16 @@ public class CsvProcessorThread implements Callable<String> {
                 baseTableHistory.setManagerUpdatedBy(currentSessionsUser);
                 baseTableHistoryList.add(baseTableHistory);
             });
-            baseTableHistoryService.addBaseTableHistoryRecord(baseTableHistoryList);
-            return baseTableHistoryList.size() + " records have been added to database";
+            //final list contains added records in fact but with assigned ids
+            List<BaseTableHistory> baseTableHistoryRecordsWihIds = baseTableHistoryService.addBaseTableHistoryRecord(baseTableHistoryList);
+
+            if(baseTablesAddedRecordsWithIds.size() != baseTableHistoryRecordsWihIds.size()){
+                return "Error occurred while importing. " + baseTablesAddedRecordsWithIds.size() +
+                        " records have been added to BaseTable table, but " + baseTableHistoryRecordsWihIds.size() +
+                        " records have been added to BaseTableHistory table";
+            }
+
+            return baseTableHistoryRecordsWihIds.size() + " records have been added to database";
         }catch (Exception e){
             return "Error occurred while importing CVS, details: \n" + e.getMessage();
         }

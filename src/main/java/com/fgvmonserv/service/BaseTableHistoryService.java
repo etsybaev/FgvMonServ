@@ -10,7 +10,7 @@ import java.util.List;
 public interface BaseTableHistoryService {
 
     public void addBaseTableHistoryRecord(BaseTableHistory baseTableHistory);
-    public void addBaseTableHistoryRecord(List<BaseTableHistory> baseTableHistoryList);
+    public List<BaseTableHistory> addBaseTableHistoryRecord(List<BaseTableHistory> baseTableHistoryList);
     public List<BaseTableHistory> getBaseTableHistoryListByBaseTableId(int baseTableRecordId);
     public void deleteAllHistoryRecordsForBaseTableId(int baseTableIdCleanHistoryFor);
 

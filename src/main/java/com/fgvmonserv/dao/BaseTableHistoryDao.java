@@ -12,7 +12,7 @@ import java.util.List;
 public interface BaseTableHistoryDao {
 
     public void addBaseTableRecord(BaseTableHistory baseTableHistory);
-    public void addBaseTableHistoryRecord(List<BaseTableHistory> baseTableHistoryList);
+    public List<BaseTableHistory> addBaseTableHistoryRecord(List<BaseTableHistory> baseTableHistoryList);
     public List<BaseTableHistory> getBaseTableHistoryListByBaseTableId(int baseTableRecordId);
     public void deleteAllHistoryRecordsForBaseTableId(int baseTableIdCleanHistoryFor);
 

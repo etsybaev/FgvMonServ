@@ -27,8 +27,8 @@ public class BaseTableHistoryServiceImpl implements BaseTableHistoryService {
 
     @Override
     @Transactional
-    public void addBaseTableHistoryRecord(List<BaseTableHistory> baseTableHistoryList) {
-        this.baseTableHistoryDao.addBaseTableHistoryRecord(baseTableHistoryList);
+    public List<BaseTableHistory> addBaseTableHistoryRecord(List<BaseTableHistory> baseTableHistoryList) {
+        return this.baseTableHistoryDao.addBaseTableHistoryRecord(baseTableHistoryList);
     }
 
     @Override
