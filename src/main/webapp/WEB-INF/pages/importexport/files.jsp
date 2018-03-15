@@ -22,6 +22,7 @@
 
         <div style="border-bottom: solid">
             <p><a href="/">Back to main menu</a></p>
+            <p><a href="/importexport/fileupload/getstatus">Check uploading status</a></p>
             <table>
                 <td style="border: double">
                     <form id="fileuploadForm" action="/importexport/fileupload" method="POST" enctype="multipart/form-data">

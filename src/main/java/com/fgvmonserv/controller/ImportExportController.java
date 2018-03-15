@@ -1,21 +1,16 @@
 package com.fgvmonserv.controller;
 
 import com.fgvmonserv.converter.CsvConverter;
-import com.fgvmonserv.converter.JsonConverter;
-import com.fgvmonserv.converter.UrlEncoderDecoder;
 import com.fgvmonserv.model.BaseTable;
-import com.fgvmonserv.model.BaseTableHistory;
-import com.fgvmonserv.model.FileStorage;
 import com.fgvmonserv.model.userauth.User;
 import com.fgvmonserv.service.BaseTableHistoryService;
 import com.fgvmonserv.service.BaseTableService;
-import com.fgvmonserv.service.FileStorageService;
+import com.fgvmonserv.service.CsvProcessorThread;
 import com.fgvmonserv.service.userauth.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,11 +18,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.util.*;
+import java.util.concurrent.*;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -38,13 +33,12 @@ public class ImportExportController {
 
     private BaseTableService baseTableService;
     private BaseTableHistoryService baseTableHistoryService;
-    private JsonConverter jsonConverter ;
-    private UrlEncoderDecoder urlEncoderDecoder;
     private CsvConverter csvConverter;
-    private FileStorageService fileStorageService;
     private UserService userService;
     private List<BaseTable> shortBaseTableInfoFromCsvFile = null; //this is temp store for parsed data from csv
     private ExecutorService es = Executors.newCachedThreadPool();
+    private Map<String, Future> threadsMap = new LinkedHashMap<>();
+    private String csvFileName = null;
 
     @Autowired(required = true)
     @Qualifier(value = "baseTableService")
@@ -61,30 +55,9 @@ public class ImportExportController {
     }
 
     @Autowired(required = true)
-    @Qualifier(value = "jsonConverter")
-    public ImportExportController setJsonConverter(JsonConverter jsonConverter) {
-        this.jsonConverter = jsonConverter;
-        return this;
-    }
-
-    @Autowired(required = true)
-    @Qualifier(value = "urlEncoderDecoder")
-    private ImportExportController setUrlEncoderDecoder(UrlEncoderDecoder urlEncoderDecoder){
-        this.urlEncoderDecoder = urlEncoderDecoder;
-        return this;
-    }
-
-    @Autowired(required = true)
     @Qualifier(value = "csvConverter")
     public ImportExportController setCsvConverter(CsvConverter csvConverter) {
         this.csvConverter = csvConverter;
-        return this;
-    }
-
-    @Autowired(required = true)
-    @Qualifier(value = "fileStorageService")
-    public ImportExportController setFileStorageService(FileStorageService fileStorageService) {
-        this.fileStorageService = fileStorageService;
         return this;
     }
 
@@ -102,35 +75,6 @@ public class ImportExportController {
         return "importexport/files";
     }
 
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
-//    @RequestMapping(value="/importexport/fileupload", method=RequestMethod.POST)
-//    public String processUpload(@RequestParam CommonsMultipartFile file, RedirectAttributes redirectAttributes) {
-//        if (file.isEmpty()) {
-//            redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
-//            return "redirect:/importexport/fileupload";
-//        }
-//
-//        List<BaseTable> shortBaseTableInfoFromCsvFile = csvConverter.getShortBaseTableInfoFromCsvFile(file.getBytes());
-//        if(shortBaseTableInfoFromCsvFile != null && shortBaseTableInfoFromCsvFile.size() != 0){
-//            redirectAttributes.addFlashAttribute("parsedData", shortBaseTableInfoFromCsvFile);
-//
-//            redirectAttributes.addFlashAttribute("message", "Please check the records to be uploaded." +
-//                    " \n If it looks good please press on Confirm button below. Otherwise fix your CSV file and try again. \n");
-//
-//            //getting user id that will be used as key to save and then fetch file from DB
-//            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//            //in our case name is PhoneNumber that is actually unique identifier
-//            User user = userService.getUserByContactPhoneNumber(auth.getName());
-//            fileStorageService.saveFileInStorage(user.getId(), file.getBytes());
-//            redirectAttributes.addFlashAttribute("uid", user.getId() );
-//        }else {
-//            redirectAttributes.addFlashAttribute("message", "OOOPS! Unable to parse your CSV file. " +
-//                    "Supported delimited: semicolon, supported encoding formats: UTF-8 and UTF-16 \n");
-//        }
-//        return "redirect:/importexport/fileupload";
-//    }
-
-
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value="/importexport/fileupload", method=RequestMethod.POST)
     public String processUpload(@RequestParam CommonsMultipartFile file, RedirectAttributes redirectAttributes) {
@@ -139,7 +83,7 @@ public class ImportExportController {
             return "redirect:/importexport/fileupload";
         }
         shortBaseTableInfoFromCsvFile = csvConverter.getShortBaseTableInfoFromCsvFile(file.getBytes());
-
+        csvFileName = file.getOriginalFilename();
         if(shortBaseTableInfoFromCsvFile != null && shortBaseTableInfoFromCsvFile.size() != 0){
             redirectAttributes.addFlashAttribute("parsedData", shortBaseTableInfoFromCsvFile);
 
@@ -162,64 +106,44 @@ public class ImportExportController {
     }
 
 
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
-//    @RequestMapping(value = "/importexport/doAddRecords", method=RequestMethod.POST)
-//    public String addUser(@ModelAttribute("uid") int uid, RedirectAttributes redirectAttributes){
-//        FileStorage fileStorage = fileStorageService.getFileStorageByUserId(uid);
-//        List<BaseTable> shortBaseTableInfoFromCsvFile = csvConverter.getShortBaseTableInfoFromCsvFile(fileStorage.getFile());
-//        //After adding these records we get updated list with records that contains auto-generated Id
-//        List<BaseTable> baseTablesAddedRecordsWithIds = baseTableService.addBaseTableRecord(shortBaseTableInfoFromCsvFile);
-//
-//        //Now need to add these updated records to DB
-//        String auth = SecurityContextHolder.getContext().getAuthentication().getName();
-//        User currentSessionsUser = userService.getUserByContactPhoneNumber(auth);
-//        List<BaseTableHistory> baseTableHistoryList = new ArrayList<>();
-//        baseTablesAddedRecordsWithIds.forEach(baseTable -> {
-//            BaseTableHistory baseTableHistory = new BaseTableHistory(baseTable);
-//            baseTableHistory.setManagerUpdatedBy(currentSessionsUser);
-//            baseTableHistoryList.add(baseTableHistory);
-//        });
-//        baseTableHistoryService.addBaseTableHistoryRecord(baseTableHistoryList);
-//
-//        redirectAttributes.addFlashAttribute("message", "All records have been added to database");
-//        return "redirect:/importexport/fileupload";
-//    }
-
-
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/importexport/doAddRecords", method=RequestMethod.POST)
     public String addUser(RedirectAttributes redirectAttributes){
         String auth = SecurityContextHolder.getContext().getAuthentication().getName();
         User currentSessionsUser = userService.getUserByContactPhoneNumber(auth);
-        es.submit(addUsersInNewThread(currentSessionsUser, shortBaseTableInfoFromCsvFile));
+        //lets submit new job to executor
+        threadsMap.put(csvFileName + "-" + LocalDateTime.now(ZoneId.ofOffset("UTC", ZoneOffset.ofHours(2))),
+                es.submit(new CsvProcessorThread(currentSessionsUser, shortBaseTableInfoFromCsvFile,
+                baseTableService, baseTableHistoryService)));
         shortBaseTableInfoFromCsvFile = null;
+        csvFileName = null;
         return "redirect:/importexport/fileupload/getstatus";
-    }
-
-    private Runnable addUsersInNewThread(User currentSessionsUser, List<BaseTable> shortBaseTableInfoFromCsvFile){ //this is workaround for fail on free hosting
-        return () ->{
-            List<BaseTable> baseTablesAddedRecordsWithIds = baseTableService.addBaseTableRecord(shortBaseTableInfoFromCsvFile);
-            //Now need to add these updated records to DB
-            List<BaseTableHistory> baseTableHistoryList = new ArrayList<>();
-            baseTablesAddedRecordsWithIds.forEach(baseTable -> {
-                BaseTableHistory baseTableHistory = new BaseTableHistory(baseTable);
-                baseTableHistory.setManagerUpdatedBy(currentSessionsUser);
-                baseTableHistoryList.add(baseTableHistory);
-            });
-            baseTableHistoryService.addBaseTableHistoryRecord(baseTableHistoryList);
-        };
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value="/importexport/fileupload/getstatus", method=RequestMethod.GET)
     public String getStatus(Model model) {
+        StringBuilder sb = new StringBuilder();
 
-        if(((ThreadPoolExecutor) es).getActiveCount() > 0){
-            model.addAttribute("message", "Uploading in progress, please wait...");
+        if(threadsMap == null || threadsMap.isEmpty()){
+            sb.append("No jobs found");
         }else {
-            model.addAttribute("message", "All records have been added to database");
+            threadsMap.forEach((k,v) -> {
+                sb.append("<p>").append(k);
+                try{
+                    //get status from executor and add it message that will be shown in html page
+                    String status = (String) v.get(10, TimeUnit.MILLISECONDS);
+                    sb.append(", status: " + status);
+                } catch (InterruptedException | ExecutionException e) {
+                    sb.append(", status: failed, details:" + e.getMessage());
+                } catch (TimeoutException e) {
+                    sb.append(", status: In progress, please wait...");
+                }
+                sb.append("</p>");
+            });
         }
 
+        model.addAttribute("message", sb.toString());
         return "importexport/csvuploadstatus";
     }
 

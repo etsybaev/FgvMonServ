@@ -1,5 +1,3 @@
-<%@ page import="com.fgvmonserv.BaseTableNamesEnum" %>
-
 <%--<%@ page contentType="text/html;charset=UTF-8" language="java" %>--%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
@@ -21,17 +19,18 @@
 </head>
 <body style="background-color: #f0f4ce">
 
-        <div style="border-bottom: solid">
-            <p><a href="/">Back to main menu</a></p>
 
+    <div style="border-bottom: solid">
+        <p><a href="/">Back to main menu</a></p>
+        <p><a href="/importexport">Back to csv upload menu</a></p>
 
         <c:if test="${!empty message}">
-            <h2 style="color:red">${message}</h2>
+            <h4>${message}</h4>
         </c:if>
 
+        <p><a href="/">Back to main menu</a></p>
+        <p><a href="/importexport">Back to csv upload menu</a></p>
 
-            <p><a href="/">Back to main menu</a></p>
-
-        </div>
+    </div>
 </body>
 </html>
