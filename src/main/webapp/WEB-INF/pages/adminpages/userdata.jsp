@@ -4,6 +4,9 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ page session="false" %>
 
+<script src="<c:url value="/resources/script/jquery-1.11.1.js" />"></script>
+<script src="<c:url value="/resources/script/keepServerAlive.js" />"></script>
+
 <html>
 <head>
   <title>UserData</title>

@@ -9,6 +9,8 @@
     <%--<link href="<c:url value="/resources/css/sortableTable.css" />" rel="sortableTable" type="text/css">--%>
     <script src="<c:url value="/resources/script/delConfirm.js" />"></script>
     <script src="<c:url value="/resources/script/sorttable.js" />"></script>
+    <script src="<c:url value="/resources/script/jquery-1.11.1.js" />"></script>
+    <script src="<c:url value="/resources/script/keepServerAlive.js" />"></script>
     <%--<script type="text/javascript" src="sorttable.js"></script>--%>
     <title>Users Page</title>
 

@@ -7,6 +7,8 @@
 <%@ page session="false" %>
 
 <script src="<c:url value="/resources/script/delConfirm.js" />"></script>
+<script src="<c:url value="/resources/script/jquery-1.11.1.js" />"></script>
+<script src="<c:url value="/resources/script/keepServerAlive.js" />"></script>
 
 <style type="text/css">
     @import "/resources/css/sortableTable.css";
@@ -25,7 +27,7 @@
 
     <div class="sortableTable">
         <%--This script is for hiding columns--%>
-        <script src="/resources/script/jquery-1.11.1.min.js"></script>
+        <%--<script src="/resources/script/jquery-1.11.1.min.js"></script>--%>
         <script>
             $(function () {
                 var $chk = $("#grpChkBox input:checkbox");

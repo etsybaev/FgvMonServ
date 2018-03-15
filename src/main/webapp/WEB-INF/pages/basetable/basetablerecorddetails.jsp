@@ -8,6 +8,7 @@
 
 <script src="<c:url value="/resources/script/delConfirm.js" />"></script>
 <script src="<c:url value="/resources/script/jquery-1.11.1.js" />"></script>
+<script src="<c:url value="/resources/script/keepServerAlive.js" />"></script>
 
 <html>
 <head>

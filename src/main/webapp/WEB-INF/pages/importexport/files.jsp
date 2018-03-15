@@ -6,6 +6,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <script src="<c:url value="/resources/script/sorttable.js" />"></script>
+<script src="<c:url value="/resources/script/jquery-1.11.1.js" />"></script>
+<script src="<c:url value="/resources/script/keepServerAlive.js" />"></script>
 
 <style type="text/css">
     @import "/resources/css/sortableTable.css";
@@ -69,7 +71,7 @@
                 </table>
 
                 <form action="/importexport/doAddRecords" style="text-align: center;" method="post" modelAttribute="parsedData" enctype="application/x-www-form-urlencoded">
-                    <input type="hidden" value="${uid}" name="uid">
+                    <%--<input type="hidden" value="${uid}" name="uid">--%>
                     <input type="submit" value="Confirm">
                 </form>
             </c:if>
