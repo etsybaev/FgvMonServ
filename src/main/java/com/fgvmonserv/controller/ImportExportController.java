@@ -87,7 +87,8 @@ public class ImportExportController {
         if(shortBaseTableInfoFromCsvFile != null && shortBaseTableInfoFromCsvFile.size() != 0){
             redirectAttributes.addFlashAttribute("parsedData", shortBaseTableInfoFromCsvFile);
 
-            redirectAttributes.addFlashAttribute("message", "Please check the records to be uploaded." +
+            redirectAttributes.addFlashAttribute("message", shortBaseTableInfoFromCsvFile.size() +
+                            " records are going to be added to Database. Please check the records to be uploaded." +
                     " \n If it looks good please press on Confirm button below. Otherwise fix your CSV file and try again. \n");
 
             redirectAttributes.addFlashAttribute("uid", true ); // this is just a flag to show data's list part in web page

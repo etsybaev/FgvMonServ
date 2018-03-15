@@ -35,7 +35,7 @@ public class CsvProcessorThread implements Callable<String> {
                 baseTableHistoryList.add(baseTableHistory);
             });
             baseTableHistoryService.addBaseTableHistoryRecord(baseTableHistoryList);
-            return "All records have been added to database";
+            return baseTableHistoryList.size() + " records have been added to database";
         }catch (Exception e){
             return "Error occurred while importing CVS, details: \n" + e.getMessage();
         }
