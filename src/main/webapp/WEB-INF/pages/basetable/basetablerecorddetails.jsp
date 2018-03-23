@@ -164,6 +164,17 @@
             </tr>
             <tr>
                 <td>
+                    <form:label path="<%=BaseTableNamesEnum.ABOUT_AUCTION.getDbName()%>">
+                        <spring:message text="<%=BaseTableNamesEnum.ABOUT_AUCTION.getViewName()%>"/>
+                    </form:label>
+                </td>
+                <td>
+                    <form:textarea path="<%=BaseTableNamesEnum.ABOUT_AUCTION.getDbName()%>" rows="10" cols="90"
+                                   cssStyle="font-weight: normal; resize: none;overflow-y: scroll;"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
                     <form:label path="<%=BaseTableNamesEnum.START_PRICE.getDbName()%>">
                         <spring:message text="<%=BaseTableNamesEnum.START_PRICE.getViewName()%>"/>
                     </form:label>
