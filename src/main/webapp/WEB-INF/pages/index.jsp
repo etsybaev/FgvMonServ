@@ -64,7 +64,9 @@
 					<input type="submit" value="Import/Export database">
 				</form>
 
-				<h3>Welcome : ${pageContext.request.userPrincipal.name} | <a href="<c:url value="/logout" />" > Logout</a></h3>
+				<h3 style="text-shadow: 2px 2px 2px #1C6EA4;">
+                    Welcome : ${pageContext.request.userPrincipal.name} | <a href="<c:url value="/logout" />" > Logout</a>
+                </h3>
 			</c:if>
 		</div>
 
@@ -77,12 +79,22 @@
 		</div>
 	</div>
 
+    <%--if it's admin user then we will have one more reminder, so indentation should be smaller--%>
+    <%--this is cheat to move a bit divs below, have no idea how to it with ccs and no time to identify now--%>
+    <c:choose>
+        <c:when test="${pageContext.request.isUserInRole('ROLE_ADMIN') == true}">
+            <div style="display: inline-block; width: 55px"></div>
+        </c:when>
+        <c:otherwise>
+            <div style="display: inline-block; width: 370px"></div>
+        </c:otherwise>
+    </c:choose>
+
     <c:if test="${remindersList != null && remindersList.size() > 0}">
-        <div style="display: inline-block; width: 250px"></div>
-        <div id="right" style="display: inline-block; border: double">
+        <div id="right" style="display: inline-block; border: double; width: 450px;">
             <p style="color: #dc090d" align="center">Deals for you to check today:</p>
             <div style="height: 150px; overflow-y: scroll">
-                <table class="sortable table table_div_trim" id="sortableTable1">
+                <table class="sortable table table_div_trim blueTable" id="sortableTable1">
                     <thead>
                     <tr>
                         <th class="<%=BaseTableNamesEnum.ID.getDbName()%>"><%=BaseTableNamesEnum.ID.getViewName()%></th>
@@ -104,10 +116,10 @@
 
     <%--this block is supposed to be shown for admins only. Show all missed reminders till today--%>
     <c:if test="${pageContext.request.isUserInRole('ROLE_ADMIN') == true && missedRemindersList != null && missedRemindersList.size() > 0}">
-        <div id="right" style="display: inline-block; border: double">
+        <div id="right" style="display: inline-block; border: double; width: 550px;">
             <p style="color: #dc090d" align="center">All deals till today:</p>
             <div style="height: 150px; overflow-y: scroll">
-                <table class="sortable table table_div_trim" id="sortableTable1">
+                <table class="sortable table table_div_trim blueTable" id="sortableTable2">
                     <thead>
                         <tr>
                             <th class="<%=BaseTableNamesEnum.ID.getDbName()%>"><%=BaseTableNamesEnum.ID.getViewName()%></th>

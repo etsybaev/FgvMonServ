@@ -79,7 +79,7 @@
         <h1>Status of Call List</h1>
 
         <c:if test="${!empty statusOfCallList}">
-            <table class="sortable" id="sortableTable">
+            <table class="sortable blueTable" id="sortableTable">
                 <tr>
                     <th width="30">ID</th>
                     <th width="120">Status of Call</th>

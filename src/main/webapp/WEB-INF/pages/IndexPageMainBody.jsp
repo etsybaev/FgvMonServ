@@ -313,7 +313,7 @@
             <button id="hide">Hide selector</button>
         </div>
 
-        <table class="sortable table table_div_trim" id="sortableTable">
+        <table class="sortable table table_div_trim blueTable" id="sortableTable">
             <thead>
                 <tr>
                     <th class="<%=BaseTableNamesEnum.ID.getDbName()%>"><%=BaseTableNamesEnum.ID.getViewName()%></th>

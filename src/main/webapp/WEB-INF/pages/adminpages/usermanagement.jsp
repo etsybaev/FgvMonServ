@@ -147,7 +147,7 @@
         <h1>User List</h1>
 
         <c:if test="${!empty listUsers}">
-            <table class="sortable" id="sortableTable">
+            <table class="sortable blueTable" id="sortableTable">
                 <tr>
                     <th width="30">ID</th>
                     <th width="120">First Name</th>

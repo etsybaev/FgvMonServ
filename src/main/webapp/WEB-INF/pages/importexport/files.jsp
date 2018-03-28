@@ -46,7 +46,7 @@
 
         <div>
             <c:if test="${!empty uid}">
-                <table class="sortable" id="sortableTable">
+                <table class="sortable blueTable" id="sortableTable">
                     <tr>
                         <th width="80"><%=BaseTableNamesEnum.BANK.getViewName()%></th>
                         <th width="50"><%=BaseTableNamesEnum.AUCTION_DATE.getViewName()%></th>
