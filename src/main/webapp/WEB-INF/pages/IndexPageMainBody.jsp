@@ -7,27 +7,6 @@
 <script src="<c:url value="/resources/script/sorttable.js" />"></script>
 <%--<link href="<c:url value="/resources/css/sortableTable.css" />" rel="tableStyle">--%>
 
-<script src="<c:url value="/resources/script/delConfirm.js" />"></script>
-
-<style type="text/css">
-    @import "/resources/css/sortableTable.css";
-
-    table, th, td {
-        border: 1px solid black;
-        border-collapse: collapse;
-    }
-</style>
-
-
-
-<div id="globalSerach">
-    <form action="/">
-        Search through all database:<br>
-        <input type="text" name="searchForText">
-        <input type="submit" value="Search">
-    </form>
-</div>
-
 
 <div id="timePickers">
     <h1>Filter result options</h1>
@@ -323,6 +302,11 @@
                     <th><input type="checkbox" name="<%=BaseTableNamesEnum.IS_UNDER_CONTROL.getDbName()%>"/><%=BaseTableNamesEnum.IS_UNDER_CONTROL.getViewName()%></th>
                     <th><input type="checkbox" name="<%=BaseTableNamesEnum.MANAGER.getDbName()%>"/><%=BaseTableNamesEnum.MANAGER.getViewName()%></th>
                     <th><input type="checkbox" name="<%=BaseTableNamesEnum.STATUS_OF_DEAL.getDbName()%>"/><%=BaseTableNamesEnum.STATUS_OF_DEAL.getViewName()%></th>
+                    <th><input type="checkbox" name="<%=BaseTableNamesEnum.REMINDER_IS_ENABLED.getDbName()%>"/><%=BaseTableNamesEnum.REMINDER_IS_ENABLED.getViewName()%></th>
+                </tr>
+                <tr>
+                    <th><input type="checkbox" name="<%=BaseTableNamesEnum.REMINDER_DATE.getDbName()%>"/><%=BaseTableNamesEnum.REMINDER_DATE.getViewName()%></th>
+                    <th><input type="checkbox" name="<%=BaseTableNamesEnum.REMINDER_TEXT.getDbName()%>"/><%=BaseTableNamesEnum.REMINDER_TEXT.getViewName()%></th>
                     <th><input type="checkbox" name="Delete"/>Delete</th>
                 </tr>
             </table>
@@ -355,6 +339,9 @@
                     <th class="<%=BaseTableNamesEnum.IS_UNDER_CONTROL.getDbName()%>"><%=BaseTableNamesEnum.IS_UNDER_CONTROL.getViewName()%></th>
                     <th class="<%=BaseTableNamesEnum.MANAGER.getDbName()%>"><%=BaseTableNamesEnum.MANAGER.getViewName()%></th>
                     <th class="<%=BaseTableNamesEnum.STATUS_OF_DEAL.getDbName()%>"><%=BaseTableNamesEnum.STATUS_OF_DEAL.getViewName()%></th>
+                    <th class="<%=BaseTableNamesEnum.REMINDER_IS_ENABLED.getDbName()%>"><%=BaseTableNamesEnum.REMINDER_IS_ENABLED.getViewName()%></th>
+                    <th class="<%=BaseTableNamesEnum.REMINDER_DATE.getDbName()%>"><%=BaseTableNamesEnum.REMINDER_DATE.getViewName()%></th>
+                    <th class="<%=BaseTableNamesEnum.REMINDER_TEXT.getDbName()%>"><%=BaseTableNamesEnum.REMINDER_TEXT.getViewName()%></th>
                     <th class="Delete">Delete</th>
                 </tr>
             </thead>
@@ -385,6 +372,9 @@
                     <td title="${allRecordsList.isUnderControl}">${allRecordsList.isUnderControl}</td>
                     <td title="${allRecordsList.manager.firstName}">${allRecordsList.manager.firstName}</td>
                     <td title="${allRecordsList.statusOfDeal.status}">${allRecordsList.statusOfDeal.status}</td>
+                    <td title="${allRecordsList.reminderIsEnabled}">${allRecordsList.reminderIsEnabled}</td>
+                    <td title="${allRecordsList.reminderDate}">${allRecordsList.reminderDate}</td>
+                    <td title="${allRecordsList.reminderText}"><div>${allRecordsList.reminderText}</div></td>
                     <%--<td title="Delete" onclick="javascript:deleteScript.deleteBaseTableRecord(${allRecordsList.id})">Delete</td>--%>
                     <td title="Delete"><a href="javascript:deleteScript.deleteBaseTableRecord(${allRecordsList.id})">Delete</a></td>
                 </tr>

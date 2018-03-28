@@ -1,3 +1,4 @@
+<%@ page import="com.fgvmonserv.BaseTableNamesEnum" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
@@ -6,6 +7,16 @@
 
 <script src="<c:url value="/resources/script/jquery-1.11.1.js" />"></script>
 <script src="<c:url value="/resources/script/keepServerAlive.js" />"></script>
+<script src="<c:url value="/resources/script/delConfirm.js" />"></script>
+
+<style type="text/css">
+    @import "/resources/css/sortableTable.css";
+
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+</style>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
@@ -17,7 +28,15 @@
 </head>
 <body style="background-color: #f0f4ce">
 
-	<div id="container"  style="overflow-scrolling:auto">
+<div id="container">
+	<%--<div id="left" style="display: inline-flex">--%>
+	<%--aaaa--%>
+	<%--</div>--%>
+	<%--<div id="right" style="display: inline-flex">--%>
+	<%--sdfsdf--%>
+	<%--</div>--%>
+
+	<div id="left" style="display: inline-block">
 		<div id="top">
 			<%--If Admin user -  show admin panel link--%>
 			<c:if test="${pageContext.request.isUserInRole('ROLE_ADMIN') == true}">
@@ -46,11 +65,76 @@
 				</form>
 
 				<h3>Welcome : ${pageContext.request.userPrincipal.name} | <a href="<c:url value="/logout" />" > Logout</a></h3>
-                <p style="border: double"></p>
-				<%--This is the page to control all the access points--%>
-				<jsp:include page="IndexPageMainBody.jsp"/>
 			</c:if>
 		</div>
+
+		<div id="globalSerach">
+			<form action="/">
+				Search through all database:<br>
+				<input type="text" name="searchForText">
+				<input type="submit" value="Search">
+			</form>
+		</div>
 	</div>
+
+    <c:if test="${remindersList != null && remindersList.size() > 0}">
+        <div style="display: inline-block; width: 250px"></div>
+        <div id="right" style="display: inline-block; border: double">
+            <p style="color: #dc090d" align="center">Deals for you to check today:</p>
+            <div style="height: 150px; overflow-y: scroll">
+                <table class="sortable table table_div_trim" id="sortableTable1">
+                    <thead>
+                    <tr>
+                        <th class="<%=BaseTableNamesEnum.ID.getDbName()%>"><%=BaseTableNamesEnum.ID.getViewName()%></th>
+                        <th class="<%=BaseTableNamesEnum.REMINDER_TEXT.getDbName()%>"><%=BaseTableNamesEnum.REMINDER_TEXT.getViewName()%></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach items="${remindersList}" var="remindersList">
+                        <tr ondblclick="openEditPage(${remindersList.id})">
+                            <td title="${remindersList.id}"><div>${remindersList.id}</div></td>
+                            <td title="${remindersList.reminderText}"><div>${remindersList.reminderText}</div></td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </c:if>
+
+    <%--this block is supposed to be shown for admins only. Show all missed reminders till today--%>
+    <c:if test="${pageContext.request.isUserInRole('ROLE_ADMIN') == true && missedRemindersList != null && missedRemindersList.size() > 0}">
+        <div id="right" style="display: inline-block; border: double">
+            <p style="color: #dc090d" align="center">All deals till today:</p>
+            <div style="height: 150px; overflow-y: scroll">
+                <table class="sortable table table_div_trim" id="sortableTable1">
+                    <thead>
+                        <tr>
+                            <th class="<%=BaseTableNamesEnum.ID.getDbName()%>"><%=BaseTableNamesEnum.ID.getViewName()%></th>
+                            <th class="<%=BaseTableNamesEnum.MANAGER.getDbName()%>"><%=BaseTableNamesEnum.MANAGER.getViewName()%></th>
+                            <th class="<%=BaseTableNamesEnum.REMINDER_TEXT.getDbName()%>"><%=BaseTableNamesEnum.REMINDER_TEXT.getViewName()%></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach items="${missedRemindersList}" var="missedReminder">
+                            <tr ondblclick="openEditPage(${missedReminder.id})">
+                                <td title="${missedReminder.id}"><div>${missedReminder.id}</div></td>
+                                <td title="${missedReminder.manager.firstName}"><div>${missedReminder.manager.firstName}</div></td>
+                                <td title="${missedReminder.reminderText}"><div>${missedReminder.reminderText}</div></td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </c:if>
+
+	<div id="middle1">
+		<c:if test="${pageContext.request.userPrincipal.name != null}">
+			<jsp:include page="IndexPageMainBody.jsp"/>
+		</c:if>
+	</div>
+
+</div>
 </body>
 </html>

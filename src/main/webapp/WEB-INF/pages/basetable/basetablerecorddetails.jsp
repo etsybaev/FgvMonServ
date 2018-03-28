@@ -462,6 +462,38 @@
                 </td>
             </tr>
 
+            <tr>
+                <td>
+                    <form:label path="<%=BaseTableNamesEnum.REMINDER_IS_ENABLED.getDbName()%>">
+                        <spring:message text="<%=BaseTableNamesEnum.REMINDER_IS_ENABLED.getViewName()%>"/>
+                    </form:label>
+                </td>
+                <td>
+                    <form:checkbox path="<%=BaseTableNamesEnum.REMINDER_IS_ENABLED.getDbName()%>" value="true" size="90"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <form:label path="<%=BaseTableNamesEnum.REMINDER_DATE.getDbName()%>">
+                        <spring:message text="<%=BaseTableNamesEnum.REMINDER_DATE.getViewName()%>"/>
+                    </form:label>
+                </td>
+                <td>
+                    <form:input type="date" path="<%=BaseTableNamesEnum.REMINDER_DATE.getDbName()%>"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <form:label path="<%=BaseTableNamesEnum.REMINDER_TEXT.getDbName()%>">
+                        <spring:message text="<%=BaseTableNamesEnum.REMINDER_TEXT.getViewName()%>"/>
+                    </form:label>
+                </td>
+                <td>
+                    <form:textarea path="<%=BaseTableNamesEnum.REMINDER_TEXT.getDbName()%>" rows="10" cols="90"
+                                   cssStyle="font-weight: normal; resize: none;overflow-y: scroll;"/>
+                </td>
+            </tr>
+
 
             <tr>
                 <td>

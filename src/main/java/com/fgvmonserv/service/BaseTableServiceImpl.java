@@ -5,6 +5,8 @@ import com.fgvmonserv.model.BaseTable;
 import com.fgvmonserv.model.BaseTableDateFilter;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -64,6 +66,18 @@ public class BaseTableServiceImpl implements BaseTableService {
     @Transactional
     public List<BaseTable> getAllRecordsList(BaseTableDateFilter baseTableDateFilter) {
         return this.baseTableDao.getAllRecordsList(baseTableDateFilter);
+    }
+
+    @Override
+    @Transactional
+    public List<BaseTable> getAllRecordsListByReminderDate(LocalDate reminderDate, boolean isReminderEnabled, int managerId) {
+        return this.baseTableDao.getAllRecordsListByReminderDate(reminderDate,isReminderEnabled, managerId);
+    }
+
+    @Override
+    @Transactional
+    public List<BaseTable> getAllRecordsListWithMissedReminders(LocalDate reminderDate, boolean isReminderEnabled) {
+        return this.baseTableDao.getAllRecordsListWithMissedReminders(reminderDate, isReminderEnabled);
     }
 
     @Override

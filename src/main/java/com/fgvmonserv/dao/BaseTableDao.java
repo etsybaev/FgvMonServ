@@ -3,6 +3,7 @@ package com.fgvmonserv.dao;
 import com.fgvmonserv.model.BaseTable;
 import com.fgvmonserv.model.BaseTableDateFilter;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -18,6 +19,8 @@ public interface BaseTableDao {
     public List<BaseTable> getAllRecordsList();
     public List<BaseTable> getAllRecordsList(String searchForText);
     public List<BaseTable> getAllRecordsList(BaseTableDateFilter baseTableDateFilter);
+    public List<BaseTable> getAllRecordsListByReminderDate(LocalDate reminderDate, boolean isReminderEnabled, int managerId);
+    public List<BaseTable> getAllRecordsListWithMissedReminders(LocalDate reminderDate, boolean isReminderEnabled);
     public List<String> getAllBanksList();
 
 }

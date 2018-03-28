@@ -34,3 +34,10 @@ table#sortableTable tbody tr:nth-child(2n+1) td {
     background: #dbdccb;
 }
 
+table#sortableTable1 tbody tr:nth-child(2n) td {
+    background: #ddd6c7;
+}
+table#sortableTable1 tbody tr:nth-child(2n+1) td {
+    background: #dbdccb;
+}
+

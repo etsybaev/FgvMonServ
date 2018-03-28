@@ -32,7 +32,10 @@ public enum BaseTableNamesEnum {
     SYMPTOM("symptom", "Symptom"),
     IS_UNDER_CONTROL("isUnderControl", "Is under control"),
     MANAGER("manager", "Manager"),
-    STATUS_OF_DEAL("statusOfDeal", "Status of deal");
+    STATUS_OF_DEAL("statusOfDeal", "Status of deal"),
+    REMINDER_DATE("reminderDate", "Reminder date"),
+    REMINDER_TEXT("reminderText", "Reminder text"),
+    REMINDER_IS_ENABLED("reminderIsEnabled", "Reminder is enabled");
 
 
     private String dbName;

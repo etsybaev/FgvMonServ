@@ -13,6 +13,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -184,6 +185,41 @@ public class BaseTableDaoImpl implements BaseTableDao {
         criteria.select(root).where(predicateList.toArray(new Predicate[]{}));
         List<BaseTable> baseTableList = session.createQuery( criteria ).getResultList();
         return baseTableList;
+    }
+
+    @Override
+    public List<BaseTable> getAllRecordsListByReminderDate(LocalDate reminderDate, boolean isReminderEnabled, int managerId) {
+        LOGGER.debug("Started looking BaseTableRecords for date: " + reminderDate + " and isReminderEnabled=" + isReminderEnabled);
+        Session session = this.sessionFactory.getCurrentSession();
+
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<BaseTable> criteria = builder.createQuery(BaseTable.class);
+        Root<BaseTable> root = criteria.from(BaseTable.class);
+        List<Predicate> predicateList = new ArrayList<>();
+
+        predicateList.add(builder.equal(root.get(BaseTableNamesEnum.REMINDER_DATE.getDbName()), reminderDate));
+        predicateList.add(builder.equal(root.get(BaseTableNamesEnum.REMINDER_IS_ENABLED.getDbName()), isReminderEnabled));
+        predicateList.add(builder.equal(root.get(BaseTableNamesEnum.MANAGER.getDbName()), managerId));
+
+        criteria.select(root).where(predicateList.toArray(new Predicate[]{}));
+        return session.createQuery(criteria).getResultList();
+    }
+
+    @Override
+    public List<BaseTable> getAllRecordsListWithMissedReminders(LocalDate reminderDate, boolean isReminderEnabled) {
+        LOGGER.debug("Started looking BaseTableRecords for date: " + reminderDate + " and isReminderEnabled=" + isReminderEnabled);
+        Session session = this.sessionFactory.getCurrentSession();
+
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<BaseTable> criteria = builder.createQuery(BaseTable.class);
+        Root<BaseTable> root = criteria.from(BaseTable.class);
+        List<Predicate> predicateList = new ArrayList<>();
+
+        predicateList.add(builder.lessThanOrEqualTo(root.get(BaseTableNamesEnum.REMINDER_DATE.getDbName()), reminderDate));
+        predicateList.add(builder.equal(root.get(BaseTableNamesEnum.REMINDER_IS_ENABLED.getDbName()), isReminderEnabled));
+
+        criteria.select(root).where(predicateList.toArray(new Predicate[]{}));
+        return session.createQuery(criteria).getResultList();
     }
 
     @Override

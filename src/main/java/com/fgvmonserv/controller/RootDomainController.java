@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -107,6 +108,13 @@ public class RootDomainController {
         model.addAttribute("statusOfDealList", this.statusOfDealService.getAllStatusList());
         model.addAttribute("allBanksList", this.baseTableService.getAllBanksList());
         model.addAttribute("allCallStatusesList", this.statusOfCallService.getAllStatusesList());
+
+        int currentUserId = userService.getUserByContactPhoneNumber(SecurityContextHolder.getContext().getAuthentication().getName()).getId();
+        model.addAttribute("remindersList", this.baseTableService.getAllRecordsListByReminderDate(
+                LocalDate.now(), true, currentUserId));
+
+        model.addAttribute("missedRemindersList", this.baseTableService.getAllRecordsListWithMissedReminders(
+                LocalDate.now(), true));
         return "index";
     }
 

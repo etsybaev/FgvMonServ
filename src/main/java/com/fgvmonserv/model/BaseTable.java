@@ -146,6 +146,18 @@ public class BaseTable {
     @GeneratedValue
     private LocalDate createdTime;
 
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @Column(name = "reminderDate")
+    @GeneratedValue
+    private LocalDate reminderDate;
+
+    @Column(name = "reminderText")
+    private String reminderText;
+
+    @Column(name = "reminderIsEnabled")
+    private boolean reminderIsEnabled;
+
+
     //@JsonIgnore
     public static BaseTable getShortBaseTableFromCsvLine(String[] lineFromCsv){
         if(lineFromCsv[5].contains(",") && lineFromCsv[5].contains(".")){
@@ -527,6 +539,33 @@ public class BaseTable {
         return this;
     }
 
+    public LocalDate getReminderDate() {
+        return reminderDate;
+    }
+
+    public BaseTable setReminderDate(LocalDate reminderDate) {
+        this.reminderDate = reminderDate;
+        return this;
+    }
+
+    public String getReminderText() {
+        return reminderText;
+    }
+
+    public BaseTable setReminderText(String reminderText) {
+        this.reminderText = reminderText;
+        return this;
+    }
+
+    public boolean isReminderIsEnabled() {
+        return reminderIsEnabled;
+    }
+
+    public BaseTable setReminderIsEnabled(boolean reminderIsEnabled) {
+        this.reminderIsEnabled = reminderIsEnabled;
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -535,6 +574,7 @@ public class BaseTable {
         BaseTable baseTable = (BaseTable) o;
 
         if (isUnderControl != baseTable.isUnderControl) return false;
+        if (reminderIsEnabled != baseTable.reminderIsEnabled) return false;
         if (id != null ? !id.equals(baseTable.id) : baseTable.id != null) return false;
         if (bank != null ? !bank.equals(baseTable.bank) : baseTable.bank != null) return false;
         if (auctionDate != null ? !auctionDate.equals(baseTable.auctionDate) : baseTable.auctionDate != null)
@@ -574,7 +614,11 @@ public class BaseTable {
         if (manager != null ? !manager.equals(baseTable.manager) : baseTable.manager != null) return false;
         if (statusOfDeal != null ? !statusOfDeal.equals(baseTable.statusOfDeal) : baseTable.statusOfDeal != null)
             return false;
-        return createdTime != null ? createdTime.equals(baseTable.createdTime) : baseTable.createdTime == null;
+        if (createdTime != null ? !createdTime.equals(baseTable.createdTime) : baseTable.createdTime != null)
+            return false;
+        if (reminderDate != null ? !reminderDate.equals(baseTable.reminderDate) : baseTable.reminderDate != null)
+            return false;
+        return reminderText != null ? reminderText.equals(baseTable.reminderText) : baseTable.reminderText == null;
     }
 
     @Override
@@ -606,6 +650,9 @@ public class BaseTable {
         result = 31 * result + (manager != null ? manager.hashCode() : 0);
         result = 31 * result + (statusOfDeal != null ? statusOfDeal.hashCode() : 0);
         result = 31 * result + (createdTime != null ? createdTime.hashCode() : 0);
+        result = 31 * result + (reminderDate != null ? reminderDate.hashCode() : 0);
+        result = 31 * result + (reminderText != null ? reminderText.hashCode() : 0);
+        result = 31 * result + (reminderIsEnabled ? 1 : 0);
         return result;
     }
 
@@ -639,6 +686,9 @@ public class BaseTable {
                 ", manager=" + manager +
                 ", statusOfDeal=" + statusOfDeal +
                 ", createdTime=" + createdTime +
+                ", reminderDate=" + reminderDate +
+                ", reminderText='" + reminderText + '\'' +
+                ", reminderIsEnabled=" + reminderIsEnabled +
                 '}';
     }
 }
